@@ -220,11 +220,11 @@ function createPlayerArray(playerNames) {
 // console.log(playerNames)
 // const playerArray = createPlayerArray(playerNames);
 function getX(i) {
-    return i*10+20;
+    return i*7+27;
 }
 
 function getY(i) {
-    return i*12-12
+    return i*11-2
 }
 
 function getColor(color) {
@@ -254,7 +254,7 @@ function showAllDecks() {
 function showDeck(i) {
     let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
     let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    let x = 10;
+    let x = 20;
     let y = getY(i);
 
     // x = x+ 3.2;
@@ -365,6 +365,8 @@ function placeCard(card, i) {
         circle.setAttribute("cx", x+2);
         circle.setAttribute("cy", y+4+ (7/nonzeroKeys.length)*j-0.5);
         circle.setAttribute("r",0.5)
+        circle.setAttribute("stroke","black")
+        circle.setAttribute("stroke-width",0.1)
         // number.setAttribute("font-size",2);
         circle.setAttribute("fill",getColor(nonzeroKeys[j]));
         container.appendChild(circle);
@@ -391,6 +393,107 @@ function placeCard(card, i) {
     // board.appendChild(number);
     // complete
     //places the chip on the board
+}
+
+function placeBonus(bonus, i) {
+// let chips = document.getElementById("chips");
+    // let board = document.getElementById("board");
+    // const svgNS = "http://www.w3.org/2000/svg";
+    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    // container.setAttribute("z-index",0);
+    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    //console.log(chip);
+    let x = 60;
+    let y = 10+i*10;
+
+    // x = x+ 3.2;
+    // y += 3.2;
+    piece.setAttribute("x",x);
+    piece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    piece.setAttribute("height", 8);
+    piece.setAttribute("width", 4);
+    // token.setAttribute("fill",chip.color);
+    piece.setAttribute("stroke","black");
+    piece.setAttribute("stroke-width",0.15);
+    piece.setAttribute("fill", "tan")
+    piece.style.display = "inline";
+    // token.style.borderRadius = "50%";
+
+    container.appendChild(piece);
+
+    // let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    // // number.textContent = getColor;
+    // bigCircle.setAttribute("cx", x+4.5);
+    // bigCircle.setAttribute("cy", y+1.25);
+    // bigCircle.setAttribute("r",0.9)
+    // bigCircle.setAttribute("stroke", "black")
+    // bigCircle.setAttribute("stroke-width", 0.15)
+    // // number.setAttribute("font-size",2);
+    // bigCircle.setAttribute("fill",getColor(card.color));
+    // container.appendChild(bigCircle);
+    
+    // let line = document.createElementNS()
+    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x);
+    line.setAttribute("y1", y+2.5);
+    line.setAttribute("x2", x+4);
+    line.setAttribute("y2", y+2.5);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", 0.2);
+    container.appendChild(line)
+
+
+    let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+    number.textContent = bonus.vp;
+    number.setAttribute("x", x+0.5);
+    number.setAttribute("y", y+2);
+    number.setAttribute("font-size",2.5);
+    number.setAttribute("fill","gold");
+    number.setAttribute("stroke", "black")
+    number.setAttribute("stroke-width",0.1)
+    container.appendChild(number);
+
+
+    let nonzero = {}
+    for (let x of Object.keys(bonus.cost)) {
+        if (bonus.cost[x] > 0) {
+            nonzero[x] = bonus.cost[x]
+        }
+    }
+    let nonzeroKeys = Object.keys(nonzero);
+    for (let j = 0; j < nonzeroKeys.length; j++) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = nonzero[nonzeroKeys[j]];
+        number.setAttribute("x", x+0.5);
+        number.setAttribute("y", y+4+ (5/nonzeroKeys.length)*j);
+        number.setAttribute("font-size",1.5);
+        number.setAttribute("fill","black");
+        container.appendChild(number);
+
+        let rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+        // number.textContent = getColor;
+        rect.setAttribute("x", x+2);
+        rect.setAttribute("y", y+4+ (5/nonzeroKeys.length)*j-1);
+        // rect.setAttribute("r",0.5)
+        rect.setAttribute("height",1)
+        rect.setAttribute("width",0.5)
+        rect.setAttribute("stroke","black")
+        rect.setAttribute("stroke-width",0.1)
+        // number.setAttribute("font-size",2);
+        rect.setAttribute("fill",getColor(nonzeroKeys[j]));
+        container.appendChild(rect);
+    }
+
+
+    board.appendChild(container);
+
+}
+
+function placeAllBonuses() {
+    for (let i = 0; i<bonuses.length; i++) {
+        placeBonus(bonuses[i], i)
+    }
 }
 
 function placeAllCards() {
@@ -451,6 +554,7 @@ function initCoinPiles(pileVals) {
 showAllDecks()
 placeAllCards()
 initCoinPiles(pileVals)
+placeAllBonuses()
 
 
 const yellowPile = document.getElementById("yellowPile");
