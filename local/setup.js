@@ -250,6 +250,21 @@ function createPlayerArray(playerNames) {
     return out
 }
 
+function createPileVals(numPlayers) {
+    let val;
+    if (numPlayers == 2) {
+        val = 4
+    }
+    else if (numPlayers == 3) {
+        val = 5
+    }
+    else {
+        val = 7
+    }
+    outDict = {"w": val, "g": val, "u": val, "k": val, "r":val}
+    return outDict
+}
+
 doneButton.addEventListener(('click'), () => {
     const bonusesOut = bonuses.splice(0,numPlayers+1);
     const outDeck1 = JSON.stringify(deck1.splice(0,4));
@@ -280,9 +295,11 @@ doneButton.addEventListener(('click'), () => {
 startGameButton.addEventListener(('click'), () => {
     console.log(playerNames)
     const playerArray = createPlayerArray(playerNames);
+    const pileVals = createPileVals(numPlayers)
     console.log(playerArray)
     localStorage.setItem("playerArray", JSON.stringify(shuffle(playerArray)));
     localStorage.setItem("turnIndex", 0);
+    localStorage.setItem("pileVals", JSON.stringify(pileVals))
     window.location.href = "game.html";
     // setTimeout(window.location.href = "game.html", 2000);
 })

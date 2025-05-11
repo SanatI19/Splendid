@@ -7,6 +7,10 @@ let outDeck1string = JSON.parse(localStorage.getItem("outDeck1"));
 let outDeck2string = JSON.parse(localStorage.getItem("outDeck2"));
 let outDeck3string = JSON.parse(localStorage.getItem("outDeck3"));
 
+let pileVals = JSON.parse(localStorage.getItem("pileVals"))
+// console.log(pileVals)
+// console.log(pileVals["k"])
+
 let victoryValue = 15;
 
 let chipsBought = [];
@@ -436,9 +440,17 @@ function moveButtonsToBack() {
     board.insertBefore(rect34,board.firstChild)
 
 }
+
+function initCoinPiles(pileVals) {
+    blackPile.querySelector("text").innerHTML = pileVals["k"];
+    bluePile.querySelector("text").innerHTML = pileVals["u"];
+    redPile.querySelector("text").innerHTML = pileVals["r"];
+    greenPile.querySelector("text").innerHTML = pileVals["g"];
+    whitePile.querySelector("text").innerHTML = pileVals["w"];
+}
 showAllDecks()
 placeAllCards()
-
+initCoinPiles(pileVals)
 
 
 const yellowPile = document.getElementById("yellowPile");
@@ -1052,6 +1064,8 @@ function storeThings() {
 
     localStorage.setItem("playerArray", JSON.stringify(playerArray))
     localStorage.setItem("turnIndex", turnIndex)
+    
+    localStorage.setItem("pileVals", JSON.stringify(pileVals))
 }
 
 
