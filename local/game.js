@@ -296,6 +296,9 @@ function initiallyPlaceCards() {
 showAllDecks()
 initiallyPlaceCards()
 
+let chipsBought = [];
+let turnOver = false;
+
 const rect11 = document.getElementById("11");
 const rect12 = document.getElementById("12");
 const rect13 = document.getElementById("13");
@@ -311,9 +314,17 @@ const rect32 = document.getElementById("32");
 const rect33 = document.getElementById("33");
 const rect34 = document.getElementById("34");
 
+const whitePile = document.getElementById("whitePile");
+const bluePile = document.getElementById("bluePile");
+const greenPile = document.getElementById("greenPile");
+const redPile = document.getElementById("redPile");
+const blackPile = document.getElementById("blackPile");
+
+
+
 const yellowPile = document.getElementById("yellowPile");
 
-function addHighlightsAll() {
+function addHighlightsAllCards() {
     rect11.style.stroke = "yellow";
     rect12.style.stroke = "yellow";
     rect13.style.stroke = "yellow";
@@ -342,7 +353,7 @@ yellowPile.addEventListener(('click'), () => {
     rect32.addEventListener("click", handleReserve);
     rect33.addEventListener("click", handleReserve);
     rect34.addEventListener("click", handleReserve);
-    addHighlightsAll()
+    addHighlightsAllCards()
 })
 // placeCard(outDeck3[0],0)
 
@@ -351,10 +362,215 @@ function handleReserve(event) {
     // LETS DO THIS LAST SINCE IT IS ANNOYING AS FREAK
 }
 
-function handleCardClick(event) {
+function addHighlightsAllChips() {
+    blackPile.querySelector("circle").style.stroke = "yellow";
+    bluePile.querySelector("circle").style.stroke = "yellow";
+    redPile.querySelector("circle").style.stroke = "yellow";
+    greenPile.querySelector("circle").style.stroke = "yellow";
+    whitePile.querySelector("circle").style.stroke = "yellow";
+    yellowPile.querySelector("circle").style.stroke = "yellow";
+}
 
+function handleCardClick(event) {
+    xVal = this.x
+    yVal = this.y
+
+    
 }
 
 function takeTurn() {
+    turnOver = false;
+    addHighlightsAllChips();
+    addChipButtons();
+}
+
+function addValidCardButtons(player) {
+
+}
+
+function removeAllCardButtons() {
+
+}
+
+function removeBlackListener() {
+    blackPile.removeEventListener("click", blackPileEvent);
+    blackPile.querySelector("circle").style.stroke = "none";
+}
+
+function removeBlueListener() {
+    bluePile.removeEventListener("click", bluePileEvent);
+    bluePile.querySelector("circle").style.stroke = "none";
+}
+
+function removeRedListener() {
+    redPile.removeEventListener("click", redPileEvent);
+    redPile.querySelector("circle").style.stroke = "none";
+}
+
+function removeGreenListener() {
+    greenPile.removeEventListener("click", greenPileEvent);
+    greenPile.querySelector("circle").style.stroke = "none";
+}
+
+function removeWhiteListener() {
+    whitePile.removeEventListener("click", whitePileEvent);
+    whitePile.querySelector("circle").style.stroke = "none";
+}
+
+function removeAllPileButtons() {
+    removeBlackListener();
+    removeBlueListener();
+    removeGreenListener();
+    removeRedListener();
+    removeWhiteListener();
+}
+
+function blackPileEvent() {
+    playerArray[turnIndex].coins["k"] += 1;
+    number = blackPile.querySelector("text").textContent;
+    blackPile.querySelector("text").innerHTML = number-1;
+    chipsBought.push("k");
+    if ((chipsBought.length == 1) && (number < 4)) {
+        removeBlackListener();
+    }
+    if ((chipsBought.length == 2) && (chipsBought[0] == "k")) {
+        removeAllPileButtons();
+        turnOver = true;
+    }
+    if (chipsBought.length == 3) {
+        removeAllPileButtons();
+    }
+}
+
+function bluePileEvent() {
+    playerArray[turnIndex].coins["u"] += 1;
+    number = bluePile.querySelector("text").textContent;
+    bluePile.querySelector("text").innerHTML = number-1;
+    chipsBought.push("u");
+    if ((chipsBought.length == 1) && (number < 4)) {
+        removeBlueListener();
+    }
+    if ((chipsBought.length == 2) && (chipsBought[0] == "u")) {
+        removeAllPileButtons();
+        turnOver = true;
+    }
+    if (chipsBought.length == 3) {
+        removeAllPileButtons();
+    }
+}
+
+function redPileEvent() {
+    playerArray[turnIndex].coins["r"] += 1;
+    number = redPile.querySelector("text").textContent;
+    redPile.querySelector("text").innerHTML = number-1;
+    chipsBought.push("r");
+    if ((chipsBought.length == 1) && (number < 4)) {
+        removeRedListener();
+    }
+    if ((chipsBought.length == 2) && (chipsBought[0] == "r")) {
+        removeAllPileButtons();
+        turnOver = true;
+    }
+    if (chipsBought.length == 3) {
+        removeAllPileButtons();
+    }
+}
+
+function greenPileEvent() {
+    playerArray[turnIndex].coins["g"] += 1;
+    number = greenPile.querySelector("text").textContent;
+    greenPile.querySelector("text").innerHTML = number-1;
+    chipsBought.push("g");
+    if ((chipsBought.length == 1) && (number < 4)) {
+        removeGreenListener();
+    }
+    if ((chipsBought.length == 2) && (chipsBought[0] == "g")) {
+        removeAllPileButtons();
+        turnOver = true;
+    }
+    if (chipsBought.length == 3) {
+        removeAllPileButtons();
+    }
+}
+
+function whitePileEvent() {
+    playerArray[turnIndex].coins["w"] += 1;
+    number = whitePile.querySelector("text").textContent;
+    whitePile.querySelector("text").innerHTML = number-1;
+    chipsBought.push("w");
+    if ((chipsBought.length == 1) && (number < 4)) {
+        removeWhiteListener();
+    }
+    if ((chipsBought.length == 2) && (chipsBought[0] == "k")) {
+        removeAllPileButtons();
+        turnOver = true;
+    }
+    if (chipsBought.length == 3) {
+        removeAllPileButtons();
+    }
+}
+
+function addChipButtons() {
+    blackPile.disabled = false;
+    bluePile.disabled = false;
+    redPile.disabled = false;
+    greenPile.disabled = false;
+    whitePile.disabled = false;
+
+    // blackPile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["k"] += 1;
+    //     number = blackPile.querySelector("text").textContent;
+    //     blackPile.querySelector("text").innerHTML = number-1;
+    //     chipsBought.push("k");
+    //     if ((chipsBought.length == 1) && (number < 4)) {
+    //         blackPile.disabled = true;
+    //         blackPile.querySelector("circle").style.stroke = "none";
+    //     }
+    //     if ((chipsBought.length == 2) && (chipsBought[0] == "k")) {
+    //         blackPile.disabled = true;
+    //         turnOver = true;
+    //     }
+    // })
+    blackPile.addEventListener("click", blackPileEvent);
+    bluePile.addEventListener("click", bluePileEvent);
+    redPile.addEventListener("click", redPileEvent);
+    greenPile.addEventListener("click", greenPileEvent);
+    whitePile.addEventListener("click", whitePileEvent);
+
+
+    // bluePile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["u"] += 1;
+    //     number = bluePile.querySelector("text").textContent;
+    //     bluePile.querySelector("text").innerHTML = number-1;
+
+    // })
+    
+    // redPile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["r"] += 1;
+    //     number = redPile.querySelector("text").textContent;
+    //     redPile.querySelector("text").innerHTML = number-1;
+    // })
+
+    // greenPile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["g"] += 1;
+    //     number = greenPile.querySelector("text").textContent;
+    //     greenPile.querySelector("text").innerHTML = number-1;
+    // })
+
+    // whitePile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["w"] += 1;
+    //     number = whitePile.querySelector("text").textContent;
+    //     whitePile.querySelector("text").innerHTML = number-1;
+    // })
+}
+
+function removeChipButtons() {
     
 }
+
+
+
+
+
+
+takeTurn()
