@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        #main {
+        width: calc(100vw - 20px);   /* Make SVG 20px narrower than full screen */
+        height: calc(100vh - 40px);  /* Make SVG 40px shorter than full screen */
+        display: block;
+        }
+    </style>
+</head>
+<body>
+    <svg id = "main" x = "0px" y="0px" xmlns = "http://www.w3.org/2000/svg"
+        viewBox="0 0 100 50">
+    <g id="board" style="display: inline;">
+            <!-- <rect style="x:10; y:80; width:10px; height:10px"></rect> -->
+            <!-- <rect x="10" y="80" width="10" height = "10"></rect> -->
+        <rect id="11" x="20" y="0" width="6" height="10"></rect>
+        <rect id="12" x="30" y="0" width="6" height="10"></rect>
+        <rect id="13" x="40" y="0" width="6" height="10"></rect>
+        <rect id="14" x="50" y="0" width="6" height="10"></rect>
+
+        <rect id="21" x="20" y="12" width="6" height="10"></rect>
+        <rect id="22" x="30" y="12" width="6" height="10"></rect>
+        <rect id="23" x="40" y="12" width="6" height="10"></rect>
+        <rect id="24" x="50" y="12" width="6" height="10"></rect>
+
+        <rect id="31" x="20" y="24" width="6" height="10"></rect>
+        <rect id="32" x="30" y="24" width="6" height="10"></rect>
+        <rect id="33" x="40" y="24" width="6" height="10"></rect>
+        <rect id="34" x="50" y="24" width="6" height="10"></rect>
+
+        <!-- <circle id="yellowButton" cx="75" cy="25" r="3" fill="gold" stroke="black" stroke-width="0.25"></circle> -->
+
+        <g id = "whitePile">
+            <circle cx="70" cy = "4" r="3" fill ="white" stroke="black" stroke-width="0.25"></circle>
+            <text id="whitePileNumber" x="70" y="5" font-size="2">7</text>
+        </g>
+        <g id = "bluePile">
+            <circle cx="70" cy = "11" r="3" fill ="blue" stroke="black" stroke-width="0.25"></circle>
+            <text id="bluePileNumber" x="70" y="12" fill="white" font-size="2">7</text>
+        </g>
+        <g id = "greenPile">
+            <circle cx="70" cy = "18" r="3" fill ="green" stroke="black" stroke-width="0.25"></circle>
+            <text id="greebPileNumber" x="70" y="19" font-size="2">7</text>
+        </g>
+        <g id = "redPile">
+            <circle cx="70" cy = "25" r="3" fill ="red" stroke="black" stroke-width="0.25"></circle>
+            <text id="redPileNumber" x="70" y="26" font-size="2">7</text>
+        </g>
+        <g id = "blackPile">
+            <circle cx="70" cy = "32" r="3" fill ="black" stroke="black" stroke-width="0.25"></circle>
+            <text id="blackPileNumber" x="70" y="33" fill="white" font-size="2">7</text>
+        </g>
+        <g id = "yellowPile">
+            <circle cx="80" cy = "18" r="3" fill ="yellow" stroke="black" stroke-width="0.25"></circle>
+            <text id="yellowPileNumber" x="80" y="19" font-size="2">5</text>
+        </g>
+        <!-- <g id="whitePile">
+            <rect x="10" y="40" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="41" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="42" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="43" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="44" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="45" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="10" y="46" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
+        </g>
+
+        <g id="bluePile">
+            <rect x="15" y="40" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="41" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="42" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="43" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="44" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="45" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="15" y="46" width="4" height="1" fill="blue" stroke="grey" stroke-width="0.25"></rect>
+        </g>
+
+        <g id="greenPile">
+            <rect x="20" y="40" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="41" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="42" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="43" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="44" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="45" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="20" y="46" width="4" height="1" fill="green" stroke="grey" stroke-width="0.25"></rect>
+        </g> -->
+
+        <!-- <g id="redPile">
+            <rect x="25" y="40" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="41" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="42" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="43" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="44" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="45" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="25" y="46" width="4" height="1" fill="red" stroke="grey" stroke-width="0.25"></rect>
+        </g> -->
+
+        <!-- <g id="blackPile">
+            <rect x="30" y="40" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="41" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="42" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="43" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="44" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="45" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="30" y="46" width="4" height="1" fill="black" stroke="grey" stroke-width="0.25"></rect>
+        </g> -->
+
+        <!-- <g id="yellowPile">
+            <rect x="40" y="42" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="40" y="43" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="40" y="44" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="40" y="45" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
+            <rect x="40" y="46" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
+        </g> -->
+    </g>
+    </svg>
+    <button id="confirm">Confirm</button>
+    <script src="game.js"></script>
+    <!-- <script>
+
+    </script> -->
+</body>
+</html>
+ 

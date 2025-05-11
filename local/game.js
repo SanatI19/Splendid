@@ -1,0 +1,360 @@
+let board = document.getElementById("board")
+const deck1string = JSON.parse(localStorage.getItem("deck1"));
+const deck2string = JSON.parse(localStorage.getItem("deck2"));
+const deck3string = JSON.parse(localStorage.getItem("deck3"));
+
+let outDeck1string = JSON.parse(localStorage.getItem("outDeck1"));
+let outDeck2string = JSON.parse(localStorage.getItem("outDeck2"));
+let outDeck3string = JSON.parse(localStorage.getItem("outDeck3"));
+
+
+const bonusesString = JSON.parse(localStorage.getItem("bonuses"));
+const playerArrayString = JSON.parse(localStorage.getItem("playerArray"));
+
+const numPlayers = parseInt(localStorage.getItem("numPlayers"));
+
+let turnIndex = parseInt(localStorage.getItem("turnIndex"));
+
+function addObjects(obj1, obj2) {
+    const result = {};
+    const keys = Object.keys(obj1);
+    for (const key of keys) {
+        result[key] = obj1[key] + obj2[key]
+    }
+    return result
+ }
+
+function getTotalDiff(coins, cost) {
+    const result = 0;
+    const keys = Object.keys(obj1);
+    for (const key of keys) {
+        result += Math.max(cost[key] - coins[key], 0)
+    }
+    return result
+}
+
+// class Player {
+//     constructor(name, coins, cards, vp, gold) {
+//         this.name = name;
+//         this.coins = {"w": 0, "u": 0, "g":0, "r": 0, "k": 0};
+//         this.cards = {"w": 0, "u": 0, "g":0, "r": 0, "k": 0};
+//         this.vp = 0;
+//         this.gold = 0;
+//     }
+// }
+
+class Player {
+    constructor(name, coins, cards, vp, gold) {
+        this.name = name;
+        this.coins = coins;
+        this.cards = cards;
+        this.vp = vp;
+        this.gold = gold;
+    }
+}
+
+class Card {
+    constructor(color, vp, cost, deck) {
+        this.color = color;
+        this.vp = vp;
+        this.cost = cost;
+        this.deck = deck;
+    }
+}
+
+class Bonus {
+    constructor(cost, vp) {
+        this.cost = cost;
+        this.vp = vp;
+    }
+}
+
+function convertToCards(array) {
+    out = []
+    for (const x of array) {
+        out.push(new Card(x["color"], x["vp"], x["cost"], x["deck"]));
+    }
+    return out
+}
+
+function convertToPlayers(array) {
+    out = []
+    for (const x of array) {
+        out.push(new Player(x["name"], x["coins"], x["cards"], x["vp"], x["gold"]));
+    }
+    return out
+}
+
+function convertToBonuses(array) {
+    out = []
+    for (const x of array) {
+        out.push(new Bonus(x["cost"], x["vp"]));
+    }
+    return out
+}
+
+const deck1 = convertToCards(deck1string);
+const deck2 = convertToCards(deck2string);
+const deck3 = convertToCards(deck3string);
+const outDeck1 = convertToCards(outDeck1string);
+const outDeck2 = convertToCards(outDeck2string);
+const outDeck3 = convertToCards(outDeck3string);
+
+const bonuses = convertToBonuses(bonusesString);
+const playerArray = convertToPlayers(playerArrayString);
+
+function createPlayerArray(playerNames) {
+    let out = []
+    for (let i = 0; i < playerNames.length; i++) {
+        out.push(new Player(playerNames[i]));
+    }
+    return out
+}
+// console.log(playerNames)
+// const playerArray = createPlayerArray(playerNames);
+function getX(i) {
+    return i*10+20;
+}
+
+function getY(i) {
+    return i*12-12
+}
+
+function getColor(color) {
+    if (color == "w") {
+        return "white"
+    }
+    else if (color == "u") {
+        return "blue"
+    }
+    else if (color == "r") {
+        return "red"
+    }
+    else if (color == "g") {
+        return "green"
+    }
+    else if (color == "k") {
+        return "black"
+    }
+}
+
+
+function showAllDecks() {
+    for (let i = 1; i<=3; i++) {
+        showDeck(i)
+    }
+}
+function showDeck(i) {
+    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    let x = 10;
+    let y = getY(i);
+
+    // x = x+ 3.2;
+    // y += 3.2;
+    piece.setAttribute("x",x);
+    piece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    piece.setAttribute("height", 10);
+    piece.setAttribute("width", 6);
+    // token.setAttribute("fill",chip.color);
+    piece.setAttribute("stroke","black");
+    piece.setAttribute("stroke-width",0.15);
+    piece.setAttribute("fill", "grey")
+    piece.style.display = "inline";
+    container.appendChild(piece)
+
+    let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+    number.textContent = i;
+    number.setAttribute("x", x+2);
+    number.setAttribute("y", y+5);
+    number.setAttribute("font-size",5);
+    number.setAttribute("fill","silver");
+    number.setAttribute("stroke", "black")
+    number.setAttribute("stroke-width",0.1)
+    container.appendChild(number);
+
+    board.appendChild(container)
+}
+
+function placeCard(card, i) {
+    // let chips = document.getElementById("chips");
+    // let board = document.getElementById("board");
+    // const svgNS = "http://www.w3.org/2000/svg";
+    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    //console.log(chip);
+    let x = getX(i);
+    let y = getY(card.deck);
+
+    // x = x+ 3.2;
+    // y += 3.2;
+    piece.setAttribute("x",x);
+    piece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    piece.setAttribute("height", 10);
+    piece.setAttribute("width", 6);
+    // token.setAttribute("fill",chip.color);
+    piece.setAttribute("stroke","black");
+    piece.setAttribute("stroke-width",0.15);
+    piece.setAttribute("fill", "tan")
+    piece.style.display = "inline";
+    // token.style.borderRadius = "50%";
+
+    container.appendChild(piece);
+
+    let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    // number.textContent = getColor;
+    bigCircle.setAttribute("cx", x+4.5);
+    bigCircle.setAttribute("cy", y+1.25);
+    bigCircle.setAttribute("r",0.9)
+    bigCircle.setAttribute("stroke", "black")
+    bigCircle.setAttribute("stroke-width", 0.15)
+    // number.setAttribute("font-size",2);
+    bigCircle.setAttribute("fill",getColor(card.color));
+    container.appendChild(bigCircle);
+    
+    // let line = document.createElementNS()
+    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x);
+    line.setAttribute("y1", y+2.5);
+    line.setAttribute("x2", x+6);
+    line.setAttribute("y2", y+2.5);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", 0.2);
+    container.appendChild(line)
+
+    if (card.vp != 0) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = card.vp;
+        number.setAttribute("x", x+0.5);
+        number.setAttribute("y", y+2);
+        number.setAttribute("font-size",2.5);
+        number.setAttribute("fill","gold");
+        number.setAttribute("stroke", "black")
+        number.setAttribute("stroke-width",0.1)
+        container.appendChild(number);
+    }
+
+    let nonzero = {}
+    for (let x of Object.keys(card.cost)) {
+        if (card.cost[x] > 0) {
+            nonzero[x] = card.cost[x]
+        }
+    }
+    let nonzeroKeys = Object.keys(nonzero);
+    for (let j = 0; j < nonzeroKeys.length; j++) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = nonzero[nonzeroKeys[j]];
+        number.setAttribute("x", x+0.5);
+        number.setAttribute("y", y+4+ (7/nonzeroKeys.length)*j);
+        number.setAttribute("font-size",1.5);
+        number.setAttribute("fill","black");
+        container.appendChild(number);
+
+        let circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        // number.textContent = getColor;
+        circle.setAttribute("cx", x+2);
+        circle.setAttribute("cy", y+4+ (7/nonzeroKeys.length)*j-0.5);
+        circle.setAttribute("r",0.5)
+        // number.setAttribute("font-size",2);
+        circle.setAttribute("fill",getColor(nonzeroKeys[j]));
+        container.appendChild(circle);
+    }
+
+
+    board.appendChild(container);
+    // console.log(board)
+    // let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+    // number.textContent = chip.value;
+    // number.setAttribute("x",x-0.5);
+    // number.setAttribute("y",y+0.7);
+    // number.setAttribute("font-size",2.5);
+    // // console.log(chip.color);
+    // if (chip.color == "black" || chip.color == "blue" || chip.color == "purple") {
+    //     number.setAttribute("fill","white");
+    // }
+    // else{
+    //     number.setAttribute("fill","black");
+    // }
+    // number.style.fill = "white";
+    // number.style.textShadow = "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black";
+    // number.style.textShadow = "-1.5px -1.5px 0 black, 1.5px -1.5px 0 black, -1.5px 1.5px 0 black, 1.5px 1.5px 0 black";
+    // board.appendChild(number);
+    // complete
+    //places the chip on the board
+}
+
+function initiallyPlaceCards() {
+    for (let i = 0; i < 4; i++) {
+        placeCard(outDeck1[i], i);
+        placeCard(outDeck2[i], i);
+        placeCard(outDeck3[i], i);
+    }
+}
+
+showAllDecks()
+initiallyPlaceCards()
+
+const rect11 = document.getElementById("11");
+const rect12 = document.getElementById("12");
+const rect13 = document.getElementById("13");
+const rect14 = document.getElementById("14");
+
+const rect21 = document.getElementById("21");
+const rect22 = document.getElementById("22");
+const rect23 = document.getElementById("23");
+const rect24 = document.getElementById("24");
+
+const rect31 = document.getElementById("31");
+const rect32 = document.getElementById("32");
+const rect33 = document.getElementById("33");
+const rect34 = document.getElementById("34");
+
+const yellowPile = document.getElementById("yellowPile");
+
+function addHighlightsAll() {
+    rect11.style.stroke = "yellow";
+    rect12.style.stroke = "yellow";
+    rect13.style.stroke = "yellow";
+    rect14.style.stroke = "yellow";
+    rect21.style.stroke = "yellow";
+    rect22.style.stroke = "yellow";
+    rect23.style.stroke = "yellow";
+    rect24.style.stroke = "yellow";
+    rect31.style.stroke = "yellow";
+    rect32.style.stroke = "yellow";
+    rect33.style.stroke = "yellow";
+    rect34.style.stroke = "yellow";
+}
+
+
+yellowPile.addEventListener(('click'), () => {
+    rect11.addEventListener("click", handleReserve);
+    rect12.addEventListener("click", handleReserve);
+    rect13.addEventListener("click", handleReserve);
+    rect14.addEventListener("click", handleReserve);
+    rect21.addEventListener("click", handleReserve);
+    rect22.addEventListener("click", handleReserve);
+    rect23.addEventListener("click", handleReserve);
+    rect24.addEventListener("click", handleReserve);    
+    rect31.addEventListener("click", handleReserve);
+    rect32.addEventListener("click", handleReserve);
+    rect33.addEventListener("click", handleReserve);
+    rect34.addEventListener("click", handleReserve);
+    addHighlightsAll()
+})
+// placeCard(outDeck3[0],0)
+
+// console.log(outDeck2)
+function handleReserve(event) {
+    // LETS DO THIS LAST SINCE IT IS ANNOYING AS FREAK
+}
+
+function handleCardClick(event) {
+
+}
+
+function takeTurn() {
+    
+}
