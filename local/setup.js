@@ -14,6 +14,7 @@ class Player {
         this.cards = {"w": 0, "u": 0, "g":0, "r": 0, "k": 0};
         this.vp = 0;
         this.gold = 0;
+        this.reserved = [];
     }
 }
 
@@ -299,6 +300,7 @@ startGameButton.addEventListener(('click'), () => {
     console.log(playerArray)
     localStorage.setItem("playerArray", JSON.stringify(shuffle(playerArray)));
     localStorage.setItem("turnIndex", 0);
+    localStorage.setItem("goldVal",5)
     localStorage.setItem("pileVals", JSON.stringify(pileVals))
     window.location.href = "game.html";
     // setTimeout(window.location.href = "game.html", 2000);

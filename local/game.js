@@ -8,6 +8,7 @@ let outDeck2string = JSON.parse(localStorage.getItem("outDeck2"));
 let outDeck3string = JSON.parse(localStorage.getItem("outDeck3"));
 
 let pileVals = JSON.parse(localStorage.getItem("pileVals"))
+let goldVal = parseInt(localStorage.getItem("goldVal"))
 // console.log(pileVals)
 // console.log(pileVals["k"])
 
@@ -253,12 +254,13 @@ function checkAffordable(player, cardCost) {
 // }
 
 class Player {
-    constructor(name, coins, cards, vp, gold) {
+    constructor(name, coins, cards, vp, gold, reserved) {
         this.name = name;
         this.coins = coins;
         this.cards = cards;
         this.vp = vp;
         this.gold = gold;
+        this.reserved = reserved;
     }
 }
 
@@ -289,7 +291,7 @@ function convertToCards(array) {
 function convertToPlayers(array) {
     out = []
     for (const x of array) {
-        out.push(new Player(x["name"], x["coins"], x["cards"], x["vp"], x["gold"]));
+        out.push(new Player(x["name"], x["coins"], x["cards"], x["vp"], x["gold"], x["reserved"]));
     }
     return out
 }
@@ -497,6 +499,24 @@ function placeCard(card, i) {
     //places the chip on the board
 }
 
+function getBonusX(i) {
+    if (i < 3) {
+        return 60
+    }
+    else {
+        return 65
+    }
+}
+
+function getBonusY(i) {
+    if (i < 3) {
+        return 10+i*10
+    }
+    else {
+        return 15+(4-i)*10
+    }
+}
+
 function placeBonus(bonus, i) {
 // let chips = document.getElementById("chips");
     // let board = document.getElementById("board");
@@ -505,8 +525,8 @@ function placeBonus(bonus, i) {
     // container.setAttribute("z-index",0);
     let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     //console.log(chip);
-    let x = 60;
-    let y = 10+i*10;
+    let x = getBonusX(i);
+    let y = getBonusY(i);
 
     // x = x+ 3.2;
     // y += 3.2;
@@ -662,10 +682,10 @@ function initTables() {
         if (i == 1) {
             initPlayer2();
         }
-        if (i == 3) {
+        if (i == 2) {
             initPlayer3();
         }
-        if (i == 4) {
+        if (i == 3) {
             initPlayer4();
         }
     }
@@ -686,6 +706,7 @@ function initPlayer1() {
     p1blackCardCount.style.display = "none";
     p1goldCard.style.display = "none";
     p1goldCardCount.style.display = "none";
+    updatePlayer1();
 }
 
 function updatePlayer1() {
@@ -720,6 +741,11 @@ function updatePlayer1() {
         p1blackCardCount.innerHTML = playerArray[0].cards["w"];
         p1blackCard.style.display = "inline";
         p1blackCardCount.style.display = "inline";
+    }
+    if (playerArray[0].reserved.length > 0) {
+        p1goldCardCount.innerHTML = playerArray[0].reserved.length;
+        p1goldCard.style.display = "inline";
+        p1goldCardCount.style.display = "inline";
     }
 }
 
@@ -756,6 +782,11 @@ function updatePlayer2() {
         p2blackCard.style.display = "inline";
         p2blackCardCount.style.display = "inline";
     }
+    if (playerArray[1].reserved.length > 0) {
+        p2goldCardCount.innerHTML = playerArray[1].reserved.length;
+        p2goldCard.style.display = "inline";
+        p2goldCardCount.style.display = "inline";
+    }
 }
 function updatePlayer3() {
     p3white.innerHTML = playerArray[2].coins["w"];
@@ -789,6 +820,11 @@ function updatePlayer3() {
         p3blackCardCount.innerHTML = playerArray[2].cards["w"];
         p3blackCard.style.display = "inline";
         p3blackCardCount.style.display = "inline";
+    }
+    if (playerArray[2].reserved.length > 0) {
+        p3goldCardCount.innerHTML = playerArray[2].reserved.length;
+        p3goldCard.style.display = "inline";
+        p3goldCardCount.style.display = "inline";
     }
 }
 function updatePlayer4() {
@@ -824,6 +860,11 @@ function updatePlayer4() {
         p4blackCard.style.display = "inline";
         p4blackCardCount.style.display = "inline";
     }
+    if (playerArray[3].reserved.length > 0) {
+        p4goldCardCount.innerHTML = playerArray[3].reserved.length;
+        p4goldCard.style.display = "inline";
+        p4goldCardCount.style.display = "inline";
+    }
 }
 
 function initPlayer2() {
@@ -841,6 +882,7 @@ function initPlayer2() {
     p2blackCardCount.style.display = "none";
     p2goldCard.style.display = "none";
     p2goldCardCount.style.display = "none";
+    updatePlayer2()
 }
 
 function initPlayer3() {
@@ -858,6 +900,7 @@ function initPlayer3() {
     p3blackCardCount.style.display = "none";
     p3goldCard.style.display = "none";
     p3goldCardCount.style.display = "none";
+    updatePlayer3()
 }
 
 function initPlayer4() {
@@ -875,6 +918,7 @@ function initPlayer4() {
     p4blackCardCount.style.display = "none";
     p4goldCard.style.display = "none";
     p4goldCardCount.style.display = "none";
+    updatePlayer4()
 }
 
 // function updateAllPlayers() {
@@ -904,19 +948,34 @@ function updateCurrentPlayer(i) {
     }
 }
 
+function removeAllPlayerHighlights() {
+    p1containerRect.style.stroke = "black";
+    p1containerRect.setAttribute("stroke-width", 0.1);
+    p2containerRect.style.stroke = "black";
+    p2containerRect.setAttribute("stroke-width", 0.1);
+    p3containerRect.style.stroke = "black";
+    p3containerRect.setAttribute("stroke-width", 0.1);
+    p4containerRect.style.stroke = "black";
+    p4containerRect.setAttribute("stroke-width", 0.1);
+}
+
 function highlightCurrentPlayer(i) {
+    removeAllPlayerHighlights();
     if (i == 0) {
         p1containerRect.style.stroke = "#90EE90";
-        p1containerRect.style.stroke-width = "1";
+        p1containerRect.setAttribute("stroke-width", 0.5);
     }
     if (i == 1) {
         p2containerRect.style.stroke = "#90EE90";
+        p2containerRect.setAttribute("stroke-width", 0.5);
     }
     if (i == 2) {
-        p3containerRect.style.stroke = "#90EE90";    
+        p3containerRect.style.stroke = "#90EE90";
+        p3containerRect.setAttribute("stroke-width", 0.5);  
     }
     if (i == 3) {
         p4containerRect.style.stroke = "#90EE90";
+        p4containerRect.setAttribute("stroke-width", 0.5);
             
     }
 }
@@ -962,28 +1021,173 @@ function addHighlightsAllCards() {
     rect34.style.stroke = "yellow";
 }
 
-
-yellowPile.addEventListener(('click'), () => {
-    rect11.addEventListener("click", handleReserve);
-    rect12.addEventListener("click", handleReserve);
-    rect13.addEventListener("click", handleReserve);
-    rect14.addEventListener("click", handleReserve);
-    rect21.addEventListener("click", handleReserve);
-    rect22.addEventListener("click", handleReserve);
-    rect23.addEventListener("click", handleReserve);
-    rect24.addEventListener("click", handleReserve);    
-    rect31.addEventListener("click", handleReserve);
-    rect32.addEventListener("click", handleReserve);
-    rect33.addEventListener("click", handleReserve);
-    rect34.addEventListener("click", handleReserve);
-    addHighlightsAllCards()
-})
-// placeCard(outDeck3[0],0)
-
-// console.log(outDeck2)
-function handleReserve(event) {
-    // LETS DO THIS LAST SINCE IT IS ANNOYING AS FREAK
+function addYellowEvent() {
+    yellowPile.addEventListener("click", yellowPileEvent);
 }
+
+function removeYellowListener() {
+    yellowPile.querySelector("circle").style.stroke = "none";
+    yellowPile.removeEventListener("click", yellowPileEvent);
+}
+
+function yellowPileEvent() {
+    playerArray[turnIndex].gold += 1
+    goldVal -= 1;
+    removeAllCardButtons();
+    removeAllPileButtons();
+    yellowPile.querySelector("text").innerHTML = goldVal;
+    updateCurrentPlayer(turnIndex)
+    rect11.addEventListener("click", handleReserve11);
+    rect12.addEventListener("click", handleReserve12);
+    rect13.addEventListener("click", handleReserve13);
+    rect14.addEventListener("click", handleReserve14);
+    rect21.addEventListener("click", handleReserve21);
+    rect22.addEventListener("click", handleReserve22);
+    rect23.addEventListener("click", handleReserve23);
+    rect24.addEventListener("click", handleReserve24);    
+    rect31.addEventListener("click", handleReserve31);
+    rect32.addEventListener("click", handleReserve32);
+    rect33.addEventListener("click", handleReserve33);
+    rect34.addEventListener("click", handleReserve34);
+    addHighlightsAllCards()
+    removeYellowListener()
+}
+// placeCard(outDeck3[0],0)
+function removeAllReserves() {
+    rect11.removeEventListener("click", handleReserve11);
+    rect11.style.stroke = "none";
+    rect12.removeEventListener("click", handleReserve12);
+    rect12.style.stroke = "none";
+    rect13.removeEventListener("click", handleReserve13);
+    rect13.style.stroke = "none";
+    rect14.removeEventListener("click", handleReserve14);
+    rect14.style.stroke = "none";
+    rect21.removeEventListener("click", handleReserve21);
+    rect21.style.stroke = "none";
+    rect22.removeEventListener("click", handleReserve22);
+    rect22.style.stroke = "none";
+    rect23.removeEventListener("click", handleReserve23);
+    rect23.style.stroke = "none";
+    rect24.removeEventListener("click", handleReserve24);
+    rect24.style.stroke = "none";    
+    rect31.removeEventListener("click", handleReserve31);
+    rect31.style.stroke = "none";
+    rect32.removeEventListener("click", handleReserve32);
+    rect32.style.stroke = "none";
+    rect33.removeEventListener("click", handleReserve33);
+    rect33.style.stroke = "none";
+    rect34.removeEventListener("click", handleReserve34);
+    rect34.style.stroke = "none";
+}
+// console.log(outDeck2)
+function handleReserve11() {
+    playerArray[turnIndex].reserved.push(outDeck1[0]);
+    outDeck1[0] = deck1.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve12() {
+    playerArray[turnIndex].reserved.push(outDeck1[1]);
+    outDeck1[1] = deck1.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve13() {
+    playerArray[turnIndex].reserved.push(outDeck1[2]);
+    outDeck1[2] = deck1.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve14() {
+    playerArray[turnIndex].reserved.push(outDeck1[3]);
+    outDeck1[3] = deck1.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve21() {
+    playerArray[turnIndex].reserved.push(outDeck2[0]);
+    outDeck2[0] = deck2.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve22() {
+    playerArray[turnIndex].reserved.push(outDeck2[1]);
+    outDeck2[1] = deck2.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve23() {
+    playerArray[turnIndex].reserved.push(outDeck2[2]);
+    outDeck2[2] = deck2.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    turnOver();
+}
+function handleReserve24() {
+    playerArray[turnIndex].reserved.push(outDeck2[3]);
+    outDeck2[3] = deck2.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve31() {
+    playerArray[turnIndex].reserved.push(outDeck3[0]);
+    outDeck3[0] = deck3.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve32() {
+    playerArray[turnIndex].reserved.push(outDeck3[1]);
+    outDeck3[1] = deck3.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve33() {
+    playerArray[turnIndex].reserved.push(outDeck3[2]);
+    outDeck3[2] = deck3.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+function handleReserve34() {
+    playerArray[turnIndex].reserved.push(outDeck3[3]);
+    outDeck3[3] = deck3.pop();
+    removeCards();
+    placeAllCards();
+    removeAllReserves();
+    updateCurrentPlayer(turnIndex)
+    turnOver();
+}
+
 
 function addHighlightsAllChips() {
     blackPile.querySelector("circle").style.stroke = "yellow";
@@ -1009,6 +1213,7 @@ function takeTurn() {
     // console.log(player)
     addHighlightsAllChips();
     addChipButtons();
+    addYellowEvent();
     // addHighlightsAllCardsBlue();
     addValidCardButtons(player);
 }
@@ -1312,8 +1517,10 @@ function blackPileEvent() {
     playerArray[turnIndex].coins["k"] += 1;
     number = blackPile.querySelector("text").textContent;
     blackPile.querySelector("text").innerHTML = number-1;
+    pileVals["k"] -= 1;
     chipsBought.push("k");
     updateCurrentPlayer(turnIndex)
+    removeYellowListener();
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlackListener();
     }
@@ -1340,7 +1547,9 @@ function bluePileEvent() {
     playerArray[turnIndex].coins["u"] += 1;
     number = bluePile.querySelector("text").textContent;
     bluePile.querySelector("text").innerHTML = number-1;
+    pileVals["u"] -= 1;
     chipsBought.push("u");
+    removeYellowListener();
     updateCurrentPlayer(turnIndex)
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlueListener();
@@ -1369,6 +1578,8 @@ function redPileEvent() {
     number = redPile.querySelector("text").textContent;
     redPile.querySelector("text").innerHTML = number-1;
     chipsBought.push("r");
+    removeYellowListener();
+    pileVals["r"] -= 1;
     updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeRedListener();
@@ -1397,6 +1608,8 @@ function greenPileEvent() {
     number = greenPile.querySelector("text").textContent;
     greenPile.querySelector("text").innerHTML = number-1;
     chipsBought.push("g");
+    removeYellowListener();
+    pileVals["g"] -= 1;
     updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeGreenListener();
@@ -1425,6 +1638,8 @@ function whitePileEvent() {
     number = whitePile.querySelector("text").textContent;
     whitePile.querySelector("text").innerHTML = number-1;
     chipsBought.push("w");
+    removeYellowListener();
+    pileVals["w"] -= 1;
     updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeWhiteListener();
@@ -1446,6 +1661,8 @@ function whitePileEvent() {
         turnOver();
     }
 }
+
+// NEED TO HANDLE CASE WHERE THERE IS NOTHING LEFT TO BUY
 
 function addChipButtons() {
     blackPile.disabled = false;
@@ -1474,6 +1691,21 @@ function addChipButtons() {
     greenPile.addEventListener("click", greenPileEvent);
     whitePile.addEventListener("click", whitePileEvent);
 
+    if (pileVals["k"] == 0) {
+        removeBlackListener()
+    }
+    if (pileVals["u"] == 0) {
+        removeBlueListener()
+    }
+    if (pileVals["g"] == 0) {
+        removeGreenListener()
+    }
+    if (pileVals["r"] == 0) {
+        removeRedListener()
+    }
+    if (pileVals["w"] == 0) {
+        removeWhiteListener()
+    }
 
     // bluePile.addEventListener('click', () => {
     //     playerArray[turnIndex].coins["u"] += 1;
@@ -1528,7 +1760,8 @@ function turnOver() {
         chipsBought = [];
         setTimeout(takeTurn,2000);
         // removeCards();
-        console.log(playerArray)
+        // console.log(playerArray)
+        // console.log(pileVals)
     }
 
 }
@@ -1545,6 +1778,8 @@ function storeThings() {
 
     localStorage.setItem("playerArray", JSON.stringify(playerArray))
     localStorage.setItem("turnIndex", turnIndex)
+
+    localStorage.setItem("goldVal", goldVal)
     
     localStorage.setItem("pileVals", JSON.stringify(pileVals))
 }
