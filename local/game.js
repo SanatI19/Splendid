@@ -37,6 +37,108 @@ const greenPile = document.getElementById("greenPile");
 const redPile = document.getElementById("redPile");
 const blackPile = document.getElementById("blackPile");
 
+// const p1container = document.getElementById("player1container");
+// const p2container = document.getElementById("player2container");
+// const p3container = document.getElementById("player3container");
+// const p4container = document.getElementById("player4container");
+
+const p1container = document.getElementById("player1");
+const p2container = document.getElementById("player2");
+const p3container = document.getElementById("player3");
+const p4container = document.getElementById("player4");
+
+const p1name = document.getElementById("player1name");
+const p2name = document.getElementById("player2name")
+const p3name = document.getElementById("player3name")
+const p4name = document.getElementById("player4name")
+
+const p1vp = document.getElementById("player1vp");
+const p2vp = document.getElementById("player2vp");
+const p3vp = document.getElementById("player3vp");
+const p4vp = document.getElementById("player4vp");
+
+const p1white = document.getElementById("p1white");
+const p2white = document.getElementById("p2white");
+const p3white = document.getElementById("p3white");
+const p4white = document.getElementById("p4white");
+
+const p1blue = document.getElementById("p1blue");
+const p2blue = document.getElementById("p2blue");
+const p3blue = document.getElementById("p3blue");
+const p4blue = document.getElementById("p4blue");
+
+const p1green = document.getElementById("p1green");
+const p2green = document.getElementById("p2green");
+const p3green = document.getElementById("p3green");
+const p4green = document.getElementById("p4green");
+
+const p1red = document.getElementById("p1red");
+const p2red = document.getElementById("p2red");
+const p3red = document.getElementById("p3red");
+const p4red = document.getElementById("p4red");
+
+const p1black = document.getElementById("p1black");
+const p2black = document.getElementById("p2black");
+const p3black = document.getElementById("p3black");
+const p4black = document.getElementById("p4black");
+
+const p1gold = document.getElementById("p1yellow");
+const p2gold = document.getElementById("p2yellow");
+const p3gold = document.getElementById("p3yellow");
+const p4gold = document.getElementById("p4yellow");
+
+const p1whiteCard = document.getElementById("p1whiteCard");
+const p1whiteCardCount = document.getElementById("p1whiteCardCount");
+const p1blueCard = document.getElementById("p1blueCard");
+const p1blueCardCount = document.getElementById("p1blueCardCount");
+const p1greenCard = document.getElementById("p1greenCard");
+const p1greenCardCount = document.getElementById("p1greenCardCount");
+const p1redCard = document.getElementById("p1redCard");
+const p1redCardCount = document.getElementById("p1redCardCount");
+const p1blackCard = document.getElementById("p1blackCard");
+const p1blackCardCount = document.getElementById("p1blackCardCount");
+const p1goldCard = document.getElementById("p1goldCard");
+const p1goldCardCount = document.getElementById("p1goldCardCount");
+
+const p2whiteCard = document.getElementById("p2whiteCard");
+const p2whiteCardCount = document.getElementById("p2whiteCardCount");
+const p2blueCard = document.getElementById("p2blueCard");
+const p2blueCardCount = document.getElementById("p2blueCardCount");
+const p2greenCard = document.getElementById("p2greenCard");
+const p2greenCardCount = document.getElementById("p2greenCardCount");
+const p2redCard = document.getElementById("p2redCard");
+const p2redCardCount = document.getElementById("p2redCardCount");
+const p2blackCard = document.getElementById("p2blackCard");
+const p2blackCardCount = document.getElementById("p2blackCardCount");
+const p2goldCard = document.getElementById("p2goldCard");
+const p2goldCardCount = document.getElementById("p2goldCardCount");
+
+const p3whiteCard = document.getElementById("p3whiteCard");
+const p3whiteCardCount = document.getElementById("p3whiteCardCount");
+const p3blueCard = document.getElementById("p3blueCard");
+const p3blueCardCount = document.getElementById("p3blueCardCount");
+const p3greenCard = document.getElementById("p3greenCard");
+const p3greenCardCount = document.getElementById("p3greenCardCount");
+const p3redCard = document.getElementById("p3redCard");
+const p3redCardCount = document.getElementById("p3redCardCount");
+const p3blackCard = document.getElementById("p3blackCard");
+const p3blackCardCount = document.getElementById("p3blackCardCount");
+const p3goldCard = document.getElementById("p3goldCard");
+const p3goldCardCount = document.getElementById("p3goldCardCount");
+
+const p4whiteCard = document.getElementById("p4whiteCard");
+const p4whiteCardCount = document.getElementById("p4whiteCardCount");
+const p4blueCard = document.getElementById("p4blueCard");
+const p4blueCardCount = document.getElementById("p4blueCardCount");
+const p4greenCard = document.getElementById("p4greenCard");
+const p4greenCardCount = document.getElementById("p4greenCardCount");
+const p4redCard = document.getElementById("p4redCard");
+const p4redCardCount = document.getElementById("p4redCardCount");
+const p4blackCard = document.getElementById("p4blackCard");
+const p4blackCardCount = document.getElementById("p4blackCardCount");
+const p4goldCard = document.getElementById("p4goldCard");
+const p4goldCardCount = document.getElementById("p4goldCardCount");
+
 
 const bonusesString = JSON.parse(localStorage.getItem("bonuses"));
 const playerArrayString = JSON.parse(localStorage.getItem("playerArray"));
@@ -220,7 +322,7 @@ function createPlayerArray(playerNames) {
 // console.log(playerNames)
 // const playerArray = createPlayerArray(playerNames);
 function getX(i) {
-    return i*7+27;
+    return i*7+29;
 }
 
 function getY(i) {
@@ -254,7 +356,7 @@ function showAllDecks() {
 function showDeck(i) {
     let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
     let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    let x = 20;
+    let x = 22;
     let y = getY(i);
 
     // x = x+ 3.2;
@@ -551,10 +653,97 @@ function initCoinPiles(pileVals) {
     greenPile.querySelector("text").innerHTML = pileVals["g"];
     whitePile.querySelector("text").innerHTML = pileVals["w"];
 }
+
+function initTables() {
+    for (let i = 0; i < playerArray.length; i++) {
+        if (i == 0) {
+            initPlayer1();
+        }
+        if (i == 1) {
+            initPlayer2();
+        }
+        if (i == 3) {
+            initPlayer3();
+        }
+        if (i == 4) {
+            initPlayer4();
+        }
+    }
+}
+
+function initPlayer1() {
+    p1container.style.display = "inline";
+    p1name.innerHTML = playerArray[0].name;
+    p1whiteCard.style.display = "none";
+    p1whiteCardCount.style.display = "none";
+    p1blueCard.style.display = "none";
+    p1blueCardCount.style.display = "none";
+    p1greenCard.style.display = "none";
+    p1greenCardCount.style.display = "none";
+    p1redCard.style.display = "none";
+    p1redCardCount.style.display = "none";
+    p1blackCard.style.display = "none";
+    p1blackCardCount.style.display = "none";
+    p1goldCard.style.display = "none";
+    p1goldCardCount.style.display = "none";
+}
+
+function initPlayer2() {
+    p2container.style.display = "inline";
+    p2name.innerHTML = playerArray[1].name;
+    p2whiteCard.style.display = "none";
+    p2whiteCardCount.style.display = "none";
+    p2blueCard.style.display = "none";
+    p2blueCardCount.style.display = "none";
+    p2greenCard.style.display = "none";
+    p2greenCardCount.style.display = "none";
+    p2redCard.style.display = "none";
+    p2redCardCount.style.display = "none";
+    p2blackCard.style.display = "none";
+    p2blackCardCount.style.display = "none";
+    p2goldCard.style.display = "none";
+    p2goldCardCount.style.display = "none";
+}
+
+function initPlayer3() {
+    p3container.style.display = "inline";
+    p3name.innerHTML = playerArray[2].name;
+    p3whiteCard.style.display = "none";
+    p3whiteCardCount.style.display = "none";
+    p3blueCard.style.display = "none";
+    p3blueCardCount.style.display = "none";
+    p3greenCard.style.display = "none";
+    p3greenCardCount.style.display = "none";
+    p3redCard.style.display = "none";
+    p3redCardCount.style.display = "none";
+    p3blackCard.style.display = "none";
+    p3blackCardCount.style.display = "none";
+    p3goldCard.style.display = "none";
+    p3goldCardCount.style.display = "none";
+}
+
+function initPlayer4() {
+    p4container.style.display = "inline";
+    p4name.innerHTML = playerArray[3].name;
+    p4whiteCard.style.display = "none";
+    p4whiteCardCount.style.display = "none";
+    p4blueCard.style.display = "none";
+    p4blueCardCount.style.display = "none";
+    p4greenCard.style.display = "none";
+    p4greenCardCount.style.display = "none";
+    p4redCard.style.display = "none";
+    p4redCardCount.style.display = "none";
+    p4blackCard.style.display = "none";
+    p4blackCardCount.style.display = "none";
+    p4goldCard.style.display = "none";
+    p4goldCardCount.style.display = "none";
+}
+
 showAllDecks()
 placeAllCards()
 initCoinPiles(pileVals)
 placeAllBonuses()
+initTables()
 
 
 const yellowPile = document.getElementById("yellowPile");
