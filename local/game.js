@@ -37,10 +37,10 @@ const greenPile = document.getElementById("greenPile");
 const redPile = document.getElementById("redPile");
 const blackPile = document.getElementById("blackPile");
 
-// const p1container = document.getElementById("player1container");
-// const p2container = document.getElementById("player2container");
-// const p3container = document.getElementById("player3container");
-// const p4container = document.getElementById("player4container");
+const p1containerRect = document.getElementById("player1container");
+const p2containerRect = document.getElementById("player2container");
+const p3containerRect = document.getElementById("player3container");
+const p4containerRect = document.getElementById("player4container");
 
 const p1container = document.getElementById("player1");
 const p2container = document.getElementById("player2");
@@ -688,6 +688,144 @@ function initPlayer1() {
     p1goldCardCount.style.display = "none";
 }
 
+function updatePlayer1() {
+    p1white.innerHTML = playerArray[0].coins["w"];
+    p1blue.innerHTML = playerArray[0].coins["u"];
+    p1green.innerHTML = playerArray[0].coins["g"];
+    p1red.innerHTML = playerArray[0].coins["r"];
+    p1black.innerHTML = playerArray[0].coins["k"];
+    p1gold.innerHTML = playerArray[0].gold;
+
+    if (playerArray[0].cards["w"] > 0) {
+        p1whiteCardCount.innerHTML = playerArray[0].cards["w"];
+        p1whiteCard.style.display = "inline";
+        p1whiteCardCount.style.display = "inline";
+    }
+    if (playerArray[0].cards["u"] > 0) {
+        p1blueCardCount.innerHTML = playerArray[0].cards["u"];
+        p1blueCard.style.display = "inline";
+        p1blueCardCount.style.display = "inline";
+    }
+    if (playerArray[0].cards["g"] > 0) {
+        p1greenCardCount.innerHTML = playerArray[0].cards["g"];
+        p1greenCard.style.display = "inline";
+        p1greenCardCount.style.display = "inline";
+    }
+    if (playerArray[0].cards["r"] > 0) {
+        p1redCardCount.innerHTML = playerArray[0].cards["r"];
+        p1redCard.style.display = "inline";
+        p1redCardCount.style.display = "inline";
+    }
+    if (playerArray[0].cards["k"] > 0) {
+        p1blackCardCount.innerHTML = playerArray[0].cards["w"];
+        p1blackCard.style.display = "inline";
+        p1blackCardCount.style.display = "inline";
+    }
+}
+
+function updatePlayer2() {
+    p2white.innerHTML = playerArray[1].coins["w"];
+    p2blue.innerHTML = playerArray[1].coins["u"];
+    p2green.innerHTML = playerArray[1].coins["g"];
+    p2red.innerHTML = playerArray[1].coins["r"];
+    p2black.innerHTML = playerArray[1].coins["k"];
+    p2gold.innerHTML = playerArray[1].gold;
+
+    if (playerArray[1].cards["w"] > 0) {
+        p2whiteCardCount.innerHTML = playerArray[1].cards["w"];
+        p2whiteCard.style.display = "inline";
+        p2whiteCardCount.style.display = "inline";
+    }
+    if (playerArray[1].cards["u"] > 0) {
+        p2blueCardCount.innerHTML = playerArray[1].cards["u"];
+        p2blueCard.style.display = "inline";
+        p2blueCardCount.style.display = "inline";
+    }
+    if (playerArray[1].cards["g"] > 0) {
+        p2greenCardCount.innerHTML = playerArray[1].cards["g"];
+        p2greenCard.style.display = "inline";
+        p2greenCardCount.style.display = "inline";
+    }
+    if (playerArray[1].cards["r"] > 0) {
+        p2redCardCount.innerHTML = playerArray[1].cards["r"];
+        p2redCard.style.display = "inline";
+        p2redCardCount.style.display = "inline";
+    }
+    if (playerArray[1].cards["k"] > 0) {
+        p2blackCardCount.innerHTML = playerArray[1].cards["w"];
+        p2blackCard.style.display = "inline";
+        p2blackCardCount.style.display = "inline";
+    }
+}
+function updatePlayer3() {
+    p3white.innerHTML = playerArray[2].coins["w"];
+    p3blue.innerHTML = playerArray[2].coins["u"];
+    p3green.innerHTML = playerArray[2].coins["g"];
+    p3red.innerHTML = playerArray[2].coins["r"];
+    p3black.innerHTML = playerArray[2].coins["k"];
+    p3gold.innerHTML = playerArray[2].gold;
+
+    if (playerArray[2].cards["w"] > 0) {
+        p3whiteCardCount.innerHTML = playerArray[2].cards["w"];
+        p3whiteCard.style.display = "inline";
+        p3whiteCardCount.style.display = "inline";
+    }
+    if (playerArray[2].cards["u"] > 0) {
+        p3blueCardCount.innerHTML = playerArray[2].cards["u"];
+        p3blueCard.style.display = "inline";
+        p3blueCardCount.style.display = "inline";
+    }
+    if (playerArray[2].cards["g"] > 0) {
+        p3greenCardCount.innerHTML = playerArray[2].cards["g"];
+        p3greenCard.style.display = "inline";
+        p3greenCardCount.style.display = "inline";
+    }
+    if (playerArray[2].cards["r"] > 0) {
+        p3redCardCount.innerHTML = playerArray[2].cards["r"];
+        p3redCard.style.display = "inline";
+        p3redCardCount.style.display = "inline";
+    }
+    if (playerArray[2].cards["k"] > 0) {
+        p3blackCardCount.innerHTML = playerArray[2].cards["w"];
+        p3blackCard.style.display = "inline";
+        p3blackCardCount.style.display = "inline";
+    }
+}
+function updatePlayer4() {
+    p4white.innerHTML = playerArray[3].coins["w"];
+    p4blue.innerHTML = playerArray[3].coins["u"];
+    p4green.innerHTML = playerArray[3].coins["g"];
+    p4red.innerHTML = playerArray[3].coins["r"];
+    p4black.innerHTML = playerArray[3].coins["k"];
+    p4gold.innerHTML = playerArray[3].gold;
+
+    if (playerArray[3].cards["w"] > 0) {
+        p4whiteCardCount.innerHTML = playerArray[3].cards["w"];
+        p4whiteCard.style.display = "inline";
+        p4whiteCardCount.style.display = "inline";
+    }
+    if (playerArray[3].cards["u"] > 0) {
+        p4blueCardCount.innerHTML = playerArray[3].cards["u"];
+        p4blueCard.style.display = "inline";
+        p4blueCardCount.style.display = "inline";
+    }
+    if (playerArray[3].cards["g"] > 0) {
+        p4greenCardCount.innerHTML = playerArray[3].cards["g"];
+        p4greenCard.style.display = "inline";
+        p4greenCardCount.style.display = "inline";
+    }
+    if (playerArray[3].cards["r"] > 0) {
+        p4redCardCount.innerHTML = playerArray[3].cards["r"];
+        p4redCard.style.display = "inline";
+        p4redCardCount.style.display = "inline";
+    }
+    if (playerArray[3].cards["k"] > 0) {
+        p4blackCardCount.innerHTML = playerArray[3].cards["w"];
+        p4blackCard.style.display = "inline";
+        p4blackCardCount.style.display = "inline";
+    }
+}
+
 function initPlayer2() {
     p2container.style.display = "inline";
     p2name.innerHTML = playerArray[1].name;
@@ -737,6 +875,50 @@ function initPlayer4() {
     p4blackCardCount.style.display = "none";
     p4goldCard.style.display = "none";
     p4goldCardCount.style.display = "none";
+}
+
+// function updateAllPlayers() {
+//     updatePlayer1();
+//     updatePlayer2();
+//     if (numPlayers == 3) {
+//         updatePlayer3();
+//     }
+//     if (numPlayers == 4) {
+//         updatePlayer3();
+//         updatePlayer4();
+//     }
+// }
+
+function updateCurrentPlayer(i) {
+    if (i == 0) {
+        updatePlayer1();
+    }
+    if (i == 1) {
+        updatePlayer2();
+    }
+    if (i == 2) {
+        updatePlayer3();
+    }
+    if (i == 3) {
+        updatePlayer4();
+    }
+}
+
+function highlightCurrentPlayer(i) {
+    if (i == 0) {
+        p1containerRect.style.stroke = "#90EE90";
+        p1containerRect.style.stroke-width = "1";
+    }
+    if (i == 1) {
+        p2containerRect.style.stroke = "#90EE90";
+    }
+    if (i == 2) {
+        p3containerRect.style.stroke = "#90EE90";    
+    }
+    if (i == 3) {
+        p4containerRect.style.stroke = "#90EE90";
+            
+    }
 }
 
 showAllDecks()
@@ -823,6 +1005,7 @@ function handleCardClick(event) {
 function takeTurn() {
     // turnOver = false;
     let player = playerArray[turnIndex];
+    highlightCurrentPlayer(turnIndex);
     // console.log(player)
     addHighlightsAllChips();
     addChipButtons();
@@ -1130,6 +1313,7 @@ function blackPileEvent() {
     number = blackPile.querySelector("text").textContent;
     blackPile.querySelector("text").innerHTML = number-1;
     chipsBought.push("k");
+    updateCurrentPlayer(turnIndex)
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlackListener();
     }
@@ -1157,6 +1341,7 @@ function bluePileEvent() {
     number = bluePile.querySelector("text").textContent;
     bluePile.querySelector("text").innerHTML = number-1;
     chipsBought.push("u");
+    updateCurrentPlayer(turnIndex)
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlueListener();
     }
@@ -1184,6 +1369,7 @@ function redPileEvent() {
     number = redPile.querySelector("text").textContent;
     redPile.querySelector("text").innerHTML = number-1;
     chipsBought.push("r");
+    updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeRedListener();
     }
@@ -1211,6 +1397,7 @@ function greenPileEvent() {
     number = greenPile.querySelector("text").textContent;
     greenPile.querySelector("text").innerHTML = number-1;
     chipsBought.push("g");
+    updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeGreenListener();
     }
@@ -1238,6 +1425,7 @@ function whitePileEvent() {
     number = whitePile.querySelector("text").textContent;
     whitePile.querySelector("text").innerHTML = number-1;
     chipsBought.push("w");
+    updateCurrentPlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeWhiteListener();
     }
