@@ -199,7 +199,7 @@ function payForCard(player, cardCost) {
     else {
         let totalAvail = addObjects(player.coins, player.cards);
         if (Object.values(subtractObjects(totalAvail, cardCost)).every(value => value >= 0)) {
-            player.coins = subtractObjects(player.coins,subtractObjects(cardCost, player.cards));
+            player.coins = subtractObjects(player.coins,makePositive(subtractObjects(cardCost, player.cards)));
             adjustCoinTallies(subtractObjects(initCoins, player.coins))
         }
         else {
@@ -213,11 +213,18 @@ function payForCard(player, cardCost) {
 }
 
 function adjustCoinTallies(payment) {
-    blackPile.querySelector("text").innerHTML = parseInt(blackPile.querySelector("text").textContent) + payment["k"];
-    bluePile.querySelector("text").innerHTML = parseInt(bluePile.querySelector("text").textContent) + payment["u"];
-    redPile.querySelector("text").innerHTML = parseInt(redPile.querySelector("text").textContent) + payment["r"];
-    greenPile.querySelector("text").innerHTML = parseInt(greenPile.querySelector("text").textContent) + payment["g"];
-    whitePile.querySelector("text").innerHTML = parseInt(whitePile.querySelector("text").textContent) + payment["w"];
+    pileVals["k"] += payment["k"]
+    pileVals["w"] += payment["w"]
+    pileVals["r"] += payment["r"]
+    pileVals["g"] += payment["g"]
+    pileVals["u"] += payment["u"]
+    updateCoinPiles(pileVals)
+
+    // blackPile.querySelector("text").innerHTML = parseInt(blackPile.querySelector("text").textContent) + payment["k"];
+    // bluePile.querySelector("text").innerHTML = parseInt(bluePile.querySelector("text").textContent) + payment["u"];
+    // redPile.querySelector("text").innerHTML = parseInt(redPile.querySelector("text").textContent) + payment["r"];
+    // greenPile.querySelector("text").innerHTML = parseInt(greenPile.querySelector("text").textContent) + payment["g"];
+    // whitePile.querySelector("text").innerHTML = parseInt(whitePile.querySelector("text").textContent) + payment["w"];
 
 }
 
@@ -629,7 +636,7 @@ function placeAllCards() {
 
 function removeCards() {
     moveButtonsToBack();
-    for (let i = 0; i<12; i++) {
+    for (let i = 0; i<12+bonuses.length; i++) {
         board.removeChild(board.lastChild)
         // board.removeChild()
     }
@@ -666,7 +673,7 @@ function moveButtonsToBack() {
 
 }
 
-function initCoinPiles(pileVals) {
+function updateCoinPiles(pileVals) {
     blackPile.querySelector("text").innerHTML = pileVals["k"];
     bluePile.querySelector("text").innerHTML = pileVals["u"];
     redPile.querySelector("text").innerHTML = pileVals["r"];
@@ -738,7 +745,7 @@ function updatePlayer1() {
         p1redCardCount.style.display = "inline";
     }
     if (playerArray[0].cards["k"] > 0) {
-        p1blackCardCount.innerHTML = playerArray[0].cards["w"];
+        p1blackCardCount.innerHTML = playerArray[0].cards["k"];
         p1blackCard.style.display = "inline";
         p1blackCardCount.style.display = "inline";
     }
@@ -778,7 +785,7 @@ function updatePlayer2() {
         p2redCardCount.style.display = "inline";
     }
     if (playerArray[1].cards["k"] > 0) {
-        p2blackCardCount.innerHTML = playerArray[1].cards["w"];
+        p2blackCardCount.innerHTML = playerArray[1].cards["k"];
         p2blackCard.style.display = "inline";
         p2blackCardCount.style.display = "inline";
     }
@@ -817,7 +824,7 @@ function updatePlayer3() {
         p3redCardCount.style.display = "inline";
     }
     if (playerArray[2].cards["k"] > 0) {
-        p3blackCardCount.innerHTML = playerArray[2].cards["w"];
+        p3blackCardCount.innerHTML = playerArray[2].cards["k"];
         p3blackCard.style.display = "inline";
         p3blackCardCount.style.display = "inline";
     }
@@ -856,7 +863,7 @@ function updatePlayer4() {
         p4redCardCount.style.display = "inline";
     }
     if (playerArray[3].cards["k"] > 0) {
-        p4blackCardCount.innerHTML = playerArray[3].cards["w"];
+        p4blackCardCount.innerHTML = playerArray[3].cards["k"];
         p4blackCard.style.display = "inline";
         p4blackCardCount.style.display = "inline";
     }
@@ -982,7 +989,7 @@ function highlightCurrentPlayer(i) {
 
 showAllDecks()
 placeAllCards()
-initCoinPiles(pileVals)
+updateCoinPiles(pileVals)
 placeAllBonuses()
 initTables()
 
@@ -1208,6 +1215,7 @@ function handleCardClick(event) {
 
 function takeTurn() {
     // turnOver = false;
+    console.log(pileVals)
     let player = playerArray[turnIndex];
     highlightCurrentPlayer(turnIndex);
     // console.log(player)
@@ -1280,6 +1288,7 @@ function rect11event() {
     outDeck1[0] = deck1.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1294,6 +1303,7 @@ function rect12event() {
     outDeck1[1] = deck1.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver()
@@ -1308,6 +1318,7 @@ function rect13event() {
     outDeck1[2] = deck1.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1322,6 +1333,7 @@ function rect14event() {
     outDeck1[3] = deck1.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1335,6 +1347,7 @@ function rect21event() {
     outDeck2[0] = deck2.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1348,6 +1361,7 @@ function rect22event() {
     outDeck2[1] = deck2.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1361,6 +1375,7 @@ function rect23event() {
     outDeck2[2] = deck2.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1374,6 +1389,7 @@ function rect24event() {
     outDeck2[3] = deck2.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1387,6 +1403,7 @@ function rect31event() {
     outDeck3[0] = deck3.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1400,6 +1417,7 @@ function rect32event() {
     outDeck3[1] = deck3.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1413,6 +1431,7 @@ function rect33event() {
     outDeck3[2] = deck3.pop()
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1426,6 +1445,7 @@ function rect34event() {
     outDeck3[3] = deck3.pop();
     removeCards();
     placeAllCards();
+    placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
     turnOver();
@@ -1745,6 +1765,7 @@ function checkWinCondition(player) {
 }
 
 function turnOver() {
+    updateCurrentPlayer(turnIndex)
     const victory = checkWinCondition(playerArray[turnIndex])
     if (victory) {
 
