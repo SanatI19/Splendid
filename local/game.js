@@ -1,3 +1,5 @@
+const waitTime = 500;
+
 let board = document.getElementById("board")
 const deck1string = JSON.parse(localStorage.getItem("deck1"));
 const deck2string = JSON.parse(localStorage.getItem("deck2"));
@@ -366,8 +368,11 @@ class Bonus {
 
 function convertToCards(array) {
     out = []
+    console.log(array)
     for (const x of array) {
+        if (x !== null) {
         out.push(new Card(x["color"], x["vp"], x["cost"], x["deck"]));
+        }
     }
     return out
 }
@@ -474,6 +479,10 @@ function showDeck(i) {
 
 function placeCard(card, i) {
     // let chips = document.getElementById("chips");
+    if (card === undefined) {
+        // console.log("YESSSS")
+    }
+    else{
     // let board = document.getElementById("board");
     // const svgNS = "http://www.w3.org/2000/svg";
     let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -581,6 +590,7 @@ function placeCard(card, i) {
     // board.appendChild(number);
     // complete
     //places the chip on the board
+    }
 }
 
 function getBonusX(i) {
@@ -712,8 +722,9 @@ function placeAllCards() {
 }
 
 function removeCards() {
+    console.log(outDeck1.length)
     moveButtonsToBack();
-    for (let i = 0; i<12+bonuses.length; i++) {
+    for (let i = 0; i<outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length; i++) {
         board.removeChild(board.lastChild)
         // board.removeChild()
     }
@@ -807,6 +818,7 @@ function updatePlayer(i) {
     playerChipCounts["k"][i].innerHTML = playerArray[i].coins["k"]; 
     playerChipCounts["y"][i].innerHTML = playerArray[i].gold; 
 
+    playerVp[i].innerHTML = playerArray[i].vp;
     // console.log(playerArray[i].coins)
     // console.log(playerChips)
 
@@ -1362,7 +1374,7 @@ function handleCardClick(event) {
 
 function takeTurn() {
     // turnOver = false;
-    console.log(pileVals)
+    // console.log(pileVals)
     let player = playerArray[turnIndex];
     highlightCurrentPlayer(turnIndex);
     // console.log(player)
@@ -1376,22 +1388,30 @@ function takeTurn() {
 
 
 function addValidCardButtons(player) {
+    if (outDeck1.length > 0) {
     if (checkAffordable(player, outDeck1[0].cost)) {
         rect11.addEventListener("click", rect11event)
         rect11.style.stroke = "cyan";
     }
+    }
+    if (outDeck1.length > 1) {
     if (checkAffordable(player, outDeck1[1].cost)) {
         rect12.addEventListener("click", rect12event)
         rect12.style.stroke = "cyan";
     }
+}
+    if (outDeck1.length > 2) {
     if (checkAffordable(player, outDeck1[2].cost)) {
         rect13.addEventListener("click", rect13event)
         rect13.style.stroke = "cyan";
     }
+}
+    if (outDeck1.length > 3) {
     if (checkAffordable(player, outDeck1[3].cost)) {
         rect14.addEventListener("click", rect14event)
         rect14.style.stroke = "cyan";
     }
+}
     if (checkAffordable(player, outDeck2[0].cost)) {
         rect21.addEventListener("click", rect21event)
         rect21.style.stroke = "cyan";
@@ -1426,6 +1446,23 @@ function addValidCardButtons(player) {
     }
 }
 
+function removeNulls(arr) {
+    // let newArr = []
+    popping = []
+    for (let i = 0; i < arr.length; i++) {
+        if ((arr[i] === null) || (arr[i] === undefined)) {
+            popping.unshift(i)
+        }
+    }
+    console.log(popping)
+    for (x of popping) {
+        arr.splice(x,1)
+    }
+    console.log(arr)
+    // return newArr
+}
+
+
 function rect11event() {
     let card = outDeck1[0];
     let player = playerArray[turnIndex];
@@ -1433,6 +1470,8 @@ function rect11event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck1[0] = deck1.pop()
+    removeNulls(outDeck1)
+    console.log(outDeck1)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1448,6 +1487,7 @@ function rect12event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck1[1] = deck1.pop()
+    removeNulls(outDeck1)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1463,6 +1503,7 @@ function rect13event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck1[2] = deck1.pop()
+    removeNulls(outDeck1)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1478,6 +1519,7 @@ function rect14event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck1[3] = deck1.pop()
+    removeNulls(outDeck1)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1492,6 +1534,7 @@ function rect21event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck2[0] = deck2.pop()
+    removeNulls(outDeck2)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1506,6 +1549,7 @@ function rect22event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck2[1] = deck2.pop()
+    removeNulls(outDeck2)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1520,6 +1564,7 @@ function rect23event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck2[2] = deck2.pop()
+    removeNulls(outDeck2)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1534,6 +1579,7 @@ function rect24event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck2[3] = deck2.pop()
+    removeNulls(outDeck2)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1548,6 +1594,7 @@ function rect31event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck3[0] = deck3.pop()
+    removeNulls(outDeck3)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1562,6 +1609,7 @@ function rect32event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck3[1] = deck3.pop()
+    removeNulls(outDeck3)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1576,6 +1624,7 @@ function rect33event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck3[2] = deck3.pop()
+    removeNulls(outDeck3)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1590,6 +1639,7 @@ function rect34event() {
     player.vp += card.vp;
     payForCard(player, card.cost)
     outDeck3[3] = deck3.pop();
+    removeNulls(outDeck3)
     removeCards();
     placeAllCards();
     placeAllBonuses();
@@ -1949,7 +1999,8 @@ function discardChips(player) {
 
 function turnOver() {
     updatePlayer(turnIndex)
-    console.log(elements)
+    // console.log(elements)
+    // console.log(playerArray)
     const victory = checkWinCondition(playerArray[turnIndex])
     if (victory) {
 
@@ -1963,7 +2014,7 @@ function turnOver() {
         
         storeThings();
         chipsBought = [];
-        setTimeout(takeTurn,2000);
+        setTimeout(takeTurn,waitTime);
         // removeCards();
         // console.log(playerArray)
         // console.log(pileVals)
