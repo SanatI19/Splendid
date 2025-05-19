@@ -62,31 +62,55 @@ const p1white = document.getElementById("p1white");
 const p2white = document.getElementById("p2white");
 const p3white = document.getElementById("p3white");
 const p4white = document.getElementById("p4white");
+const p1whitecircle = document.getElementById("p1whitecircle");
+const p2whitecircle = document.getElementById("p2whitecircle");
+const p3whitecircle = document.getElementById("p3whitecircle");
+const p4whitecircle = document.getElementById("p4whitecircle");
 
 const p1blue = document.getElementById("p1blue");
 const p2blue = document.getElementById("p2blue");
 const p3blue = document.getElementById("p3blue");
 const p4blue = document.getElementById("p4blue");
+const p1bluecircle = document.getElementById("p1bluecircle");
+const p2bluecircle = document.getElementById("p2bluecircle");
+const p3bluecircle = document.getElementById("p3bluecircle");
+const p4bluecircle = document.getElementById("p4bluecircle");
 
 const p1green = document.getElementById("p1green");
 const p2green = document.getElementById("p2green");
 const p3green = document.getElementById("p3green");
 const p4green = document.getElementById("p4green");
+const p1greencircle = document.getElementById("p1greencircle");
+const p2greencircle = document.getElementById("p2greencircle");
+const p3greencircle = document.getElementById("p3greencircle");
+const p4greencircle = document.getElementById("p4greencircle");
 
 const p1red = document.getElementById("p1red");
 const p2red = document.getElementById("p2red");
 const p3red = document.getElementById("p3red");
 const p4red = document.getElementById("p4red");
+const p1redcircle = document.getElementById("p1redcircle");
+const p2redcircle = document.getElementById("p2redcircle");
+const p3redcircle = document.getElementById("p3redcircle");
+const p4redcircle = document.getElementById("p4redcircle");
 
 const p1black = document.getElementById("p1black");
 const p2black = document.getElementById("p2black");
 const p3black = document.getElementById("p3black");
 const p4black = document.getElementById("p4black");
+const p1blackcircle = document.getElementById("p1blackcircle");
+const p2blackcircle = document.getElementById("p2blackcircle");
+const p3blackcircle = document.getElementById("p3blackcircle");
+const p4blackcircle = document.getElementById("p4blackcircle");
 
 const p1gold = document.getElementById("p1yellow");
 const p2gold = document.getElementById("p2yellow");
 const p3gold = document.getElementById("p3yellow");
 const p4gold = document.getElementById("p4yellow");
+const p1goldcircle = document.getElementById("p1yellowcircle");
+const p2goldcircle = document.getElementById("p2yellowcircle");
+const p3goldcircle = document.getElementById("p3yellowcircle");
+const p4goldcircle = document.getElementById("p4yellowcircle");
 
 const p1whiteCard = document.getElementById("p1whiteCard");
 const p1whiteCardCount = document.getElementById("p1whiteCardCount");
@@ -140,6 +164,59 @@ const p4blackCardCount = document.getElementById("p4blackCardCount");
 const p4goldCard = document.getElementById("p4goldCard");
 const p4goldCardCount = document.getElementById("p4goldCardCount");
 
+
+function createPlayerElementArrays() {
+    const white = [p1whiteCard, p2whiteCard, p3whiteCard, p4whiteCard]
+    const whiteCounts = [p1whiteCardCount, p2whiteCardCount, p3whiteCardCount, p4whiteCardCount]
+    const blue = [p1blueCard, p2blueCard, p3blueCard, p4blueCard]
+    const blueCounts = [p1blueCardCount, p2blueCardCount, p3blueCardCount, p4blueCardCount]
+    const green = [p1greenCard, p2greenCard, p3greenCard, p4greenCard]
+    const greenCounts = [p1greenCardCount, p2greenCardCount, p3greenCardCount, p4greenCardCount]
+    const red = [p1redCard, p2redCard, p3redCard, p4redCard]
+    const redCounts = [p1redCardCount, p2redCardCount, p3redCardCount, p4redCardCount]
+    const black = [p1blackCard, p2blackCard, p3blackCard, p4blackCard]
+    const blackCounts = [p1blackCardCount, p2blackCardCount, p3blackCardCount, p4blackCardCount]
+    const gold = [p1goldCard, p2goldCard, p3goldCard, p4goldCard]
+    const goldCounts = [p1goldCardCount, p2goldCardCount, p3goldCardCount, p4goldCardCount]
+
+    const vp = [p1vp, p2vp, p3vp, p4vp]
+
+    const whiteChipCount = [p1white, p2white, p3white, p4white]
+    const whiteChip = [p1whitecircle, p2whitecircle, p3whitecircle, p4whitecircle]
+    const blueChipCount = [p1blue, p2blue, p3blue, p4blue]
+    const blueChip = [p1bluecircle, p2bluecircle, p3bluecircle, p4bluecircle]
+    const greenChipCount = [p1green, p2green, p3green, p4green]
+    const greenChip = [p1greencircle, p2greencircle, p3greencircle, p4greencircle]
+    const redChipCount = [p1red, p2red, p3red, p4red]
+    const redChip = [p1redcircle, p2redcircle, p3redcircle, p4redcircle]
+    const blackChipCount = [p1black, p2black, p3black, p4black]
+    const blackChip = [p1blackcircle, p2blackcircle, p3blackcircle, p4blackcircle]
+    const goldChipCount = [p1gold, p2gold, p3gold, p4gold]
+    const goldChip = [p1goldcircle, p2goldcircle, p3goldcircle, p4goldcircle]
+
+    const containerRects = [p1containerRect, p2containerRect, p3containerRect, p4containerRect]
+    const containers = [p1container,p2container,p3container, p4container]
+
+    const playerChipCounts = {"w": whiteChipCount, "k": blackChipCount, "r": redChipCount, "u": blueChipCount, "g": greenChipCount, "y": goldChipCount}
+    const playerChips = {"w": whiteChip, "k": blackChip, "r": redChip, "u": blueChip, "g": greenChip, "y": goldChip}
+    const playerCardCounts = {"w": whiteCounts, "k": blackCounts, "r": redCounts, "u": blueCounts, "g": greenCounts, "y": goldCounts}
+    const playerCards = {"w": white, "k": black, "r": red, "u": blue, "g": green, "y": gold}
+
+    const playerNames = [p1name, p2name, p3name, p4name]
+    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames]
+}
+
+const elements = createPlayerElementArrays()
+// console.log(elements)
+const playerVp = elements[0]
+const playerContainerRects = elements[1]
+const playerContainers = elements[2]
+const playerChipCounts = elements[3]
+const playerChips = elements[4]
+const playerCards = elements[5]
+const playerCardCounts = elements[6]
+const playerNames = elements[7]
+// console.log(playerCardCounts)
 
 const bonusesString = JSON.parse(localStorage.getItem("bonuses"));
 const playerArrayString = JSON.parse(localStorage.getItem("playerArray"));
@@ -681,20 +758,87 @@ function updateCoinPiles(pileVals) {
     whitePile.querySelector("text").innerHTML = pileVals["w"];
 }
 
+// function initTables() {
+//     for (let i = 0; i < playerArray.length; i++) {
+//         if (i == 0) {
+//             initPlayer1();
+//         }
+//         if (i == 1) {
+//             initPlayer2();
+//         }
+//         if (i == 2) {
+//             initPlayer3();
+//         }
+//         if (i == 3) {
+//             initPlayer4();
+//         }
+//     }
+// }
+
 function initTables() {
     for (let i = 0; i < playerArray.length; i++) {
-        if (i == 0) {
-            initPlayer1();
-        }
-        if (i == 1) {
-            initPlayer2();
-        }
-        if (i == 2) {
-            initPlayer3();
-        }
-        if (i == 3) {
-            initPlayer4();
-        }
+        initPlayer(i)
+    }
+}
+
+function initPlayer(i) {
+    playerContainers[i].style.display = "inline";
+    playerNames[i].innerHTML = playerArray[i].name;
+    playerCards["w"][i].style.display = "none";
+    playerCardCounts["w"][i].style.display = "none";
+    playerCards["u"][i].style.display = "none";
+    playerCardCounts["u"][i].style.display = "none";
+    playerCards["g"][i].style.display = "none";
+    playerCardCounts["g"][i].style.display = "none";
+    playerCards["r"][i].style.display = "none";
+    playerCardCounts["r"][i].style.display = "none";
+    playerCards["k"][i].style.display = "none";
+    playerCardCounts["k"][i].style.display = "none";
+    playerCards["y"][i].style.display = "none";
+    playerCardCounts["y"][i].style.display = "none";
+    updatePlayer(i);
+}
+
+function updatePlayer(i) {
+    playerChipCounts["w"][i].innerHTML = playerArray[i].coins["w"];
+    playerChipCounts["u"][i].innerHTML = playerArray[i].coins["u"];
+    playerChipCounts["g"][i].innerHTML = playerArray[i].coins["g"];
+    playerChipCounts["r"][i].innerHTML = playerArray[i].coins["r"];    
+    playerChipCounts["k"][i].innerHTML = playerArray[i].coins["k"]; 
+    playerChipCounts["y"][i].innerHTML = playerArray[i].gold; 
+
+    // console.log(playerArray[i].coins)
+    // console.log(playerChips)
+
+    if (playerArray[i].cards["w"] > 0) {
+        playerCardCounts["w"][i].innerHTML = playerArray[i].cards["w"];
+        playerCards["w"][i].style.display = "inline";
+        playerCardCounts["w"][i].style.display = "inline";
+    }
+    if (playerArray[i].cards["u"] > 0) {
+        playerCardCounts["u"][i].innerHTML = playerArray[i].cards["u"];
+        playerCards["u"][i].style.display = "inline";
+        playerCardCounts["u"][i].style.display = "inline";
+    }
+    if (playerArray[i].cards["g"] > 0) {
+        playerCardCounts["g"][i].innerHTML = playerArray[i].cards["g"];
+        playerCards["g"][i].style.display = "inline";
+        playerCardCounts["g"][i].style.display = "inline";
+    }
+    if (playerArray[i].cards["r"] > 0) {
+        playerCardCounts["r"][i].innerHTML = playerArray[i].cards["r"];
+        playerCards["r"][i].style.display = "inline";
+        playerCardCounts["r"][i].style.display = "inline";
+    }
+    if (playerArray[i].cards["k"] > 0) {
+        playerCardCounts["k"][i].innerHTML = playerArray[i].cards["k"];
+        playerCards["k"][i].style.display = "inline";
+        playerCardCounts["k"][i].style.display = "inline";
+    }
+    if (playerArray[i].reserved.length > 0) {
+        playerCardCounts["y"][i].innerHTML = playerArray[i].reserved.length;
+        playerCards["y"][i].style.display = "inline";
+        playerCardCounts["y"][i].style.display = "inline";
     }
 }
 
@@ -1030,11 +1174,13 @@ function addHighlightsAllCards() {
 
 function addYellowEvent() {
     yellowPile.addEventListener("click", yellowPileEvent);
+    goldPileDisabled = false;
 }
 
 function removeYellowListener() {
     yellowPile.querySelector("circle").style.stroke = "none";
     yellowPile.removeEventListener("click", yellowPileEvent);
+    goldPileDisabled = true;
 }
 
 function yellowPileEvent() {
@@ -1043,7 +1189,8 @@ function yellowPileEvent() {
     removeAllCardButtons();
     removeAllPileButtons();
     yellowPile.querySelector("text").innerHTML = goldVal;
-    updateCurrentPlayer(turnIndex)
+    // updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     rect11.addEventListener("click", handleReserve11);
     rect12.addEventListener("click", handleReserve12);
     rect13.addEventListener("click", handleReserve13);
@@ -1093,7 +1240,7 @@ function handleReserve11() {
     removeCards();
     placeAllCards();
     removeAllReserves();
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     turnOver();
 }
 function handleReserve12() {
@@ -1102,7 +1249,7 @@ function handleReserve12() {
     removeCards();
     placeAllCards();
     removeAllReserves();
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     turnOver();
 }
 function handleReserve13() {
@@ -1111,7 +1258,7 @@ function handleReserve13() {
     removeCards();
     placeAllCards();
     removeAllReserves();
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     turnOver();
 }
 function handleReserve14() {
@@ -1120,7 +1267,7 @@ function handleReserve14() {
     removeCards();
     placeAllCards();
     removeAllReserves();
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     turnOver();
 }
 function handleReserve21() {
@@ -1452,7 +1599,12 @@ function rect34event() {
 }
 
 // NEED TO ADD THE CHIP BANK THING
-
+let whitePileDisabled = false;
+let blackPileDisabled = false;
+let redPileDisabled = false;
+let bluePileDisabled = false;
+let greenPileDisabled = false;
+let goldPileDisabled = false;
 
 function removeAllCardButtons() {
     rect11.removeEventListener("click", rect11event);
@@ -1484,26 +1636,31 @@ function removeAllCardButtons() {
 function removeBlackListener() {
     blackPile.removeEventListener("click", blackPileEvent);
     blackPile.querySelector("circle").style.stroke = "none";
+    blackPileDisabled = true;
 }
 
 function removeBlueListener() {
     bluePile.removeEventListener("click", bluePileEvent);
     bluePile.querySelector("circle").style.stroke = "none";
+    bluePileDisabled = true;
 }
 
 function removeRedListener() {
     redPile.removeEventListener("click", redPileEvent);
     redPile.querySelector("circle").style.stroke = "none";
+    redPileDisabled = true;
 }
 
 function removeGreenListener() {
     greenPile.removeEventListener("click", greenPileEvent);
     greenPile.querySelector("circle").style.stroke = "none";
+    greenPileDisabled = true;
 }
 
 function removeWhiteListener() {
     whitePile.removeEventListener("click", whitePileEvent);
     whitePile.querySelector("circle").style.stroke = "none";
+    whitePileDisabled = true;
 }
 
 function removeAllPileButtons() {
@@ -1532,6 +1689,12 @@ function removePrevListener(color) {
     }
 }
 
+function checkAllDisabled() {
+    if ((blackPileDisabled) && (bluePileDisabled) && (greenPileDisabled) && (redPileDisabled) && (whitePileDisabled) && (goldPileDisabled)) {
+        turnOver()
+    }
+}
+
 function blackPileEvent() {
     removeAllCardButtons();
     playerArray[turnIndex].coins["k"] += 1;
@@ -1539,10 +1702,11 @@ function blackPileEvent() {
     blackPile.querySelector("text").innerHTML = number-1;
     pileVals["k"] -= 1;
     chipsBought.push("k");
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     removeYellowListener();
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlackListener();
+        checkAllDisabled()
     }
     if (chipsBought.length == 2) {
         if (chipsBought[0] == "k") {
@@ -1553,6 +1717,7 @@ function blackPileEvent() {
         else {
             removeBlackListener();
             removePrevListener(chipsBought[0]);
+            checkAllDisabled()
         }
     }
     if (chipsBought.length == 3) {
@@ -1570,9 +1735,10 @@ function bluePileEvent() {
     pileVals["u"] -= 1;
     chipsBought.push("u");
     removeYellowListener();
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
     if ((chipsBought.length == 1) && (number < 4)) {
         removeBlueListener();
+        checkAllDisabled();
     }
     if (chipsBought.length == 2) {
         if (chipsBought[0] == "u") {
@@ -1583,6 +1749,7 @@ function bluePileEvent() {
         else {
             removeBlueListener();
             removePrevListener(chipsBought[0]);
+            checkAllDisabled();
         }
     }
     if (chipsBought.length == 3) {
@@ -1600,9 +1767,10 @@ function redPileEvent() {
     chipsBought.push("r");
     removeYellowListener();
     pileVals["r"] -= 1;
-    updateCurrentPlayer(turnIndex);
+    updatePlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeRedListener();
+        checkAllDisabled();
     }
     if (chipsBought.length == 2) {
         if (chipsBought[0] == "r") {
@@ -1613,6 +1781,7 @@ function redPileEvent() {
         else {
             removeRedListener();
             removePrevListener(chipsBought[0]);
+            checkAllDisabled();
         }
     }
     if (chipsBought.length == 3) {
@@ -1630,9 +1799,10 @@ function greenPileEvent() {
     chipsBought.push("g");
     removeYellowListener();
     pileVals["g"] -= 1;
-    updateCurrentPlayer(turnIndex);
+    updatePlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeGreenListener();
+        checkAllDisabled();
     }
     if (chipsBought.length == 2) {
         if (chipsBought[0] == "g") {
@@ -1643,6 +1813,7 @@ function greenPileEvent() {
         else {
             removeGreenListener();
             removePrevListener(chipsBought[0]);
+            checkAllDisabled();
         }
     }
     if (chipsBought.length == 3) {
@@ -1660,9 +1831,10 @@ function whitePileEvent() {
     chipsBought.push("w");
     removeYellowListener();
     pileVals["w"] -= 1;
-    updateCurrentPlayer(turnIndex);
+    updatePlayer(turnIndex);
     if ((chipsBought.length == 1) && (number < 4)) {
         removeWhiteListener();
+        checkAllDisabled();
     }
     if (chipsBought.length == 2) {
         if (chipsBought[0] == "w") {
@@ -1673,6 +1845,7 @@ function whitePileEvent() {
         else {
             removeWhiteListener();
             removePrevListener(chipsBought[0]);
+            checkAllDisabled();
         }
     }
     if (chipsBought.length == 3) {
@@ -1710,6 +1883,12 @@ function addChipButtons() {
     redPile.addEventListener("click", redPileEvent);
     greenPile.addEventListener("click", greenPileEvent);
     whitePile.addEventListener("click", whitePileEvent);
+
+    blackPileDisabled = false;
+    bluePileDisabled = false;
+    redPileDisabled = false;
+    greenPileDisabled = false;
+    whitePileDisabled = false;
 
     if (pileVals["k"] == 0) {
         removeBlackListener()
@@ -1764,8 +1943,13 @@ function checkWinCondition(player) {
     return false;
 }
 
+function discardChips(player) {
+
+}
+
 function turnOver() {
-    updateCurrentPlayer(turnIndex)
+    updatePlayer(turnIndex)
+    console.log(elements)
     const victory = checkWinCondition(playerArray[turnIndex])
     if (victory) {
 
