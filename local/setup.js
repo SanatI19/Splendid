@@ -28,9 +28,10 @@ class Card {
 }
 
 class Bonus {
-    constructor(cost, vp) {
+    constructor(cost, vp, name) {
         this.cost = cost;
         this.vp = vp;
+        this.name = name;
     }
 }
 
@@ -177,16 +178,16 @@ function createAvailableChips() {
 function createBonuses() {
     let bonuses = [];
 
-    bonuses.push(new Bonus({"w": 3, "u": 3, "g":3, "r": 0, "k": 0}, 3));
-    bonuses.push(new Bonus({"w": 0, "u": 3, "g":3, "r": 3, "k": 0}, 3));
-    bonuses.push(new Bonus({"w": 3, "u": 0, "g":0, "r": 3, "k": 3}, 3));
-    bonuses.push(new Bonus({"w": 3, "u": 3, "g":0, "r": 0, "k": 3}, 3));
-    bonuses.push(new Bonus({"w": 0, "u": 0, "g":3, "r": 3, "k": 3}, 3));
-    bonuses.push(new Bonus({"w": 0, "u": 0, "g":0, "r": 4, "k": 4}, 3));
-    bonuses.push(new Bonus({"w": 4, "u": 0, "g":0, "r": 0, "k": 4}, 3));
-    bonuses.push(new Bonus({"w": 0, "u": 0, "g":4, "r": 4, "k": 0}, 3));
-    bonuses.push(new Bonus({"w": 4, "u": 4, "g":0, "r": 0, "k": 0}, 3));
-    bonuses.push(new Bonus({"w": 0, "u": 4, "g":4, "r": 0, "k": 0}, 3));
+    bonuses.push(new Bonus({"w": 3, "u": 3, "g":3, "r": 0, "k": 0}, 3, -1));
+    bonuses.push(new Bonus({"w": 0, "u": 3, "g":3, "r": 3, "k": 0}, 3, -1));
+    bonuses.push(new Bonus({"w": 3, "u": 0, "g":0, "r": 3, "k": 3}, 3, -1));
+    bonuses.push(new Bonus({"w": 3, "u": 3, "g":0, "r": 0, "k": 3}, 3, -1));
+    bonuses.push(new Bonus({"w": 0, "u": 0, "g":3, "r": 3, "k": 3}, 3, -1));
+    bonuses.push(new Bonus({"w": 0, "u": 0, "g":0, "r": 4, "k": 4}, 3, -1));
+    bonuses.push(new Bonus({"w": 4, "u": 0, "g":0, "r": 0, "k": 4}, 3, -1));
+    bonuses.push(new Bonus({"w": 0, "u": 0, "g":4, "r": 4, "k": 0}, 3, -1));
+    bonuses.push(new Bonus({"w": 4, "u": 4, "g":0, "r": 0, "k": 0}, 3, -1));
+    bonuses.push(new Bonus({"w": 0, "u": 4, "g":4, "r": 0, "k": 0}, 3, -1));
 
     outBonus = shuffle(bonuses);
     return outBonus

@@ -39,6 +39,7 @@ const bluePile = document.getElementById("bluePile");
 const greenPile = document.getElementById("greenPile");
 const redPile = document.getElementById("redPile");
 const blackPile = document.getElementById("blackPile");
+const yellowPile = document.getElementById("yellowPile");
 
 const p1containerRect = document.getElementById("player1container");
 const p2containerRect = document.getElementById("player2container");
@@ -166,6 +167,11 @@ const p4blackCardCount = document.getElementById("p4blackCardCount");
 const p4goldCard = document.getElementById("p4goldCard");
 const p4goldCardCount = document.getElementById("p4goldCardCount");
 
+const deck1rect = document.getElementById("deck1")
+const deck2rect = document.getElementById("deck2")
+const deck3rect = document.getElementById("deck3")
+
+const deckRects = [deck1rect, deck2rect, deck3rect]
 
 function createPlayerElementArrays() {
     const white = [p1whiteCard, p2whiteCard, p3whiteCard, p4whiteCard]
@@ -221,6 +227,7 @@ const playerNames = elements[7]
 // console.log(playerCardCounts)
 
 const bonusesString = JSON.parse(localStorage.getItem("bonuses"));
+// console.log(bonusesString)
 const playerArrayString = JSON.parse(localStorage.getItem("playerArray"));
 
 const numPlayers = parseInt(localStorage.getItem("numPlayers"));
@@ -243,6 +250,16 @@ function subtractObjects(total, cost) {
         result[key] = total[key] - cost[key]
     }
     return result
+}
+
+function allPositive(dict) {
+    const keys = Object.keys(dict)
+    for (const key of keys) {
+        if (dict[key] < 0) {
+            return false
+        }
+    }
+    return true
 }
 
 function getTotalDiff(coins, cost) {
@@ -284,8 +301,10 @@ function payForCard(player, cardCost) {
         else {
             if (getTotalDiff(totalAvail, cardCost) <= player.gold) {
                 player.gold -= getTotalDiff(totalAvail, cardCost);
-                player.coins = makePositive(subtractObjects(player.coins,subtractObjects(cardCost, player.cards)));
+                player.coins = makePositive(subtractObjects(player.coins,makePositive(subtractObjects(cardCost, player.cards))));
                 adjustCoinTallies(subtractObjects(initCoins, player.coins))
+                goldVal += getTotalDiff(totalAvail, cardCost);
+                yellowPile.querySelector("text").innerHTML = goldVal
             }
         }
     }
@@ -360,15 +379,16 @@ class Card {
 }
 
 class Bonus {
-    constructor(cost, vp) {
+    constructor(cost, vp, name) {
         this.cost = cost;
         this.vp = vp;
+        this.name = name;
     }
 }
 
 function convertToCards(array) {
     out = []
-    console.log(array)
+    // console.log(array)
     for (const x of array) {
         if (x !== null) {
         out.push(new Card(x["color"], x["vp"], x["cost"], x["deck"]));
@@ -388,7 +408,7 @@ function convertToPlayers(array) {
 function convertToBonuses(array) {
     out = []
     for (const x of array) {
-        out.push(new Bonus(x["cost"], x["vp"]));
+        out.push(new Bonus(x["cost"], x["vp"], x["name"]));
     }
     return out
 }
@@ -399,6 +419,8 @@ const deck3 = convertToCards(deck3string);
 const outDeck1 = convertToCards(outDeck1string);
 const outDeck2 = convertToCards(outDeck2string);
 const outDeck3 = convertToCards(outDeck3string);
+
+const decks = [deck1, deck2, deck3]
 
 const bonuses = convertToBonuses(bonusesString);
 const playerArray = convertToPlayers(playerArrayString);
@@ -439,47 +461,47 @@ function getColor(color) {
 }
 
 
-function showAllDecks() {
-    for (let i = 1; i<=3; i++) {
-        showDeck(i)
-    }
-}
-function showDeck(i) {
-    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    let x = 22;
-    let y = getY(i);
+// function showAllDecks() {
+//     for (let i = 1; i<=3; i++) {
+//         showDeck(i)
+//     }
+// }
+// function showDeck(i) {
+//     let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+//     let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+//     let x = 22;
+//     let y = getY(i);
 
-    // x = x+ 3.2;
-    // y += 3.2;
-    piece.setAttribute("x",x);
-    piece.setAttribute("y",y);
-    // piece.setAttribute("r",1.75);
-    piece.setAttribute("height", 10);
-    piece.setAttribute("width", 6);
-    // token.setAttribute("fill",chip.color);
-    piece.setAttribute("stroke","black");
-    piece.setAttribute("stroke-width",0.15);
-    piece.setAttribute("fill", "grey")
-    piece.style.display = "inline";
-    container.appendChild(piece)
+//     // x = x+ 3.2;
+//     // y += 3.2;
+//     piece.setAttribute("x",x);
+//     piece.setAttribute("y",y);
+//     // piece.setAttribute("r",1.75);
+//     piece.setAttribute("height", 10);
+//     piece.setAttribute("width", 6);
+//     // token.setAttribute("fill",chip.color);
+//     piece.setAttribute("stroke","black");
+//     piece.setAttribute("stroke-width",0.15);
+//     piece.setAttribute("fill", "grey")
+//     piece.style.display = "inline";
+//     container.appendChild(piece)
 
-    let number = document.createElementNS("http://www.w3.org/2000/svg","text");
-    number.textContent = i;
-    number.setAttribute("x", x+2);
-    number.setAttribute("y", y+5);
-    number.setAttribute("font-size",5);
-    number.setAttribute("fill","silver");
-    number.setAttribute("stroke", "black")
-    number.setAttribute("stroke-width",0.1)
-    container.appendChild(number);
+//     let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+//     number.textContent = i;
+//     number.setAttribute("x", x+2);
+//     number.setAttribute("y", y+5);
+//     number.setAttribute("font-size",5);
+//     number.setAttribute("fill","silver");
+//     number.setAttribute("stroke", "black")
+//     number.setAttribute("stroke-width",0.1)
+//     container.appendChild(number);
 
-    board.appendChild(container)
-}
+//     board.appendChild(container)
+// }
 
 function placeCard(card, i) {
     // let chips = document.getElementById("chips");
-    if (card === undefined) {
+    if ((card === undefined) || (card === null)) {
         // console.log("YESSSS")
     }
     else{
@@ -622,6 +644,8 @@ function placeBonus(bonus, i) {
     let x = getBonusX(i);
     let y = getBonusY(i);
 
+    let name = "bonus" + i;
+    container.id = name;
     // x = x+ 3.2;
     // y += 3.2;
     piece.setAttribute("x",x);
@@ -638,6 +662,15 @@ function placeBonus(bonus, i) {
 
     container.appendChild(piece);
 
+    // let valText = document
+
+    let valText = document.createElementNS("http://www.w3.org/2000/svg","text")
+    valText.textContent = ""
+    valText.setAttribute("x", x+4.5);
+    valText.setAttribute("y", y+6);
+    valText.setAttribute("font-size", 2.5);
+    valText.setAttribute("fill", "black")
+    container.appendChild(valText);
     // let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
     // // number.textContent = getColor;
     // bigCircle.setAttribute("cx", x+4.5);
@@ -702,6 +735,7 @@ function placeBonus(bonus, i) {
     }
 
 
+    // container.append(valText);
     board.appendChild(container);
 
 }
@@ -709,6 +743,9 @@ function placeBonus(bonus, i) {
 function placeAllBonuses() {
     for (let i = 0; i<bonuses.length; i++) {
         placeBonus(bonuses[i], i)
+        if (bonuses[i].name !== -1) {
+            showClaimed(i)
+        }
     }
 }
 
@@ -722,12 +759,18 @@ function placeAllCards() {
 }
 
 function removeCards() {
-    console.log(outDeck1.length)
+    // console.log(outDeck1.length)
     moveButtonsToBack();
+    // console.log(outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length)
     for (let i = 0; i<outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length; i++) {
+        // console.log(board.lastChild)
         board.removeChild(board.lastChild)
         // board.removeChild()
     }
+}
+
+for (let i = 0; i<3; i++) {
+    checkEmptyDeck(i)
 }
 
 function moveButtonsToFront() {
@@ -767,6 +810,7 @@ function updateCoinPiles(pileVals) {
     redPile.querySelector("text").innerHTML = pileVals["r"];
     greenPile.querySelector("text").innerHTML = pileVals["g"];
     whitePile.querySelector("text").innerHTML = pileVals["w"];
+    yellowPile.querySelector("text").innerHTML = goldVal;
 }
 
 // function initTables() {
@@ -1143,14 +1187,14 @@ function highlightCurrentPlayer(i) {
     }
 }
 
-showAllDecks()
+// showAllDecks()
 placeAllCards()
 updateCoinPiles(pileVals)
 placeAllBonuses()
 initTables()
 
 
-const yellowPile = document.getElementById("yellowPile");
+
 
 // function addHighlightsAllCardsBlue() {
 //     rect11.style.stroke = "cyan";
@@ -1385,7 +1429,37 @@ function takeTurn() {
     addValidCardButtons(player);
 }
 
+function showClaimed(i) {
+    title = "bonus" + i
+    // console.log(document.getElementById(title))
+    const group = document.getElementById(title)
+    const elements = group.children
+    // console.log(elements)
+    for (element of elements) {
+        element.setAttribute("opacity", 0.3)
+    }
+    // document.getElementById(title).style.opacity = "0.3"
+    document.getElementById(title).querySelector("text").style.opacity = "1"
+    document.getElementById(title).querySelector("text").innerHTML = playerArray[bonuses[i].name].name
+}
 
+function checkBonuses() {
+    // console.log(bonuses)
+    for (let i = 0; i < bonuses.length; i++) {
+        x = bonuses[i]
+        // console.log(x.name)
+        if (x.name == -1) {
+            if (allPositive(subtractObjects(playerArray[turnIndex].cards, x.cost))){
+                console.log("BONUSSSS")
+                x.name = turnIndex;
+                playerArray[turnIndex].vp += x.vp;
+                // document.getElementById(title).querySelector("rect").style.opacity = "0.5"
+                // document.getElementById(title).querySelector("text").innerHTML += " " + playerArray[turnIndex].name
+                showClaimed(i)
+            }
+        }
+    }
+}
 
 function addValidCardButtons(player) {
     if (outDeck1.length > 0) {
@@ -1446,7 +1520,7 @@ function addValidCardButtons(player) {
     }
 }
 
-function removeNulls(arr) {
+function removeNulls(arr, i) {
     // let newArr = []
     popping = []
     for (let i = 0; i < arr.length; i++) {
@@ -1454,14 +1528,22 @@ function removeNulls(arr) {
             popping.unshift(i)
         }
     }
-    console.log(popping)
+    // console.log(popping)
     for (x of popping) {
         arr.splice(x,1)
     }
-    console.log(arr)
+    // if (popping.length > 0) {
+    //     deckRects[i].style.display = "none";
+    // }
+    // console.log(arr)
     // return newArr
 }
 
+function checkEmptyDeck(i) {
+    if (decks[i].length == 0) {
+        deckRects[i].style.display = "none";
+    }
+}
 
 function rect11event() {
     let card = outDeck1[0];
@@ -1469,11 +1551,12 @@ function rect11event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck1[0] = deck1.pop()
-    removeNulls(outDeck1)
-    console.log(outDeck1)
     removeCards();
+    outDeck1[0] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
     placeAllCards();
+    // setTimeout(placeAllCards, 500);
     placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
@@ -1486,9 +1569,10 @@ function rect12event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck1[1] = deck1.pop()
-    removeNulls(outDeck1)
     removeCards();
+    outDeck1[1] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1502,9 +1586,10 @@ function rect13event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck1[2] = deck1.pop()
-    removeNulls(outDeck1)
     removeCards();
+    outDeck1[2] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1518,9 +1603,10 @@ function rect14event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck1[3] = deck1.pop()
-    removeNulls(outDeck1)
     removeCards();
+    outDeck1[3] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1533,9 +1619,10 @@ function rect21event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
+    removeCards();    
     outDeck2[0] = deck2.pop()
-    removeNulls(outDeck2)
-    removeCards();
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1548,9 +1635,10 @@ function rect22event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck2[1] = deck2.pop()
-    removeNulls(outDeck2)
     removeCards();
+    outDeck2[1] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1563,9 +1651,10 @@ function rect23event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck2[2] = deck2.pop()
-    removeNulls(outDeck2)
     removeCards();
+    outDeck2[2] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1578,9 +1667,10 @@ function rect24event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck2[3] = deck2.pop()
-    removeNulls(outDeck2)
     removeCards();
+    outDeck2[3] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1593,9 +1683,10 @@ function rect31event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck3[0] = deck3.pop()
-    removeNulls(outDeck3)
     removeCards();
+    outDeck3[0] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1608,9 +1699,10 @@ function rect32event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck3[1] = deck3.pop()
-    removeNulls(outDeck3)
     removeCards();
+    outDeck3[1] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1623,9 +1715,10 @@ function rect33event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck3[2] = deck3.pop()
-    removeNulls(outDeck3)
     removeCards();
+    outDeck3[2] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1638,9 +1731,10 @@ function rect34event() {
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    outDeck3[3] = deck3.pop();
-    removeNulls(outDeck3)
     removeCards();
+    outDeck3[3] = deck3.pop();
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
     placeAllCards();
     placeAllBonuses();
     removeAllCardButtons();
@@ -1998,6 +2092,7 @@ function discardChips(player) {
 }
 
 function turnOver() {
+    checkBonuses()
     updatePlayer(turnIndex)
     // console.log(elements)
     // console.log(playerArray)
