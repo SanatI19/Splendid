@@ -1,4 +1,5 @@
 const waitTime = 500;
+const cardTransitionTime = 700;
 
 let board = document.getElementById("board")
 const deck1string = JSON.parse(localStorage.getItem("deck1"));
@@ -9,12 +10,13 @@ let outDeck1string = JSON.parse(localStorage.getItem("outDeck1"));
 let outDeck2string = JSON.parse(localStorage.getItem("outDeck2"));
 let outDeck3string = JSON.parse(localStorage.getItem("outDeck3"));
 
+
 let pileVals = JSON.parse(localStorage.getItem("pileVals"))
 let goldVal = parseInt(localStorage.getItem("goldVal"))
 // console.log(pileVals)
 // console.log(pileVals["k"])
 
-let victoryValue = 15;
+let victoryValue = 205;
 
 let chipsBought = [];
 // let turnOver = false;
@@ -127,6 +129,13 @@ const p1blackCard = document.getElementById("p1blackCard");
 const p1blackCardCount = document.getElementById("p1blackCardCount");
 const p1goldCard = document.getElementById("p1goldCard");
 const p1goldCardCount = document.getElementById("p1goldCardCount");
+const p1whiteCardCopy = document.getElementById("p1whiteCardCopy")
+const p1blueCardCopy = document.getElementById("p1blueCardCopy")
+const p1greenCardCopy = document.getElementById("p1greenCardCopy")
+const p1redCardCopy = document.getElementById("p1redCardCopy")
+const p1blackCardCopy = document.getElementById("p1blackCardCopy")
+const p1goldCardCopy = document.getElementById("p1goldCardCopy")
+
 
 const p2whiteCard = document.getElementById("p2whiteCard");
 const p2whiteCardCount = document.getElementById("p2whiteCardCount");
@@ -140,6 +149,12 @@ const p2blackCard = document.getElementById("p2blackCard");
 const p2blackCardCount = document.getElementById("p2blackCardCount");
 const p2goldCard = document.getElementById("p2goldCard");
 const p2goldCardCount = document.getElementById("p2goldCardCount");
+const p2whiteCardCopy = document.getElementById("p2whiteCardCopy")
+const p2blueCardCopy = document.getElementById("p2blueCardCopy")
+const p2greenCardCopy = document.getElementById("p2greenCardCopy")
+const p2redCardCopy = document.getElementById("p2redCardCopy")
+const p2blackCardCopy = document.getElementById("p2blackCardCopy")
+const p2goldCardCopy = document.getElementById("p2goldCardCopy")
 
 const p3whiteCard = document.getElementById("p3whiteCard");
 const p3whiteCardCount = document.getElementById("p3whiteCardCount");
@@ -153,6 +168,12 @@ const p3blackCard = document.getElementById("p3blackCard");
 const p3blackCardCount = document.getElementById("p3blackCardCount");
 const p3goldCard = document.getElementById("p3goldCard");
 const p3goldCardCount = document.getElementById("p3goldCardCount");
+const p3whiteCardCopy = document.getElementById("p3whiteCardCopy")
+const p3blueCardCopy = document.getElementById("p3blueCardCopy")
+const p3greenCardCopy = document.getElementById("p3greenCardCopy")
+const p3redCardCopy = document.getElementById("p3redCardCopy")
+const p3blackCardCopy = document.getElementById("p3blackCardCopy")
+const p3goldCardCopy = document.getElementById("p3goldCardCopy")
 
 const p4whiteCard = document.getElementById("p4whiteCard");
 const p4whiteCardCount = document.getElementById("p4whiteCardCount");
@@ -166,6 +187,12 @@ const p4blackCard = document.getElementById("p4blackCard");
 const p4blackCardCount = document.getElementById("p4blackCardCount");
 const p4goldCard = document.getElementById("p4goldCard");
 const p4goldCardCount = document.getElementById("p4goldCardCount");
+const p4whiteCardCopy = document.getElementById("p4whiteCardCopy")
+const p4blueCardCopy = document.getElementById("p4blueCardCopy")
+const p4greenCardCopy = document.getElementById("p4greenCardCopy")
+const p4redCardCopy = document.getElementById("p4redCardCopy")
+const p4blackCardCopy = document.getElementById("p4blackCardCopy")
+const p4goldCardCopy = document.getElementById("p4goldCardCopy")
 
 const deck1rect = document.getElementById("deck1")
 const deck2rect = document.getElementById("deck2")
@@ -186,6 +213,13 @@ function createPlayerElementArrays() {
     const blackCounts = [p1blackCardCount, p2blackCardCount, p3blackCardCount, p4blackCardCount]
     const gold = [p1goldCard, p2goldCard, p3goldCard, p4goldCard]
     const goldCounts = [p1goldCardCount, p2goldCardCount, p3goldCardCount, p4goldCardCount]
+
+    const whiteCopy = [p1whiteCardCopy, p2whiteCardCopy, p3whiteCardCopy, p4whiteCardCopy]
+    const blueCopy = [p1blueCardCopy, p2blueCardCopy, p3blueCardCopy, p4blueCardCopy]
+    const greenCopy = [p1greenCardCopy, p2greenCardCopy, p3greenCardCopy, p4greenCardCopy]
+    const redCopy = [p1redCardCopy, p2redCardCopy, p3redCardCopy, p4redCardCopy]
+    const blackCopy = [p1blackCardCopy, p2blackCardCopy, p3blackCardCopy, p4blackCardCopy]
+    const goldCopy = [p1goldCardCopy, p2goldCardCopy, p3goldCardCopy, p4goldCardCopy]
 
     const vp = [p1vp, p2vp, p3vp, p4vp]
 
@@ -211,7 +245,8 @@ function createPlayerElementArrays() {
     const playerCards = {"w": white, "k": black, "r": red, "u": blue, "g": green, "y": gold}
 
     const playerNames = [p1name, p2name, p3name, p4name]
-    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames]
+    const playerCardCopies = {"w": whiteCopy, "k": blackCopy, "r": redCopy, "u": blueCopy, "g": greenCopy, "y": goldCopy}
+    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames, playerCardCopies]
 }
 
 const elements = createPlayerElementArrays()
@@ -224,6 +259,7 @@ const playerChips = elements[4]
 const playerCards = elements[5]
 const playerCardCounts = elements[6]
 const playerNames = elements[7]
+const playerCardCopies = elements[8]
 // console.log(playerCardCounts)
 
 const bonusesString = JSON.parse(localStorage.getItem("bonuses"));
@@ -421,6 +457,7 @@ const outDeck2 = convertToCards(outDeck2string);
 const outDeck3 = convertToCards(outDeck3string);
 
 const decks = [deck1, deck2, deck3]
+const outDecks = [outDeck1, outDeck2, outDeck3]
 
 const bonuses = convertToBonuses(bonusesString);
 const playerArray = convertToPlayers(playerArrayString);
@@ -440,6 +477,24 @@ function getX(i) {
 
 function getY(i) {
     return i*11-2
+}
+
+function getAbbrev(color) {
+    if (color == "white") {
+        return "w"
+    }
+    else if (color == "blue") {
+        return "u"
+    }
+    else if (color == "red") {
+        return "r"
+    }
+    else if (color == "green") {
+        return "g"
+    }
+    else if (color == "black") {
+        return "k"
+    }
 }
 
 function getColor(color) {
@@ -615,6 +670,122 @@ function placeCard(card, i) {
     }
 }
 
+function createCard(card, i) {
+        // let chips = document.getElementById("chips");
+    if ((card === undefined) || (card === null)) {
+        // console.log("YESSSS")
+    }
+    else{
+    // let board = document.getElementById("board");
+    // const svgNS = "http://www.w3.org/2000/svg";
+    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    // container.setAttribute("z-index",0);
+    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    //console.log(chip);
+    let x = getX(i);
+    let y = getY(card.deck);
+
+    // x = x+ 3.2;
+    // y += 3.2;
+    piece.setAttribute("x",x);
+    piece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    piece.setAttribute("height", 10);
+    piece.setAttribute("width", 6);
+    // token.setAttribute("fill",chip.color);
+    piece.setAttribute("stroke","black");
+    piece.setAttribute("stroke-width",0.15);
+    piece.setAttribute("fill", "tan")
+    piece.style.display = "inline";
+    // token.style.borderRadius = "50%";
+
+    container.appendChild(piece);
+
+    let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    // number.textContent = getColor;
+    bigCircle.setAttribute("cx", x+4.5);
+    bigCircle.setAttribute("cy", y+1.25);
+    bigCircle.setAttribute("r",0.9)
+    bigCircle.setAttribute("stroke", "black")
+    bigCircle.setAttribute("stroke-width", 0.15)
+    // number.setAttribute("font-size",2);
+    bigCircle.setAttribute("fill",getColor(card.color));
+    container.appendChild(bigCircle);
+    
+    // let line = document.createElementNS()
+    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x);
+    line.setAttribute("y1", y+2.5);
+    line.setAttribute("x2", x+6);
+    line.setAttribute("y2", y+2.5);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", 0.2);
+    container.appendChild(line)
+
+    if (card.vp != 0) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = card.vp;
+        number.setAttribute("x", x+0.5);
+        number.setAttribute("y", y+2);
+        number.setAttribute("font-size",2.5);
+        number.setAttribute("fill","gold");
+        number.setAttribute("stroke", "black")
+        number.setAttribute("stroke-width",0.1)
+        container.appendChild(number);
+    }
+
+    let nonzero = {}
+    for (let x of Object.keys(card.cost)) {
+        if (card.cost[x] > 0) {
+            nonzero[x] = card.cost[x]
+        }
+    }
+    let nonzeroKeys = Object.keys(nonzero);
+    for (let j = 0; j < nonzeroKeys.length; j++) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = nonzero[nonzeroKeys[j]];
+        number.setAttribute("x", x+0.5);
+        number.setAttribute("y", y+4+ (7/nonzeroKeys.length)*j);
+        number.setAttribute("font-size",1.5);
+        number.setAttribute("fill","black");
+        container.appendChild(number);
+
+        let circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        // number.textContent = getColor;
+        circle.setAttribute("cx", x+2);
+        circle.setAttribute("cy", y+4+ (7/nonzeroKeys.length)*j-0.5);
+        circle.setAttribute("r",0.5)
+        circle.setAttribute("stroke","black")
+        circle.setAttribute("stroke-width",0.1)
+        // number.setAttribute("font-size",2);
+        circle.setAttribute("fill",getColor(nonzeroKeys[j]));
+        container.appendChild(circle);
+    }
+
+
+    return container
+    // console.log(board)
+    // let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+    // number.textContent = chip.value;
+    // number.setAttribute("x",x-0.5);
+    // number.setAttribute("y",y+0.7);
+    // number.setAttribute("font-size",2.5);
+    // // console.log(chip.color);
+    // if (chip.color == "black" || chip.color == "blue" || chip.color == "purple") {
+    //     number.setAttribute("fill","white");
+    // }
+    // else{
+    //     number.setAttribute("fill","black");
+    // }
+    // number.style.fill = "white";
+    // number.style.textShadow = "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black";
+    // number.style.textShadow = "-1.5px -1.5px 0 black, 1.5px -1.5px 0 black, -1.5px 1.5px 0 black, 1.5px 1.5px 0 black";
+    // board.appendChild(number);
+    // complete
+    //places the chip on the board
+    }
+}
+
 function getBonusX(i) {
     if (i < 3) {
         return 60
@@ -758,6 +929,184 @@ function placeAllCards() {
     moveButtonsToFront();
 }
 
+function checkNull(val) {
+    // console.log(val)
+    if ((val === null) || (val === undefined)) {
+        // console.log("null")
+        return 0
+    }
+    return 1
+}
+
+
+function removeNulls(arr, i) {
+    // let newArr = []
+    popping = []
+    for (let i = 0; i < arr.length; i++) {
+        if ((arr[i] === null) || (arr[i] === undefined)) {
+            popping.unshift(i)
+        }
+    }
+    // console.log(popping)
+    for (x of popping) {
+        arr.splice(x,1)
+    }
+    return arr
+    // if (popping.length > 0) {
+    //     deckRects[i].style.display = "none";
+    // }
+    // console.log(arr)
+    // return newArr
+}
+
+function sumPrev(deck,i) {
+    console.log(outDecks)
+    let sum = 0;
+    for (let val = 0; val < i; val++) {
+        sum += removeNulls(outDecks.map(x => x[val])).length
+    }
+    console.log(sum)
+    // console.log(outDecks)
+    for (let val = 0; val < deck; val++) {
+        sum += checkNull(outDecks[val][i]);
+    }
+    console.log(sum)
+    console.log(3*i + deck)
+    return sum
+}
+console.log(outDecks)
+function removeCard(deck, i) {
+    console.log(board.children)
+    console.log(outDecks)
+    moveButtonsToBack();
+    const nthchild = board.children[sumPrev(deck,i)+22]
+    console.log(nthchild)
+
+    slideCardToPlayer(nthchild, deck, i, cardTransitionTime)
+    board.removeChild(nthchild)
+    // setTimeout(() => {
+    //     board.removeChild(nthchild)
+    // }, 201)
+}
+
+function slideCardToPlayer(cardElement, deck, i, duration) {
+    const color = cardElement.children[1].getAttribute("fill");
+    // console.log(color)
+    const stationaryElement = playerCards[getAbbrev(color)][turnIndex]
+    const element = playerCardCopies[getAbbrev(color)][turnIndex]
+    // element.parentNode.appendChild(element)
+    element.style.display = "inline"
+    
+    console.log(element)
+    const finalX = parseFloat(stationaryElement.getAttribute("x"));
+    const finalY = parseFloat(stationaryElement.getAttribute("y"))
+    const initX = getX(i+1)
+    const initY = getY(deck+1)
+    const distanceX = finalX - initX;
+    const distanceY = finalY - initY;
+    // console.log(distanceX)
+    // console.log(distanceY)
+    const startTime = performance.now();
+
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
+        const currentX = initX + distanceX * progress;
+        const currentY = initY + distanceY * progress
+
+        // cardElement.querySelector("rect").setAttribute("x", currentX);
+        element.setAttribute("x", currentX)
+        element.setAttribute("y", currentY)
+        // cardElement.setAttribute("x", currentX)
+        // cardElement.setAttribute("y", currentY)
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+        else {
+            element.style.display = "none"
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+
+function replaceCard(deck, i) {
+    const nthchild = board.children[sumPrev(deck,i)+22]
+    const newCard = createCard(outDecks[deck][i], i)
+    if (newCard) {
+        board.insertBefore(newCard,nthchild);
+        // newCard.setAttribute("x", 1000)
+        slideCardFromDeck(newCard, deck, 500)
+    }
+    moveButtonsToFront(newCard, deck)
+}
+
+// function slideCardFromDeck(cardElement, deck, time) {
+//     const initX = parseFloat(deckRects[deck].querySelector("rect").getAttribute("x"));
+//     console.log(initX)
+//     const finalX = parseFloat(cardElement.querySelector("rect").getAttribute("x"));
+//     console.log(finalX)
+//     let x = initX;
+//     cardElement.setAttribute("x", x)
+//     const speed = (finalX-initX)/time
+//     function animate() {
+//         if (x < finalX) {
+//             x += speed;
+//             cardElement.querySelector("rect").setAttribute("x", x)
+//             requestAnimationFrame(animate)
+//         }
+//         // console.log("YE")
+//     }
+//     animate();
+// }
+
+function slideCardFromDeck(cardElement, deck, duration) {
+    const initX = parseFloat(deckRects[deck].querySelector("rect").getAttribute("x"));
+    const finalX = parseFloat(cardElement.querySelector("rect").getAttribute("x"));
+    const distance = finalX - initX;
+    const startTime = performance.now();
+
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
+        const currentX = initX + distance * progress;
+
+        // cardElement.querySelector("rect").setAttribute("x", currentX);
+        updateAllX(cardElement, currentX)
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+function updateAllX(cardElement, x) {
+    const children = cardElement.children;
+    children[0].setAttribute("x", x)
+    children[1].setAttribute("cx", x+4.5)
+    children[2].setAttribute("x1", x)
+    children[2].setAttribute("x2", x+6)
+    if (children.length % 2 == 0) {
+        children[3].setAttribute("x", x+0.5)
+        for (let i = 4; i<children.length;i+=2) {
+            children[i].setAttribute("x", x+0.5)
+            children[i+1].setAttribute("cx", x+2)
+        }
+    }
+    else{
+        for (let i = 3; i<children.length;i+=2) {
+            children[i].setAttribute("x", x+0.5)
+            children[i+1].setAttribute("cx", x+2)
+        }
+    }
+}
+
+
+
 function removeCards() {
     // console.log(outDeck1.length)
     moveButtonsToBack();
@@ -851,6 +1200,12 @@ function initPlayer(i) {
     playerCardCounts["k"][i].style.display = "none";
     playerCards["y"][i].style.display = "none";
     playerCardCounts["y"][i].style.display = "none";
+    playerCardCopies["w"][i].style.display = "none";
+    playerCardCopies["u"][i].style.display = "none";
+    playerCardCopies["g"][i].style.display = "none";
+    playerCardCopies["r"][i].style.display = "none";
+    playerCardCopies["k"][i].style.display = "none";
+    playerCardCopies["y"][i].style.display = "none";
     updatePlayer(i);
 }
 
@@ -1247,156 +1602,186 @@ function yellowPileEvent() {
     yellowPile.querySelector("text").innerHTML = goldVal;
     // updateCurrentPlayer(turnIndex)
     updatePlayer(turnIndex)
-    rect11.addEventListener("click", handleReserve11);
-    rect12.addEventListener("click", handleReserve12);
-    rect13.addEventListener("click", handleReserve13);
-    rect14.addEventListener("click", handleReserve14);
-    rect21.addEventListener("click", handleReserve21);
-    rect22.addEventListener("click", handleReserve22);
-    rect23.addEventListener("click", handleReserve23);
-    rect24.addEventListener("click", handleReserve24);    
-    rect31.addEventListener("click", handleReserve31);
-    rect32.addEventListener("click", handleReserve32);
-    rect33.addEventListener("click", handleReserve33);
-    rect34.addEventListener("click", handleReserve34);
+    rect11.addEventListener("click", reserveHandlers["0,0"]);
+    rect12.addEventListener("click", reserveHandlers["0,1"]);
+    rect13.addEventListener("click", reserveHandlers["0,2"]);
+    rect14.addEventListener("click", reserveHandlers["0,3"]);
+    rect21.addEventListener("click", reserveHandlers["1,0"]);
+    rect22.addEventListener("click", reserveHandlers["1,1"]);
+    rect23.addEventListener("click", reserveHandlers["1,2"]);
+    rect24.addEventListener("click", reserveHandlers["1,3"]);    
+    rect31.addEventListener("click", reserveHandlers["2,0"]);
+    rect32.addEventListener("click", reserveHandlers["2,1"]);
+    rect33.addEventListener("click", reserveHandlers["2,2"]);
+    rect34.addEventListener("click", reserveHandlers["2,3"]);
     addHighlightsAllCards()
     removeYellowListener()
 }
 // placeCard(outDeck3[0],0)
 function removeAllReserves() {
-    rect11.removeEventListener("click", handleReserve11);
+    rect11.removeEventListener("click", reserveHandlers["0,0"]);
     rect11.style.stroke = "none";
-    rect12.removeEventListener("click", handleReserve12);
+    rect12.removeEventListener("click", reserveHandlers["0,1"]);
     rect12.style.stroke = "none";
-    rect13.removeEventListener("click", handleReserve13);
+    rect13.removeEventListener("click", reserveHandlers["0,2"]);
     rect13.style.stroke = "none";
-    rect14.removeEventListener("click", handleReserve14);
+    rect14.removeEventListener("click", reserveHandlers["0,3"]);
     rect14.style.stroke = "none";
-    rect21.removeEventListener("click", handleReserve21);
+    rect21.removeEventListener("click", reserveHandlers["1,0"]);
     rect21.style.stroke = "none";
-    rect22.removeEventListener("click", handleReserve22);
+    rect22.removeEventListener("click", reserveHandlers["1,1"]);
     rect22.style.stroke = "none";
-    rect23.removeEventListener("click", handleReserve23);
+    rect23.removeEventListener("click", reserveHandlers["1,2"]);
     rect23.style.stroke = "none";
-    rect24.removeEventListener("click", handleReserve24);
+    rect24.removeEventListener("click", reserveHandlers["1,3"]);
     rect24.style.stroke = "none";    
-    rect31.removeEventListener("click", handleReserve31);
+    rect31.removeEventListener("click", reserveHandlers["2,0"]);
     rect31.style.stroke = "none";
-    rect32.removeEventListener("click", handleReserve32);
+    rect32.removeEventListener("click", reserveHandlers["2,1"]);
     rect32.style.stroke = "none";
-    rect33.removeEventListener("click", handleReserve33);
+    rect33.removeEventListener("click", reserveHandlers["2,2"]);
     rect33.style.stroke = "none";
-    rect34.removeEventListener("click", handleReserve34);
+    rect34.removeEventListener("click", reserveHandlers["2,3"]);
     rect34.style.stroke = "none";
 }
 // console.log(outDeck2)
-function handleReserve11() {
-    playerArray[turnIndex].reserved.push(outDeck1[0]);
-    outDeck1[0] = deck1.pop();
-    removeCards();
-    placeAllCards();
+function reserveEvent(deck, i) {
+    playerArray[turnIndex].reserved.push(outDecks[deck][i]);
+    removeCard(deck, i);
+    outDecks[deck][i] = decks[deck].pop();
+    replaceCard(deck, i)
+    // placeAllCards();
     removeAllReserves();
     updatePlayer(turnIndex)
     turnOver();
 }
-function handleReserve12() {
-    playerArray[turnIndex].reserved.push(outDeck1[1]);
-    outDeck1[1] = deck1.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updatePlayer(turnIndex)
-    turnOver();
+
+function createReserveHandler(deck, i) {
+    return function() {
+        reserveEvent(deck, i)
+    }
+} 
+
+function createAllReserveHandlers() {
+    const handlers = {}
+    for (let deck = 0; deck < 3; deck++) {
+        for (let i = 0; i < 4; i++) {
+            let key = `${deck},${i}`;
+            handlers[key] = createReserveHandler(deck,i)
+        }
+    }
+    return handlers
 }
-function handleReserve13() {
-    playerArray[turnIndex].reserved.push(outDeck1[2]);
-    outDeck1[2] = deck1.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updatePlayer(turnIndex)
-    turnOver();
-}
-function handleReserve14() {
-    playerArray[turnIndex].reserved.push(outDeck1[3]);
-    outDeck1[3] = deck1.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updatePlayer(turnIndex)
-    turnOver();
-}
-function handleReserve21() {
-    playerArray[turnIndex].reserved.push(outDeck2[0]);
-    outDeck2[0] = deck2.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve22() {
-    playerArray[turnIndex].reserved.push(outDeck2[1]);
-    outDeck2[1] = deck2.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve23() {
-    playerArray[turnIndex].reserved.push(outDeck2[2]);
-    outDeck2[2] = deck2.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    turnOver();
-}
-function handleReserve24() {
-    playerArray[turnIndex].reserved.push(outDeck2[3]);
-    outDeck2[3] = deck2.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve31() {
-    playerArray[turnIndex].reserved.push(outDeck3[0]);
-    outDeck3[0] = deck3.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve32() {
-    playerArray[turnIndex].reserved.push(outDeck3[1]);
-    outDeck3[1] = deck3.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve33() {
-    playerArray[turnIndex].reserved.push(outDeck3[2]);
-    outDeck3[2] = deck3.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
-function handleReserve34() {
-    playerArray[turnIndex].reserved.push(outDeck3[3]);
-    outDeck3[3] = deck3.pop();
-    removeCards();
-    placeAllCards();
-    removeAllReserves();
-    updateCurrentPlayer(turnIndex)
-    turnOver();
-}
+
+const reserveHandlers = createAllReserveHandlers()
+
+// function handleReserve11() {
+//     playerArray[turnIndex].reserved.push(outDeck1[0]);
+//     outDeck1[0] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve12() {
+//     playerArray[turnIndex].reserved.push(outDeck1[1]);
+//     outDeck1[1] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve13() {
+//     playerArray[turnIndex].reserved.push(outDeck1[2]);
+//     outDeck1[2] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve14() {
+//     playerArray[turnIndex].reserved.push(outDeck1[3]);
+//     outDeck1[3] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve21() {
+//     playerArray[turnIndex].reserved.push(outDeck2[0]);
+//     outDeck2[0] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve22() {
+//     playerArray[turnIndex].reserved.push(outDeck2[1]);
+//     outDeck2[1] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve23() {
+//     playerArray[turnIndex].reserved.push(outDeck2[2]);
+//     outDeck2[2] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     turnOver();
+// }
+// function handleReserve24() {
+//     playerArray[turnIndex].reserved.push(outDeck2[3]);
+//     outDeck2[3] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve31() {
+//     playerArray[turnIndex].reserved.push(outDeck3[0]);
+//     outDeck3[0] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve32() {
+//     playerArray[turnIndex].reserved.push(outDeck3[1]);
+//     outDeck3[1] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve33() {
+//     playerArray[turnIndex].reserved.push(outDeck3[2]);
+//     outDeck3[2] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve34() {
+//     playerArray[turnIndex].reserved.push(outDeck3[3]);
+//     outDeck3[3] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
 
 
 function addHighlightsAllChips() {
@@ -1462,82 +1847,141 @@ function checkBonuses() {
 }
 
 function addValidCardButtons(player) {
-    if (outDeck1.length > 0) {
+    if (outDeck1[0] !== undefined) {
     if (checkAffordable(player, outDeck1[0].cost)) {
-        rect11.addEventListener("click", rect11event)
+        rect11.addEventListener("click", rectHandlers["0,0"])
         rect11.style.stroke = "cyan";
     }
     }
-    if (outDeck1.length > 1) {
+    if (outDeck1[1] !== undefined) {
     if (checkAffordable(player, outDeck1[1].cost)) {
-        rect12.addEventListener("click", rect12event)
+        rect12.addEventListener("click", rectHandlers["0,1"])
         rect12.style.stroke = "cyan";
     }
 }
-    if (outDeck1.length > 2) {
+    if (outDeck1[2] !== undefined) {
     if (checkAffordable(player, outDeck1[2].cost)) {
-        rect13.addEventListener("click", rect13event)
+        rect13.addEventListener("click", rectHandlers["0,2"])
         rect13.style.stroke = "cyan";
     }
 }
-    if (outDeck1.length > 3) {
+    if (outDeck1[3] !== undefined) {
     if (checkAffordable(player, outDeck1[3].cost)) {
-        rect14.addEventListener("click", rect14event)
+        rect14.addEventListener("click", rectHandlers["0,3"])
         rect14.style.stroke = "cyan";
     }
 }
     if (checkAffordable(player, outDeck2[0].cost)) {
-        rect21.addEventListener("click", rect21event)
+        rect21.addEventListener("click", rectHandlers["1,0"])
         rect21.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck2[1].cost)) {
-        rect22.addEventListener("click", rect22event)
+        rect22.addEventListener("click", rectHandlers["1,1"])
         rect22.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck2[2].cost)) {
-        rect23.addEventListener("click", rect23event)
+        rect23.addEventListener("click", rectHandlers["1,2"])
         rect23.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck2[3].cost)) {
-        rect24.addEventListener("click", rect24event)
+        rect24.addEventListener("click", rectHandlers["1,3"])
         rect24.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck3[0].cost)) {
-        rect31.addEventListener("click", rect31event)
+        rect31.addEventListener("click", rectHandlers["2,0"])
         rect31.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck3[1].cost)) {
-        rect32.addEventListener("click", rect32event)
+        rect32.addEventListener("click", rectHandlers["2,1"])
         rect32.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck3[2].cost)) {
-        rect33.addEventListener("click", rect33event)
+        rect33.addEventListener("click", rectHandlers["2,2"])
         rect33.style.stroke = "cyan";
     }
     if (checkAffordable(player, outDeck3[3].cost)) {
-        rect34.addEventListener("click", rect34event)
+        rect34.addEventListener("click", rectHandlers["2,3"])
         rect34.style.stroke = "cyan";
     }
 }
 
-function removeNulls(arr, i) {
-    // let newArr = []
-    popping = []
-    for (let i = 0; i < arr.length; i++) {
-        if ((arr[i] === null) || (arr[i] === undefined)) {
-            popping.unshift(i)
-        }
-    }
-    // console.log(popping)
-    for (x of popping) {
-        arr.splice(x,1)
-    }
-    // if (popping.length > 0) {
-    //     deckRects[i].style.display = "none";
-    // }
-    // console.log(arr)
-    // return newArr
-}
+// function addValidCardButtons(player) {
+//     if (outDeck1.length > 0) {
+//     if (checkAffordable(player, outDeck1[0].cost)) {
+//         rect11.addEventListener("click", rect11event)
+//         rect11.style.stroke = "cyan";
+//     }
+//     }
+//     if (outDeck1.length > 1) {
+//     if (checkAffordable(player, outDeck1[1].cost)) {
+//         rect12.addEventListener("click", rect12event)
+//         rect12.style.stroke = "cyan";
+//     }
+// }
+//     if (outDeck1.length > 2) {
+//     if (checkAffordable(player, outDeck1[2].cost)) {
+//         rect13.addEventListener("click", rect13event)
+//         rect13.style.stroke = "cyan";
+//     }
+// }
+//     if (outDeck1.length > 3) {
+//     if (checkAffordable(player, outDeck1[3].cost)) {
+//         rect14.addEventListener("click", rect14event)
+//         rect14.style.stroke = "cyan";
+//     }
+// }
+//     if (checkAffordable(player, outDeck2[0].cost)) {
+//         rect21.addEventListener("click", rect21event)
+//         rect21.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck2[1].cost)) {
+//         rect22.addEventListener("click", rect22event)
+//         rect22.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck2[2].cost)) {
+//         rect23.addEventListener("click", rect23event)
+//         rect23.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck2[3].cost)) {
+//         rect24.addEventListener("click", rect24event)
+//         rect24.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck3[0].cost)) {
+//         rect31.addEventListener("click", rect31event)
+//         rect31.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck3[1].cost)) {
+//         rect32.addEventListener("click", rect32event)
+//         rect32.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck3[2].cost)) {
+//         rect33.addEventListener("click", rect33event)
+//         rect33.style.stroke = "cyan";
+//     }
+//     if (checkAffordable(player, outDeck3[3].cost)) {
+//         rect34.addEventListener("click", rect34event)
+//         rect34.style.stroke = "cyan";
+//     }
+// }
+
+// function removeNulls(arr, i) {
+//     // let newArr = []
+//     popping = []
+//     for (let i = 0; i < arr.length; i++) {
+//         if ((arr[i] === null) || (arr[i] === undefined)) {
+//             popping.unshift(i)
+//         }
+//     }
+//     // console.log(popping)
+//     for (x of popping) {
+//         arr.splice(x,1)
+//     }
+//     // if (popping.length > 0) {
+//     //     deckRects[i].style.display = "none";
+//     // }
+//     // console.log(arr)
+//     // return newArr
+// }
 
 function checkEmptyDeck(i) {
     if (decks[i].length == 0) {
@@ -1545,17 +1989,67 @@ function checkEmptyDeck(i) {
     }
 }
 
+function rectEvent(deck, i) {
+    console.log(deck)
+    console.log(i)
+    let card = outDecks[deck][i];
+    console.log(card)
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    // removeCards();
+    removeCard(deck,i);
+    // console.log(outDecks[deck][])
+    outDecks[deck][i] = decks[deck].pop()
+    // removeNulls(outDecks[deck], deck)
+    checkEmptyDeck(deck);
+    setTimeout(() => {
+        replaceCard(deck,i)
+    }, 100)
+    // replaceCard(deck,i)
+    // placeAllCards();
+    // setTimeout(placeAllCards, 500);
+    // placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+
+function createHandler(deck, i) {
+    return function() {
+        rectEvent(deck,i);
+    }
+}
+
+function createAllHandlers() {
+    const handlers = {}
+    for (let deck = 0; deck < 3; deck++) {
+        for (let i = 0; i < 4; i++) {
+            let key = `${deck},${i}`;
+            handlers[key] = createHandler(deck,i)
+        }
+    }
+    return handlers
+}
+
+const rectHandlers = createAllHandlers()
+console.log(rectHandlers)
 function rect11event() {
     let card = outDeck1[0];
     let player = playerArray[turnIndex];
     player.cards[card.color] += 1;
     player.vp += card.vp;
     payForCard(player, card.cost)
-    removeCards();
+    // removeCards();
+    removeCard(0,0);
     outDeck1[0] = deck1.pop()
     removeNulls(outDeck1, 0)
     checkEmptyDeck(0);
-    placeAllCards();
+    setTimeout(() => {
+        replaceCard(0,0)
+    }, 500)
+    // placeAllCards();
     // setTimeout(placeAllCards, 500);
     placeAllBonuses();
     removeAllCardButtons();
@@ -1751,29 +2245,29 @@ let greenPileDisabled = false;
 let goldPileDisabled = false;
 
 function removeAllCardButtons() {
-    rect11.removeEventListener("click", rect11event);
+    rect11.removeEventListener("click", rectHandlers["0,0"]);
     rect11.style.stroke = "none";
-    rect12.removeEventListener("click", rect12event);
+    rect12.removeEventListener("click", rectHandlers["0,1"]);
     rect12.style.stroke = "none";
-    rect13.removeEventListener("click", rect13event);
+    rect13.removeEventListener("click", rectHandlers["0,2"]);
     rect13.style.stroke = "none";
-    rect14.removeEventListener("click", rect14event);
+    rect14.removeEventListener("click", rectHandlers["0,3"]);
     rect14.style.stroke = "none";
-    rect21.removeEventListener("click", rect21event);
+    rect21.removeEventListener("click", rectHandlers["1,0"]);
     rect21.style.stroke = "none";
-    rect22.removeEventListener("click", rect22event);
+    rect22.removeEventListener("click", rectHandlers["1,1"]);
     rect22.style.stroke = "none";
-    rect23.removeEventListener("click", rect23event);
+    rect23.removeEventListener("click", rectHandlers["1,2"]);
     rect23.style.stroke = "none";
-    rect24.removeEventListener("click", rect24event);
+    rect24.removeEventListener("click", rectHandlers["1,3"]);
     rect24.style.stroke = "none";    
-    rect31.removeEventListener("click", rect31event);
+    rect31.removeEventListener("click", rectHandlers["2,0"]);
     rect31.style.stroke = "none";
-    rect32.removeEventListener("click", rect32event);
+    rect32.removeEventListener("click", rectHandlers["2,1"]);
     rect32.style.stroke = "none";
-    rect33.removeEventListener("click", rect33event);
+    rect33.removeEventListener("click", rectHandlers["2,2"]);
     rect33.style.stroke = "none";
-    rect34.removeEventListener("click", rect34event);
+    rect34.removeEventListener("click", rectHandlers["2,3"]);
     rect34.style.stroke = "none";
 }
 

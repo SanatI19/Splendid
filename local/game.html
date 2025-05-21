@@ -15,161 +15,6 @@
 <body>  
     <svg id="main" x = "20px" y="20px" xmlns = "http://www.w3.org/2000/svg"
         viewBox="0 0 100 50">
-      
-    <!-- <g id="board" -->
-    <g id="player1" style="display: none;">
-        <rect id="player1container" x="40" y="0" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <line x1="40" x2="56" y1="2" y2="2" stroke="black" stroke-width="0.2"></line>
-        <line x1="53" x2="53" y1="0" y2="2" stroke="black" stroke-width="0.2"></line>
-        <text id="player1vp" x="53.5" y="1.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
-        <text id="player1name" x="40.5" y="1.5" font-size="1.5">A</text>
-        <rect id="p1chips" x="56" y="0" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <circle id="p1whitecircle" cx="57" cy="1" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1white" x="58.5" y="1.3" fill="black" font-size="1">0</text>
-        <circle id="p1bluecircle" cx="57" cy="2" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1blue" x="58.5" y="2.3" fill="black" font-size="1">0</text>
-        <circle id="p1greencircle" cx="57" cy="3" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1green" x="58.5" y="3.3" fill="black" font-size="1">0</text>
-        <circle id="p1redcircle" cx="57" cy="4" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1red" x="58.5" y="4.3" fill="black" font-size="1">0</text>
-        <circle id="p1blackcircle" cx="57" cy="5" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1black" x="58.5" y="5.3" fill="black" font-size="1">0</text>
-        <circle id="p1yellowcircle" cx="57" cy="6" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
-        <text id="p1yellow" x="58.5" y="6.3" fill="black" font-size="1">0</text>
-        
-        <rect id="p1whiteCard" x="41" y="3" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1whiteCardCount" x="42" y="5" font-size="1.5">0</text>
-        <rect id="p1blueCard" x="43.5" y="3" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1blueCardCount" x="44.5" y="5" fill="white" font-size="1.5">0</text>
-
-        <rect id="p1greenCard" x="46" y="3" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1greenCardCount" x="47" y="5" font-size="1.5">0</text>
-
-        <rect id="p1redCard" x="48.5" y="3" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1redCardCount" x="49.5" y="5" font-size="1.5">0</text>
-        
-        <rect id="p1blackCard" x="51" y="3" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1blackCardCount" x="52" y="5" fill="white" font-size="1.5">0</text>
-
-        <rect id="p1goldCard" x="53.5" y="3" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
-        <text id="p1goldCardCount" x="54.5" y="5" fill="black" font-size="1.5">0</text>
-
-        
-    </g>
-    <g id="player2" style="display: none;">
-        <rect id="player2container" x="80" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <line x1="80" x2="96" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
-        <line x1="93" x2="93" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
-        <text id="player2vp" x="93.5" y="21.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
-        <text id="player2name" x="80.5" y="21.5" font-size="1.5">A</text>
-        <rect id="p2chips" x="96" y="20" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <circle id="p2whitecircle" cx="97" cy="21" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2white" x="98.5" y="21.3" fill="black" font-size="1">0</text>
-        <circle id="p2bluecircle" cx="97" cy="22" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2blue" x="98.5" y="22.3" fill="black" font-size="1">0</text>
-        <circle id="p2greencircle" cx="97" cy="23" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2green" x="98.5" y="23.3" fill="black" font-size="1">0</text>
-        <circle id="p2redcircle" cx="97" cy="24" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2red" x="98.5" y="24.3" fill="black" font-size="1">0</text>
-        <circle id="p2blackcircle" cx="97" cy="25" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2black" x="98.5" y="25.3" fill="black" font-size="1">0</text>
-        <circle id="p2yellowcircle" cx="97" cy="26" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
-        <text id="p2yellow" x="98.5" y="26.3" fill="black" font-size="1">0</text>
-
-        <rect id="p2whiteCard" x="81" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2whiteCardCount" x="82" y="25" font-size="1.5">0</text>
-        <rect id="p2blueCard" x="83.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2blueCardCount" x="84.5" y="25" fill="white" font-size="1.5">0</text>
-
-        <rect id="p2greenCard" x="86" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2greenCardCount" x="87" y="25" font-size="1.5">0</text>
-
-        <rect id="p2redCard" x="88.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2redCardCount" x="89.5" y="25" font-size="1.5">0</text>
-        
-        <rect id="p2blackCard" x="91" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2blackCardCount" x="92" y="25" fill="white" font-size="1.5">0</text>
-
-        <rect id="p2goldCard" x="93.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
-        <text id="p2goldCardCount" x="94.5" y="25" fill="black" font-size="1.5">0</text>
-
-    </g>
-    <g id="player4" style="display: none;">
-        <rect id="player4container" x="0" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <line x1="0" x2="16" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
-        <line x1="13" x2="13" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
-        <text id="player4vp" x="13.5" y="21.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
-        <text id="player4name" x="0.5" y="21.5" font-size="1.5">A</text>
-        <rect id="p4chips" x="16" y="20" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <circle id="p4whitecircle" cx="17" cy="21" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4white" x="18.5" y="21.3" fill="black" font-size="1">0</text>
-        <circle id="p4bluecircle" cx="17" cy="22" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4blue" x="18.5" y="22.3" fill="black" font-size="1">0</text>
-        <circle id="p4greencircle" cx="17" cy="23" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4green" x="18.5" y="23.3" fill="black" font-size="1">0</text>
-        <circle id="p4redcircle" cx="17" cy="24" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4red" x="18.5" y="24.3" fill="black" font-size="1">0</text>
-        <circle id="p4blackcircle" cx="17" cy="25" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4black" x="18.5" y="25.3" fill="black" font-size="1">0</text>
-        <circle id="p4yellowcircle" cx="17" cy="26" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
-        <text id="p4yellow" x="18.5" y="26.3" fill="black" font-size="1">0</text>
-
-        <rect id="p4whiteCard" x="1" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4whiteCardCount" x="2" y="25" font-size="1.5">0</text>
-        <rect id="p4blueCard" x="3.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4blueCardCount" x="4.5" y="25" fill="white" font-size="1.5">0</text>
-
-        <rect id="p4greenCard" x="6" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4greenCardCount" x="7" y="25" font-size="1.5">0</text>
-
-        <rect id="p4redCard" x="8.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4redCardCount" x="9.5" y="25" font-size="1.5">0</text>
-        
-        <rect id="p4blackCard" x="11" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4blackCardCount" x="12" y="25" fill="white" font-size="1.5">0</text>
-
-        <rect id="p4goldCard" x="13.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
-        <text id="p4goldCardCount" x="14.5" y="25" fill="black" font-size="1.5">0</text>
-
-    </g>
-
-    <g id="player3" style="display: none;">
-        <rect id="player3container" x="40" y="43" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <line x1="40" x2="56" y1="45" y2="45" stroke="black" stroke-width="0.2"></line>
-        <line x1="53" x2="53" y1="43" y2="45" stroke="black" stroke-width="0.2"></line>
-        <text id="player3vp" x="53.5" y="44.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
-        <text id="player3name" x="40.5" y="44.5" font-size="1.5">A</text>
-        <rect id="p3chips" x="56" y="43" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <circle id="p3whitecircle" cx="57" cy="44" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3white" x="58.5" y="44.3" fill="black" font-size="1">0</text>
-        <circle id="p3bluecircle" cx="57" cy="45" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3blue" x="58.5" y="45.3" fill="black" font-size="1">0</text>
-        <circle id="p3greencircle" cx="57" cy="46" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3green" x="58.5" y="46.3" fill="black" font-size="1">0</text>
-        <circle id="p3redcircle" cx="57" cy="47" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3red" x="58.5" y="47.3" fill="black" font-size="1">0</text>
-        <circle id="p3blackcircle" cx="57" cy="48" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3black" x="58.5" y="48.3" fill="black" font-size="1">0</text>
-        <circle id="p3yellowcircle" cx="57" cy="49" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
-        <text id="p3yellow" x="58.5" y="49.3" fill="black" font-size="1">0</text>
-
-        <rect id="p3whiteCard" x="41" y="46" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3whiteCardCount" x="42" y="48" font-size="1.5">0</text>
-        <rect id="p3blueCard" x="43.5" y="46" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3blueCardCount" x="44.5" y="48" fill="white" font-size="1.5">0</text>
-
-        <rect id="p3greenCard" x="46" y="46" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3greenCardCount" x="47" y="48" font-size="1.5">0</text>
-
-        <rect id="p3redCard" x="48.5" y="46" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3redCardCount" x="49.5" y="48" font-size="1.5">0</text>
-        
-        <rect id="p3blackCard" x="51" y="46" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3blackCardCount" x="52" y="48" fill="white" font-size="1.5">0</text>
-
-        <rect id="p3goldCard" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
-        <text id="p3goldCardCount" x="54.5" y="48" fill="black" font-size="1.5">0</text>
-    </g>
     <g id="board" style="display: inline;">
             <!-- <rect style="x:10; y:80; width:10px; height:10px"></rect> -->
             <!-- <rect x="10" y="80" width="10" height = "10"></rect> -->
@@ -292,6 +137,202 @@
             <rect x="40" y="46" width="4" height="1" fill="yellow" stroke="grey" stroke-width="0.25"></rect>
         </g> -->
     </g>
+    <!-- <g id="board" -->
+    <g id="player1" style="display: none;">
+        <rect id="player1container" x="40" y="0" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <line x1="40" x2="56" y1="2" y2="2" stroke="black" stroke-width="0.2"></line>
+        <line x1="53" x2="53" y1="0" y2="2" stroke="black" stroke-width="0.2"></line>
+        <text id="player1vp" x="53.5" y="1.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
+        <text id="player1name" x="40.5" y="1.5" font-size="1.5">A</text>
+        <rect id="p1chips" x="56" y="0" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <circle id="p1whitecircle" cx="57" cy="1" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1white" x="58.5" y="1.3" fill="black" font-size="1">0</text>
+        <circle id="p1bluecircle" cx="57" cy="2" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1blue" x="58.5" y="2.3" fill="black" font-size="1">0</text>
+        <circle id="p1greencircle" cx="57" cy="3" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1green" x="58.5" y="3.3" fill="black" font-size="1">0</text>
+        <circle id="p1redcircle" cx="57" cy="4" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1red" x="58.5" y="4.3" fill="black" font-size="1">0</text>
+        <circle id="p1blackcircle" cx="57" cy="5" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1black" x="58.5" y="5.3" fill="black" font-size="1">0</text>
+        <circle id="p1yellowcircle" cx="57" cy="6" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
+        <text id="p1yellow" x="58.5" y="6.3" fill="black" font-size="1">0</text>
+        
+        <rect id="p1whiteCard" x="41" y="3" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1whiteCardCopy" x="41" y="3" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1whiteCardCount" x="42" y="5" font-size="1.5">0</text>
+        <rect id="p1blueCard" x="43.5" y="3" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1blueCardCopy" x="43.5" y="3" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1blueCardCount" x="44.5" y="5" fill="white" font-size="1.5">0</text>
+
+        <rect id="p1greenCard" x="46" y="3" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1greenCardCopy" x="46" y="3" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1greenCardCount" x="47" y="5" font-size="1.5">0</text>
+
+        <rect id="p1redCard" x="48.5" y="3" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1redCardCopy" x="48.5" y="3" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1redCardCount" x="49.5" y="5" font-size="1.5">0</text>
+        
+        <rect id="p1blackCard" x="51" y="3" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1blackCardCopy" x="51" y="3" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1blackCardCount" x="52" y="5" fill="white" font-size="1.5">0</text>
+
+        <rect id="p1goldCard" x="53.5" y="3" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p1goldCardCopy" x="53.5" y="3" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p1goldCardCount" x="54.5" y="5" fill="black" font-size="1.5">0</text>
+
+        
+    </g>
+    <g id="player2" style="display: none;">
+        <rect id="player2container" x="80" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <line x1="80" x2="96" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
+        <line x1="93" x2="93" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
+        <text id="player2vp" x="93.5" y="21.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
+        <text id="player2name" x="80.5" y="21.5" font-size="1.5">A</text>
+        <rect id="p2chips" x="96" y="20" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <circle id="p2whitecircle" cx="97" cy="21" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2white" x="98.5" y="21.3" fill="black" font-size="1">0</text>
+        <circle id="p2bluecircle" cx="97" cy="22" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2blue" x="98.5" y="22.3" fill="black" font-size="1">0</text>
+        <circle id="p2greencircle" cx="97" cy="23" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2green" x="98.5" y="23.3" fill="black" font-size="1">0</text>
+        <circle id="p2redcircle" cx="97" cy="24" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2red" x="98.5" y="24.3" fill="black" font-size="1">0</text>
+        <circle id="p2blackcircle" cx="97" cy="25" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2black" x="98.5" y="25.3" fill="black" font-size="1">0</text>
+        <circle id="p2yellowcircle" cx="97" cy="26" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
+        <text id="p2yellow" x="98.5" y="26.3" fill="black" font-size="1">0</text>
+
+        <rect id="p2whiteCard" x="81" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2whiteCardCopy" x="81" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2whiteCardCount" x="82" y="25" font-size="1.5">0</text>
+        <rect id="p2blueCard" x="83.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2blueCardCopy" x="83.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2blueCardCount" x="84.5" y="25" fill="white" font-size="1.5">0</text>
+
+        <rect id="p2greenCard" x="86" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2greenCardCopy" x="86" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2greenCardCount" x="87" y="25" font-size="1.5">0</text>
+
+        <rect id="p2redCard" x="88.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2redCardCopy" x="88.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2redCardCount" x="89.5" y="25" font-size="1.5">0</text>
+        
+        <rect id="p2blackCard" x="91" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2blackCardCopy" x="91" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2blackCardCount" x="92" y="25" fill="white" font-size="1.5">0</text>
+
+        <rect id="p2goldCard" x="93.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p2goldCardCopy" x="93.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p2goldCardCount" x="94.5" y="25" fill="black" font-size="1.5">0</text>
+
+    </g>
+    <g id="player4" style="display: none;">
+        <rect id="player4container" x="0" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <line x1="0" x2="16" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
+        <line x1="13" x2="13" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
+        <text id="player4vp" x="13.5" y="21.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
+        <text id="player4name" x="0.5" y="21.5" font-size="1.5">A</text>
+        <rect id="p4chips" x="16" y="20" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <circle id="p4whitecircle" cx="17" cy="21" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4white" x="18.5" y="21.3" fill="black" font-size="1">0</text>
+        <circle id="p4bluecircle" cx="17" cy="22" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4blue" x="18.5" y="22.3" fill="black" font-size="1">0</text>
+        <circle id="p4greencircle" cx="17" cy="23" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4green" x="18.5" y="23.3" fill="black" font-size="1">0</text>
+        <circle id="p4redcircle" cx="17" cy="24" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4red" x="18.5" y="24.3" fill="black" font-size="1">0</text>
+        <circle id="p4blackcircle" cx="17" cy="25" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4black" x="18.5" y="25.3" fill="black" font-size="1">0</text>
+        <circle id="p4yellowcircle" cx="17" cy="26" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
+        <text id="p4yellow" x="18.5" y="26.3" fill="black" font-size="1">0</text>
+
+        <rect id="p4whiteCard" x="1" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4whiteCardCopy" x="1" y="23" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p4whiteCardCount" x="2" y="25" font-size="1.5">0</text>
+        <rect id="p4blueCard" x="3.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4blueCardCopy" x="3.5" y="23" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p4blueCardCount" x="4.5" y="25" fill="white" font-size="1.5">0</text>
+
+        <rect id="p4greenCard" x="6" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4greenCardCopy" x="6" y="23" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p4greenCardCount" x="7" y="25" font-size="1.5">0</text>
+
+        <rect id="p4redCard" x="8.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4redCardCopy" x="8.5" y="23" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+        <text id="p4redCardCount" x="9.5" y="25" font-size="1.5">0</text>
+        
+        <rect id="p4blackCard" x="11" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4blackCardCopy" x="11" y="23" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+        <text id="p4blackCardCount" x="12" y="25" fill="white" font-size="1.5">0</text>
+
+        <rect id="p4goldCard" x="13.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p4goldCardCopy" x="13.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <text id="p4goldCardCount" x="14.5" y="25" fill="black" font-size="1.5">0</text>
+
+    </g>
+
+    <g id="player3" style="display: none;">
+        <rect id="player3container" x="40" y="43" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <line x1="40" x2="56" y1="45" y2="45" stroke="black" stroke-width="0.2"></line>
+        <line x1="53" x2="53" y1="43" y2="45" stroke="black" stroke-width="0.2"></line>
+        <text id="player3vp" x="53.5" y="44.5" font-size="1.5" fill="gold" stroke="black" stroke-width="0.05">0</text>
+        <text id="player3name" x="40.5" y="44.5" font-size="1.5">A</text>
+        <rect id="p3chips" x="56" y="43" height="7" width="4" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <circle id="p3whitecircle" cx="57" cy="44" r="0.4" fill="white" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3white" x="58.5" y="44.3" fill="black" font-size="1">0</text>
+        <circle id="p3bluecircle" cx="57" cy="45" r="0.4" fill="blue" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3blue" x="58.5" y="45.3" fill="black" font-size="1">0</text>
+        <circle id="p3greencircle" cx="57" cy="46" r="0.4" fill="green" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3green" x="58.5" y="46.3" fill="black" font-size="1">0</text>
+        <circle id="p3redcircle" cx="57" cy="47" r="0.4" fill="red" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3red" x="58.5" y="47.3" fill="black" font-size="1">0</text>
+        <circle id="p3blackcircle" cx="57" cy="48" r="0.4" fill="black" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3black" x="58.5" y="48.3" fill="black" font-size="1">0</text>
+        <circle id="p3yellowcircle" cx="57" cy="49" r="0.4" fill="yellow" stroke="black" stroke-width="0.1"></circle>
+        <text id="p3yellow" x="58.5" y="49.3" fill="black" font-size="1">0</text>
+
+        <rect id="p3whiteCard" x="41" y="46" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3whiteCardCopy" x="41" y="46" height="3" width="2" fill="white" stroke="black" stroke-width="0.1"></rect>
+        <text id="p3whiteCardCount" x="42" y="48" font-size="1.5">0</text>
+        <rect id="p3blueCard" x="43.5" y="46" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3blueCardCopy" x="43.5" y="46" height="3" width="2" fill="blue" stroke="black" stroke-width="0.1"></rect>
+        <text id="p3blueCardCount" x="44.5" y="48" fill="white" font-size="1.5">0</text>
+
+        <rect id="p3greenCard" x="46" y="46" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3greenCardCopy" x="46" y="46" height="3" width="2" fill="green" stroke="black" stroke-width="0.1"></rect>
+        <text id="p3greenCardCount" x="47" y="48" font-size="1.5">0</text>
+
+        <rect id="p3redCard" x="48.5" y="46" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3redCardCopy" x="48.5" y="46" height="3" width="2" fill="red" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p3redCardCount" x="49.5" y="48" font-size="1.5">0</text>
+        
+        <rect id="p3blackCard" x="51" y="46" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3blackCardCopy" x="51" y="46" height="3" width="2" fill="black" stroke="black" stroke-width="0.1"></rect>
+
+        <text id="p3blackCardCount" x="52" y="48" fill="white" font-size="1.5">0</text>
+
+        <rect id="p3goldCard" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <rect id="p3goldCardCopy" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
+        <text id="p3goldCardCount" x="54.5" y="48" fill="black" font-size="1.5">0</text>
+    </g>
+    
     </svg>
     <!-- <button id="confirm">Confirm</button> -->
     <script src="game.js"></script>
