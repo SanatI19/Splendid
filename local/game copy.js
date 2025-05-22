@@ -55,15 +55,6 @@ const redPileCopy = document.getElementById("redPileCopy");
 const blackPileCopy = document.getElementById("blackPileCopy");
 const yellowPileCopy = document.getElementById("yellowPileCopy");
 
-const p1chipsRect = document.getElementById("p1chips")
-const p2chipsRect = document.getElementById("p2chips")
-const p3chipsRect = document.getElementById("p3chips")
-const p4chipsRect = document.getElementById("p4chips")
-
-const p1containerRectOuter = document.getElementById("player1outer");
-const p2containerRectOuter = document.getElementById("player2outer");
-const p3containerRectOuter = document.getElementById("player3outer");
-const p4containerRectOuter = document.getElementById("player4outer");
 
 const p1containerRect = document.getElementById("player1container");
 const p2containerRect = document.getElementById("player2container");
@@ -273,11 +264,7 @@ function createPlayerElementArrays() {
     const piles = {"w": whitePile, "k": blackPile, "r": redPile, "u": bluePile, "g": greenPile, "y": yellowPile}
     const pilesCopies = {"w": whitePileCopy, "k": blackPileCopy, "r": redPileCopy, "u": bluePileCopy, "g": greenPileCopy, "y": yellowPileCopy}
 
-    const playerChipRects = [p1chipsRect, p2chipsRect, p3chipsRect, p4chipsRect];
-
-    const containerRectsOuter = [p1containerRectOuter, p2containerRectOuter, p3containerRectOuter, p4containerRectOuter]
-
-    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames, playerCardCopies, piles, pilesCopies, playerChipRects, containerRectsOuter]
+    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames, playerCardCopies, piles, pilesCopies]
 }
 
 const elements = createPlayerElementArrays()
@@ -293,8 +280,6 @@ const playerNames = elements[7]
 const playerCardCopies = elements[8]
 const piles = elements[9]
 const pilesCopies = elements[10]
-const playerChipRects = elements[11]
-const playerContainersOuter = elements[12]
 
 // console.log(playerCardCounts)
 
@@ -343,15 +328,6 @@ function getTotalDiff(coins, cost) {
     return result
 }
 
-function getTotalCoins(player) {
-    const coins = player.coins
-    let result = 0;
-    const keys = Object.keys(coins)
-    for (const key of keys) {
-        result += coins[key]
-    }
-    return result
-}
 // function getDiffedColord(coins, cost) {
 //     const result = {};
 //     const keys = Object.keys(coins);
@@ -399,6 +375,12 @@ function adjustCoinTallies(payment) {
     pileVals["u"] += payment["u"]
     updateCoinPiles(pileVals)
 
+    // blackPile.querySelector("text").innerHTML = parseInt(blackPile.querySelector("text").textContent) + payment["k"];
+    // bluePile.querySelector("text").innerHTML = parseInt(bluePile.querySelector("text").textContent) + payment["u"];
+    // redPile.querySelector("text").innerHTML = parseInt(redPile.querySelector("text").textContent) + payment["r"];
+    // greenPile.querySelector("text").innerHTML = parseInt(greenPile.querySelector("text").textContent) + payment["g"];
+    // whitePile.querySelector("text").innerHTML = parseInt(whitePile.querySelector("text").textContent) + payment["w"];
+
 }
 
 function checkAffordable(player, cardCost) {
@@ -423,6 +405,15 @@ function checkAffordable(player, cardCost) {
         }
     }
 }
+// class Player {
+//     constructor(name, coins, cards, vp, gold) {
+//         this.name = name;
+//         this.coins = {"w": 0, "u": 0, "g":0, "r": 0, "k": 0};
+//         this.cards = {"w": 0, "u": 0, "g":0, "r": 0, "k": 0};
+//         this.vp = 0;
+//         this.gold = 0;
+//     }
+// }
 
 class Player {
     constructor(name, coins, cards, vp, gold, reserved) {
@@ -525,9 +516,6 @@ function getAbbrev(color) {
     else if (color == "black") {
         return "k"
     }
-    else if (color == "yellow") {
-        return "y"
-    }
 }
 
 function getColor(color) {
@@ -546,13 +534,46 @@ function getColor(color) {
     else if (color == "k") {
         return "black"
     }
-    else if (color == "y") {
-        return "yellow"
-    }
 }
 
 
+// function showAllDecks() {
+//     for (let i = 1; i<=3; i++) {
+//         showDeck(i)
+//     }
+// }
+// function showDeck(i) {
+//     let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+//     let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+//     let x = 22;
+//     let y = getY(i);
 
+//     // x = x+ 3.2;
+//     // y += 3.2;
+//     piece.setAttribute("x",x);
+//     piece.setAttribute("y",y);
+//     // piece.setAttribute("r",1.75);
+//     piece.setAttribute("height", 10);
+//     piece.setAttribute("width", 6);
+//     // token.setAttribute("fill",chip.color);
+//     piece.setAttribute("stroke","black");
+//     piece.setAttribute("stroke-width",0.15);
+//     piece.setAttribute("fill", "grey")
+//     piece.style.display = "inline";
+//     container.appendChild(piece)
+
+//     let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+//     number.textContent = i;
+//     number.setAttribute("x", x+2);
+//     number.setAttribute("y", y+5);
+//     number.setAttribute("font-size",5);
+//     number.setAttribute("fill","silver");
+//     number.setAttribute("stroke", "black")
+//     number.setAttribute("stroke-width",0.1)
+//     container.appendChild(number);
+
+//     board.appendChild(container)
+// }
 
 function placeCard(card, i) {
     // let chips = document.getElementById("chips");
@@ -764,6 +785,25 @@ function createCard(card, i) {
 
 
     return container
+    // console.log(board)
+    // let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+    // number.textContent = chip.value;
+    // number.setAttribute("x",x-0.5);
+    // number.setAttribute("y",y+0.7);
+    // number.setAttribute("font-size",2.5);
+    // // console.log(chip.color);
+    // if (chip.color == "black" || chip.color == "blue" || chip.color == "purple") {
+    //     number.setAttribute("fill","white");
+    // }
+    // else{
+    //     number.setAttribute("fill","black");
+    // }
+    // number.style.fill = "white";
+    // number.style.textShadow = "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black";
+    // number.style.textShadow = "-1.5px -1.5px 0 black, 1.5px -1.5px 0 black, -1.5px 1.5px 0 black, 1.5px 1.5px 0 black";
+    // board.appendChild(number);
+    // complete
+    //places the chip on the board
     }
 }
 
@@ -818,12 +858,22 @@ function placeBonus(bonus, i) {
 
     let valText = document.createElementNS("http://www.w3.org/2000/svg","text")
     valText.textContent = ""
-    valText.setAttribute("x", x+0.5);
-    valText.setAttribute("y", y+5);
+    valText.setAttribute("x", x+4.5);
+    valText.setAttribute("y", y+6);
     valText.setAttribute("font-size", 2.5);
     valText.setAttribute("fill", "black")
     container.appendChild(valText);
-
+    // let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    // // number.textContent = getColor;
+    // bigCircle.setAttribute("cx", x+4.5);
+    // bigCircle.setAttribute("cy", y+1.25);
+    // bigCircle.setAttribute("r",0.9)
+    // bigCircle.setAttribute("stroke", "black")
+    // bigCircle.setAttribute("stroke-width", 0.15)
+    // // number.setAttribute("font-size",2);
+    // bigCircle.setAttribute("fill",getColor(card.color));
+    // container.appendChild(bigCircle);
+    
     // let line = document.createElementNS()
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", x);
@@ -936,26 +986,24 @@ function sumPrev(deck,i) {
     for (let val = 0; val < i; val++) {
         sum += removeNulls(outDecks.map(x => x[val])).length
     }
-    // console.log(sum)
+    console.log(sum)
     // console.log(outDecks)
     for (let val = 0; val < deck; val++) {
         sum += checkNull(outDecks[val][i]);
     }
+    console.log(sum)
+    console.log(3*i + deck)
     return sum
 }
 // console.log(outDecks)
-function removeCard(deck, i, y) {
+function removeCard(deck, i) {
     console.log(board.children)
     console.log(outDecks)
     moveButtonsToBack();
     const nthchild = board.children[sumPrev(deck,i)+22]
     console.log(nthchild)
-    if (y) {
-        slideCardToPlayer("yellow", deck, i, cardTransitionTime)
-    }
-    else{
-        slideCardToPlayer(nthchild.children[1].getAttribute("fill"), deck, i, cardTransitionTime)
-    }
+
+    slideCardToPlayer(nthchild, deck, i, cardTransitionTime)
     board.removeChild(nthchild)
     // setTimeout(() => {
     //     board.removeChild(nthchild)
@@ -971,8 +1019,8 @@ function doNotExceed(currentX, finalX, distance) {
     }
 }
 
-function slideCardToPlayer(color, deck, i, duration) {
-    // const color = cardElement.children[1].getAttribute("fill");
+function slideCardToPlayer(cardElement, deck, i, duration) {
+    const color = cardElement.children[1].getAttribute("fill");
     // console.log(color)
     const stationaryElement = playerCards[getAbbrev(color)][turnIndex]
     const element = playerCardCopies[getAbbrev(color)][turnIndex]
@@ -1030,67 +1078,12 @@ function slideChipToPlayer(color) {
     // element.parentNode.appendChild(element)
     element.style.display = "inline"
     // console.l
-    // console.log(stationaryElement)
+    console.log(stationaryElement)
     // console.log(element)
     const finalX = parseFloat(finalElement.getAttribute("cx"));
     const finalY = parseFloat(finalElement.getAttribute("cy"))
     const initX = parseFloat(stationaryElement.getAttribute("cx"))
     const initY = parseFloat(stationaryElement.getAttribute("cy"))
-    const distanceX = finalX - initX;
-    const distanceY = finalY - initY;
-    // console.log(distanceX)
-    // console.log(distanceY)
-    // const startTime = performance.now();
-    let currentX = initX;
-    let currentY = initY;
-
-    function animate() {
-        // const elapsed = currentTime - startTime;
-        // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
-        // const currentX = initX + distanceX * progress;
-        // const currentY = initY + distanceY * progress
-        currentX += Math.sign(distanceX)*xSpeedPlayer
-        currentY += Math.sign(distanceY)*ySpeedPlayer
-        // cardElement.querySelector("rect").setAttribute("x", currentX);
-        element.setAttribute("cx", doNotExceed(currentX, finalX, distanceX))
-        element.setAttribute("cy", doNotExceed(currentY, finalY, distanceY))
-        // cardElement.setAttribute("x", currentX)
-        // cardElement.setAttribute("y", currentY)
-        // console.log(currentX)
-        // console.log(finalX)
-        if ((doNotExceed(currentX, finalX, distanceX) != finalX) || (doNotExceed(currentY, finalY, distanceY) != finalY)) {
-            requestAnimationFrame(animate)
-        }
-        else {
-            element.style.display = "none"
-        }
-        
-        // if (progress < 1) {
-        //     requestAnimationFrame(animate);
-        // }
-        // else {
-        //     element.style.display = "none"
-        // }
-    }
-
-    requestAnimationFrame(animate);
-}
-
-function slideChipToPile(color) {
-    // const color = cardElement.children[1].getAttribute("fill");
-    // console.log(color)
-    const stationaryElement = piles[color].querySelector("circle")
-    const finalElement = playerChips[color][turnIndex]
-    const element = pilesCopies[color]
-    // element.parentNode.appendChild(element)
-    element.style.display = "inline"
-    // console.l
-    // console.log(stationaryElement)
-    // console.log(element)
-    const initX = parseFloat(finalElement.getAttribute("cx"));
-    const initY = parseFloat(finalElement.getAttribute("cy"))
-    const finalX = parseFloat(stationaryElement.getAttribute("cx"))
-    const finalY = parseFloat(stationaryElement.getAttribute("cy"))
     const distanceX = finalX - initX;
     const distanceY = finalY - initY;
     // console.log(distanceX)
@@ -1275,16 +1268,16 @@ function updateAllX(cardElement, x) {
 
 
 
-// function removeCards() {
-//     // console.log(outDeck1.length)
-//     moveButtonsToBack();
-//     // console.log(outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length)
-//     for (let i = 0; i<outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length; i++) {
-//         // console.log(board.lastChild)
-//         board.removeChild(board.lastChild)
-//         // board.removeChild()
-//     }
-// }
+function removeCards() {
+    // console.log(outDeck1.length)
+    moveButtonsToBack();
+    // console.log(outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length)
+    for (let i = 0; i<outDeck1.length+outDeck2.length+outDeck3.length+bonuses.length; i++) {
+        // console.log(board.lastChild)
+        board.removeChild(board.lastChild)
+        // board.removeChild()
+    }
+}
 
 for (let i = 0; i<3; i++) {
     checkEmptyDeck(i)
@@ -1355,7 +1348,6 @@ function initTables() {
 
 function initPlayer(i) {
     playerContainers[i].style.display = "inline";
-    playerContainersOuter[i].style.display = "none";
     playerNames[i].innerHTML = playerArray[i].name;
     playerCards["w"][i].style.display = "none";
     playerCardCounts["w"][i].style.display = "none";
@@ -1680,32 +1672,35 @@ function updateCurrentPlayer(i) {
 }
 
 function removeAllPlayerHighlights() {
-    for (x of playerContainersOuter) {
-        x.style.display = "none"
-    }
+    p1containerRect.style.stroke = "black";
+    p1containerRect.setAttribute("stroke-width", 0.1);
+    p2containerRect.style.stroke = "black";
+    p2containerRect.setAttribute("stroke-width", 0.1);
+    p3containerRect.style.stroke = "black";
+    p3containerRect.setAttribute("stroke-width", 0.1);
+    p4containerRect.style.stroke = "black";
+    p4containerRect.setAttribute("stroke-width", 0.1);
 }
 
 function highlightCurrentPlayer(i) {
     removeAllPlayerHighlights();
-    playerContainersOuter[i].style.display = "inline"
-    // playerContainersOuter[i].style.stroke = "#90EE90";
-    // if (i == 0) {
-    //     p1containerRect.style.stroke = "#90EE90";
-    //     p1containerRect.setAttribute("stroke-width", 0.5);
-    // }
-    // if (i == 1) {
-    //     p2containerRect.style.stroke = "#90EE90";
-    //     p2containerRect.setAttribute("stroke-width", 0.5);
-    // }
-    // if (i == 2) {
-    //     p3containerRect.style.stroke = "#90EE90";
-    //     p3containerRect.setAttribute("stroke-width", 0.5);  
-    // }
-    // if (i == 3) {
-    //     p4containerRect.style.stroke = "#90EE90";
-    //     p4containerRect.setAttribute("stroke-width", 0.5);
+    if (i == 0) {
+        p1containerRect.style.stroke = "#90EE90";
+        p1containerRect.setAttribute("stroke-width", 0.5);
+    }
+    if (i == 1) {
+        p2containerRect.style.stroke = "#90EE90";
+        p2containerRect.setAttribute("stroke-width", 0.5);
+    }
+    if (i == 2) {
+        p3containerRect.style.stroke = "#90EE90";
+        p3containerRect.setAttribute("stroke-width", 0.5);  
+    }
+    if (i == 3) {
+        p4containerRect.style.stroke = "#90EE90";
+        p4containerRect.setAttribute("stroke-width", 0.5);
             
-    // }
+    }
 }
 
 // showAllDecks()
@@ -1742,11 +1737,9 @@ function rectEvent(deck, i) {
     player.vp += card.vp;
     payForCard(player, card.cost)
     // removeCards();
-    removeCard(deck,i,0);
-    // console.log(outDecks[deck][])c
-    console.log(decks[deck])
+    removeCard(deck,i);
+    // console.log(outDecks[deck][])
     outDecks[deck][i] = decks[deck].pop()
-    console.log(decks[deck])
     // removeNulls(outDecks[deck], deck)
     checkEmptyDeck(deck);
     setTimeout(() => {
@@ -1782,7 +1775,7 @@ const rectHandlers = createAllHandlers()
 
 function reserveEvent(deck, i) {
     playerArray[turnIndex].reserved.push(outDecks[deck][i]);
-    removeCard(deck, i, true);
+    removeCard(deck, i);
     outDecks[deck][i] = decks[deck].pop();
     replaceCard(deck, i)
     // placeAllCards();
@@ -1827,64 +1820,6 @@ function pileListenerHandler(color) {
 const pileHandlersAll = {"k": pileListenerHandler("k"), "u": pileListenerHandler("u"), "g": pileListenerHandler("g"), "r": pileListenerHandler("r"), "w": pileListenerHandler("w")}
 pileHandlersAll["y"] = yellowPileEvent;
 
-function playerPileEvent(color) {
-    // console.log("pressed")
-    // console.log(color)
-    slideChipToPile(color)
-    // removeAllCardButtons();
-    playerArray[turnIndex].coins[color] -= 1;
-    const number = parseInt(piles[color].querySelector("text").textContent);
-    // console.log(number)
-    piles[color].querySelector("text").innerHTML = number+1;
-    pileVals[color] += 1;
-    // console.log(pileVals)
-    // chipsBought.push(color);
-    updatePlayer(turnIndex)
-
-    if (playerArray[turnIndex].coins[color] == 0) {
-        playerChips[color][turnIndex].style.stroke = "black";
-        playerChips[color][turnIndex].removeEventListener("click", allPlayerPileHandlers[color])
-    }
-    // removeYellowListener();
-    if (getTotalCoins(playerArray[turnIndex]) <= 10) {
-        removeAllPlayerPileListeners()
-        playerChipRects[turnIndex].style.stroke = "black";
-        endTurn()
-    } 
-}
-
-function playerPileHandler(color) {
-    return function() {
-        playerPileEvent(color)
-    }
-}
-
-function createPlayerPileHandlers() {
-    const result = {}
-    for (const color of colors) {
-        result[color] = playerPileHandler(color)
-    }
-    return result
-}
-
-const allPlayerPileHandlers = createPlayerPileHandlers();
-
-function triggerChipReturn() {
-    playerChipRects[turnIndex].style.stroke = "red";
-    for (const color of colors) {
-        if (playerArray[turnIndex].coins[color] > 0) {
-            playerChips[color][turnIndex].style.stroke = "red";
-            playerChips[color][turnIndex].addEventListener("click", allPlayerPileHandlers[color])
-        }
-    }
-}
-
-function removeAllPlayerPileListeners() {
-    for (const color of colors) {
-        playerChips[color][turnIndex].style.stroke = "black";
-        playerChips[color][turnIndex].removeEventListener("click", allPlayerPileHandlers[color])
-    }
-}
 
 function addHighlightsAllCards() {
     rect11.style.stroke = "yellow";
@@ -1909,7 +1844,7 @@ function addYellowEvent() {
 function removeYellowListener() {
     yellowPile.querySelector("circle").style.stroke = "none";
     yellowPile.removeEventListener("click", yellowPileEvent);
-    pilesDisabled["y"] = true
+    goldPileDisabled = true;
 }
 
 function yellowPileEvent() {
@@ -1965,6 +1900,113 @@ function removeAllReserves() {
 }
 // console.log(outDeck2)
 
+// function handleReserve11() {
+//     playerArray[turnIndex].reserved.push(outDeck1[0]);
+//     outDeck1[0] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve12() {
+//     playerArray[turnIndex].reserved.push(outDeck1[1]);
+//     outDeck1[1] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve13() {
+//     playerArray[turnIndex].reserved.push(outDeck1[2]);
+//     outDeck1[2] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve14() {
+//     playerArray[turnIndex].reserved.push(outDeck1[3]);
+//     outDeck1[3] = deck1.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updatePlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve21() {
+//     playerArray[turnIndex].reserved.push(outDeck2[0]);
+//     outDeck2[0] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve22() {
+//     playerArray[turnIndex].reserved.push(outDeck2[1]);
+//     outDeck2[1] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve23() {
+//     playerArray[turnIndex].reserved.push(outDeck2[2]);
+//     outDeck2[2] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     turnOver();
+// }
+// function handleReserve24() {
+//     playerArray[turnIndex].reserved.push(outDeck2[3]);
+//     outDeck2[3] = deck2.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve31() {
+//     playerArray[turnIndex].reserved.push(outDeck3[0]);
+//     outDeck3[0] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve32() {
+//     playerArray[turnIndex].reserved.push(outDeck3[1]);
+//     outDeck3[1] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve33() {
+//     playerArray[turnIndex].reserved.push(outDeck3[2]);
+//     outDeck3[2] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
+// function handleReserve34() {
+//     playerArray[turnIndex].reserved.push(outDeck3[3]);
+//     outDeck3[3] = deck3.pop();
+//     removeCards();
+//     placeAllCards();
+//     removeAllReserves();
+//     updateCurrentPlayer(turnIndex)
+//     turnOver();
+// }
 
 
 function addHighlightsAllChips() {
@@ -1977,13 +2019,17 @@ function addHighlightsAllChips() {
 }
 
 
+function handleCardClick(event) {
+    xVal = this.x
+    yVal = this.y
+
+    
+}
+
 function takeTurn() {
     // turnOver = false;
     // console.log(pileVals)
     let player = playerArray[turnIndex];
-    if (player.reserved.length > 0) {
-        addReservedCardAction()
-    }
     highlightCurrentPlayer(turnIndex);
     // console.log(player)
     addHighlightsAllChips();
@@ -1999,8 +2045,8 @@ function showClaimed(i) {
     const group = document.getElementById(title)
     const elements = group.children
     // console.log(elements)
-    for (const element of elements) {
-        element.setAttribute("opacity", 0.2)
+    for (element of elements) {
+        element.setAttribute("opacity", 0.3)
     }
     // document.getElementById(title).style.opacity = "0.3"
     document.getElementById(title).querySelector("text").style.opacity = "1"
@@ -2050,47 +2096,38 @@ function addValidCardButtons(player) {
         rect14.style.stroke = "cyan";
     }
 }
-    if (outDeck2[0] !== undefined) {
     if (checkAffordable(player, outDeck2[0].cost)) {
         rect21.addEventListener("click", rectHandlers["1,0"])
         rect21.style.stroke = "cyan";
-    }}
-    if (outDeck2[1] !== undefined) {
+    }
     if (checkAffordable(player, outDeck2[1].cost)) {
         rect22.addEventListener("click", rectHandlers["1,1"])
         rect22.style.stroke = "cyan";
     }
-}
-    if (outDeck2[2] !== undefined) {
     if (checkAffordable(player, outDeck2[2].cost)) {
         rect23.addEventListener("click", rectHandlers["1,2"])
         rect23.style.stroke = "cyan";
-    }}
-    if (outDeck2[3] !== undefined) {
+    }
     if (checkAffordable(player, outDeck2[3].cost)) {
         rect24.addEventListener("click", rectHandlers["1,3"])
         rect24.style.stroke = "cyan";
-    }}
-    if (outDeck3[0] !== undefined) {
+    }
     if (checkAffordable(player, outDeck3[0].cost)) {
         rect31.addEventListener("click", rectHandlers["2,0"])
         rect31.style.stroke = "cyan";
-    }}
-    if (outDeck3[1] !== undefined) {
+    }
     if (checkAffordable(player, outDeck3[1].cost)) {
         rect32.addEventListener("click", rectHandlers["2,1"])
         rect32.style.stroke = "cyan";
-    }}
-    if (outDeck3[2] !== undefined) {
+    }
     if (checkAffordable(player, outDeck3[2].cost)) {
         rect33.addEventListener("click", rectHandlers["2,2"])
         rect33.style.stroke = "cyan";
-    }}
-    if (outDeck3[3] !== undefined) {
+    }
     if (checkAffordable(player, outDeck3[3].cost)) {
         rect34.addEventListener("click", rectHandlers["2,3"])
         rect34.style.stroke = "cyan";
-    }}
+    }
 }
 
 // function addValidCardButtons(player) {
@@ -2178,7 +2215,206 @@ function checkEmptyDeck(i) {
 }
 
 // console.log(rectHandlers)
+function rect11event() {
+    let card = outDeck1[0];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    // removeCards();
+    removeCard(0,0);
+    outDeck1[0] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
+    setTimeout(() => {
+        replaceCard(0,0)
+    }, 500)
+    // placeAllCards();
+    // setTimeout(placeAllCards, 500);
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
 
+function rect12event() {
+    let card = outDeck1[1];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck1[1] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver()
+}
+
+function rect13event() {
+    let card = outDeck1[2];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck1[2] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+
+function rect14event() {
+    let card = outDeck1[3];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck1[3] = deck1.pop()
+    removeNulls(outDeck1, 0)
+    checkEmptyDeck(0);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect21event() {
+    let card = outDeck2[0];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();    
+    outDeck2[0] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect22event() {
+    let card = outDeck2[1];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck2[1] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect23event() {
+    let card = outDeck2[2];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck2[2] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect24event() {
+    let card = outDeck2[3];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck2[3] = deck2.pop()
+    removeNulls(outDeck2, 1)
+    checkEmptyDeck(1);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect31event() {
+    let card = outDeck3[0];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck3[0] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect32event() {
+    let card = outDeck3[1];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck3[1] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect33event() {
+    let card = outDeck3[2];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck3[2] = deck3.pop()
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
+function rect34event() {
+    let card = outDeck3[3];
+    let player = playerArray[turnIndex];
+    player.cards[card.color] += 1;
+    player.vp += card.vp;
+    payForCard(player, card.cost)
+    removeCards();
+    outDeck3[3] = deck3.pop();
+    removeNulls(outDeck3, 2)
+    checkEmptyDeck(2);
+    placeAllCards();
+    placeAllBonuses();
+    removeAllCardButtons();
+    removeAllPileButtons();
+    turnOver();
+}
 
 // NEED TO ADD THE CHIP BANK THING
 
@@ -2221,6 +2457,46 @@ function removePileListener(color) {
     pilesDisabled[color] = true;
 }
 
+// function removePileListenerHandler(color) {
+//     return function() {
+//         removePileListener(color)
+//     }
+// }
+
+// function removeBlackListener() {
+//     console.log("removingBlack")
+//     blackPile.removeEventListener("click", pileHandlersAll["k"]);
+//     blackPile.querySelector("circle").style.stroke = "none";
+//     blackPileDisabled = true;
+// }
+
+// function removeBlueListener() {
+//     bluePile.removeEventListener("click", pileHandlersAll["u"]);
+//     bluePile.querySelector("circle").style.stroke = "none";
+//     bluePileDisabled = true;
+// }
+
+// function removeRedListener() {
+//     redPile.removeEventListener("click", pileHandlersAll["r"]);
+//     redPile.querySelector("circle").style.stroke = "none";
+//     redPileDisabled = true;
+// }
+
+// function removeGreenListener() {
+//     greenPile.removeEventListener("click", pileHandlersAll["g"]);
+//     greenPile.querySelector("circle").style.stroke = "none";
+//     greenPileDisabled = true;
+// }
+
+// function removeWhiteListener() {
+//     whitePile.removeEventListener("click", pileHandlersAll["w"]);
+//     whitePile.querySelector("circle").style.stroke = "none";
+//     whitePileDisabled = true;
+// }
+
+// const removePileListenersDict = {"k": removePileListenerHandler("k"), "u": removePileListenerHandler("u"), "r": removePileListenerHandler("r"), "g": removePileListenerHandler("g"), "w": removePileListenerHandler("w")}
+// // removePileListenersDict["k"] = removeBlackListener()
+
 
 function removeAllPileButtons() {
     // removeBlackListener();
@@ -2238,7 +2514,7 @@ function removeAllPileButtons() {
 // }
 
 function checkAllDisabled() {
-    if ((pilesDisabled["k"]) && (pilesDisabled["u"]) && (pilesDisabled["g"]) && (pilesDisabled["r"]) && (pilesDisabled["w"]) && (pilesDisabled["y"])) {
+    if ((blackPileDisabled) && (bluePileDisabled) && (greenPileDisabled) && (redPileDisabled) && (whitePileDisabled) && (goldPileDisabled)) {
         turnOver()
     }
 }
@@ -2280,6 +2556,165 @@ function pileEvent(color) {
     }
 }
 
+// function blackPileEvent() {
+//     removeAllCardButtons();
+//     playerArray[turnIndex].coins["k"] += 1;
+//     number = blackPile.querySelector("text").textContent;
+//     blackPile.querySelector("text").innerHTML = number-1;
+//     pileVals["k"] -= 1;
+//     chipsBought.push("k");
+//     updatePlayer(turnIndex)
+//     removeYellowListener();
+//     if ((chipsBought.length == 1) && (number < 4)) {
+//         removeBlackListener();
+//         checkAllDisabled()
+//     }
+//     if (chipsBought.length == 2) {
+//         if (chipsBought[0] == "k") {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver()
+//         }
+//         else {
+//             removeBlackListener();
+//             removePrevListener(chipsBought[0]);
+//             checkAllDisabled()
+//         }
+//     }
+//     if (chipsBought.length == 3) {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver();
+//     }
+// }
+
+// function bluePileEvent() {
+//     removeAllCardButtons();
+//     playerArray[turnIndex].coins["u"] += 1;
+//     number = bluePile.querySelector("text").textContent;
+//     bluePile.querySelector("text").innerHTML = number-1;
+//     pileVals["u"] -= 1;
+//     chipsBought.push("u");
+//     removeYellowListener();
+//     updatePlayer(turnIndex)
+//     if ((chipsBought.length == 1) && (number < 4)) {
+//         removeBlueListener();
+//         checkAllDisabled();
+//     }
+//     if (chipsBought.length == 2) {
+//         if (chipsBought[0] == "u") {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver();
+//         }
+//         else {
+//             removeBlueListener();
+//             removePrevListener(chipsBought[0]);
+//             checkAllDisabled();
+//         }
+//     }
+//     if (chipsBought.length == 3) {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver();
+//     }
+// }
+
+// function redPileEvent() {
+//     removeAllCardButtons();
+//     playerArray[turnIndex].coins["r"] += 1;
+//     number = redPile.querySelector("text").textContent;
+//     redPile.querySelector("text").innerHTML = number-1;
+//     chipsBought.push("r");
+//     removeYellowListener();
+//     pileVals["r"] -= 1;
+//     updatePlayer(turnIndex);
+//     if ((chipsBought.length == 1) && (number < 4)) {
+//         removeRedListener();
+//         checkAllDisabled();
+//     }
+//     if (chipsBought.length == 2) {
+//         if (chipsBought[0] == "r") {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver()
+//         }
+//         else {
+//             removeRedListener();
+//             removePrevListener(chipsBought[0]);
+//             checkAllDisabled();
+//         }
+//     }
+//     if (chipsBought.length == 3) {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver()
+//     }
+// }
+
+// function greenPileEvent() {
+//     removeAllCardButtons();
+//     playerArray[turnIndex].coins["g"] += 1;
+//     number = greenPile.querySelector("text").textContent;
+//     greenPile.querySelector("text").innerHTML = number-1;
+//     chipsBought.push("g");
+//     removeYellowListener();
+//     pileVals["g"] -= 1;
+//     updatePlayer(turnIndex);
+//     if ((chipsBought.length == 1) && (number < 4)) {
+//         removeGreenListener();
+//         checkAllDisabled();
+//     }
+//     if (chipsBought.length == 2) {
+//         if (chipsBought[0] == "g") {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver();
+//         }
+//         else {
+//             removeGreenListener();
+//             removePrevListener(chipsBought[0]);
+//             checkAllDisabled();
+//         }
+//     }
+//     if (chipsBought.length == 3) {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver()
+//     }
+// }
+
+// function whitePileEvent() {
+//     removeAllCardButtons();
+//     playerArray[turnIndex].coins["w"] += 1;
+//     number = whitePile.querySelector("text").textContent;
+//     whitePile.querySelector("text").innerHTML = number-1;
+//     chipsBought.push("w");
+//     removeYellowListener();
+//     pileVals["w"] -= 1;
+//     updatePlayer(turnIndex);
+//     if ((chipsBought.length == 1) && (number < 4)) {
+//         removeWhiteListener();
+//         checkAllDisabled();
+//     }
+//     if (chipsBought.length == 2) {
+//         if (chipsBought[0] == "w") {
+//             removeAllPileButtons();
+//             // setTimeout(turnOver,2000);
+//             turnOver();
+//         }
+//         else {
+//             removeWhiteListener();
+//             removePrevListener(chipsBought[0]);
+//             checkAllDisabled();
+//         }
+//     }
+//     if (chipsBought.length == 3) {
+//         removeAllPileButtons();
+//         // setTimeout(turnOver,2000);
+//         turnOver();
+//     }
+// }
 
 // NEED TO HANDLE CASE WHERE THERE IS NOTHING LEFT TO BUY
 
@@ -2290,18 +2725,32 @@ function addChipButtons() {
     greenPile.disabled = false;
     whitePile.disabled = false;
 
+    // blackPile.addEventListener('click', () => {
+    //     playerArray[turnIndex].coins["k"] += 1;
+    //     number = blackPile.querySelector("text").textContent;
+    //     blackPile.querySelector("text").innerHTML = number-1;
+    //     chipsBought.push("k");
+    //     if ((chipsBought.length == 1) && (number < 4)) {
+    //         blackPile.disabled = true;
+    //         blackPile.querySelector("circle").style.stroke = "none";
+    //     }
+    //     if ((chipsBought.length == 2) && (chipsBought[0] == "k")) {
+    //         blackPile.disabled = true;
+    //         turnOver = true;
+    //     }
+    // })
     blackPile.addEventListener("click", pileHandlersAll["k"]);
     bluePile.addEventListener("click", pileHandlersAll["u"]);
     redPile.addEventListener("click", pileHandlersAll["r"]);
     greenPile.addEventListener("click", pileHandlersAll["g"]);
     whitePile.addEventListener("click", pileHandlersAll["w"]);
 
-    pilesDisabled["k"] = false;
-    pilesDisabled["u"] = false;
-    pilesDisabled["g"] = false;
-    pilesDisabled["r"] = false;
-    pilesDisabled["w"] = false;
-    pilesDisabled["y"] = false;
+    blackPileDisabled = false;
+    bluePileDisabled = false;
+    redPileDisabled = false;
+    greenPileDisabled = false;
+    whitePileDisabled = false;
+
     // if (pileVals["k"] == 0) {
     //     removeBlackListener()
     // }
@@ -2370,41 +2819,34 @@ function turnOver() {
     updatePlayer(turnIndex)
     // console.log(elements)
     // console.log(playerArray)
-    // console.log("ending turn")
     const victory = checkWinCondition(playerArray[turnIndex])
     if (victory) {
 
-    }
-    else if (getTotalCoins(playerArray[turnIndex]) > 10) {
-        triggerChipReturn()
-    }
+    } 
     else {
-        endTurn()
+        turnIndex += 1;
+        if (turnIndex >= playerArray.length) {
+            turnIndex = 0;
+        }
+
+        
+        storeThings();
+        chipsBought = [];
+        setTimeout(takeTurn,waitTime);
+        // removeCards();
+        // console.log(playerArray)
+        // console.log(pileVals)
     }
 
-}
-function endTurn() {
-    turnIndex += 1;
-    if (turnIndex >= playerArray.length) {
-        turnIndex = 0;
-    }
-
-    
-    storeThings();
-    chipsBought = [];
-    setTimeout(takeTurn,waitTime);
-    // removeCards();
-    // console.log(playerArray)
-    // console.log(pileVals)
 }
 
 function storeThings() {
     localStorage.setItem("deck1", JSON.stringify(deck1))
-    localStorage.setItem("deck2", JSON.stringify(deck2))
-    localStorage.setItem("deck3", JSON.stringify(deck3))
+    localStorage.setItem("deck1", JSON.stringify(deck1))
+    localStorage.setItem("deck1", JSON.stringify(deck1))
     localStorage.setItem("outDeck1", JSON.stringify(outDeck1))
     localStorage.setItem("outDeck2", JSON.stringify(outDeck2))
-    localStorage.setItem("outDeck3", JSON.stringify(outDeck3))
+    localStorage.setItem("outDeck2", JSON.stringify(outDeck2))
 
     localStorage.setItem("bonuses", JSON.stringify(bonuses))
 

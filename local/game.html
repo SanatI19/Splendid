@@ -79,6 +79,9 @@
             <circle cx="75" cy = "37" r="2" fill ="yellow" stroke="black" stroke-width="0.25"></circle>
             <text id="yellowPileNumber" x="75" y="38" font-size="2">5</text>
         </g>
+        
+
+
         <!-- <g id="whitePile">
             <rect x="10" y="40" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
             <rect x="10" y="41" width="4" height="1" fill="white" stroke="grey" stroke-width="0.25"></rect>
@@ -139,6 +142,7 @@
     </g>
     <!-- <g id="board" -->
     <g id="player1" style="display: none;">
+        <rect id="player1outer" x="40" y="0" height="7" width="20" fill="white" stroke="#90EE90" stroke-width="1.5"></rect>
         <rect id="player1container" x="40" y="0" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
         <line x1="40" x2="56" y1="2" y2="2" stroke="black" stroke-width="0.2"></line>
         <line x1="53" x2="53" y1="0" y2="2" stroke="black" stroke-width="0.2"></line>
@@ -190,6 +194,7 @@
         
     </g>
     <g id="player2" style="display: none;">
+        <rect id="player2outer" x="80" y="20" height="7" width="20" fill="white" stroke="#90EE90" stroke-width="1.5"></rect>
         <rect id="player2container" x="80" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
         <line x1="80" x2="96" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
         <line x1="93" x2="93" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
@@ -240,6 +245,7 @@
 
     </g>
     <g id="player4" style="display: none;">
+        <rect id="player4outer" x="0" y="20" height="7" width="20" fill="white" stroke="#90EE90" stroke-width="1.5"></rect>
         <rect id="player4container" x="0" y="20" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
         <line x1="0" x2="16" y1="22" y2="22" stroke="black" stroke-width="0.2"></line>
         <line x1="13" x2="13" y1="20" y2="22" stroke="black" stroke-width="0.2"></line>
@@ -288,6 +294,7 @@
     </g>
 
     <g id="player3" style="display: none;">
+        <rect id="player3outer" x="40" y="43" height="7" width="20" fill="white" stroke="#90EE90" stroke-width="1.5"></rect>
         <rect id="player3container" x="40" y="43" height="7" width="20" fill="white" stroke="black" stroke-width="0.1"></rect>
         <line x1="40" x2="56" y1="45" y2="45" stroke="black" stroke-width="0.2"></line>
         <line x1="53" x2="53" y1="43" y2="45" stroke="black" stroke-width="0.2"></line>
@@ -332,6 +339,17 @@
         <rect id="p3goldCardCopy" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
         <text id="p3goldCardCount" x="54.5" y="48" fill="black" font-size="1.5">0</text>
     </g>
+
+            <circle id="whitePileCopy" cx="75" cy = "12" r="2" fill ="white" stroke="black" stroke-width="0.25" style="display:none"></circle>
+
+        <circle id="bluePileCopy" cx="75" cy = "17" r="2" fill ="blue" stroke="black" stroke-width="0.25" style="display:none"></circle>
+
+        <circle id="greenPileCopy" cx="75" cy = "22" r="2" fill ="green" stroke="black" stroke-width="0.25" style="display:none"></circle>
+
+        <circle id="redPileCopy" cx="75" cy = "27" r="2" fill ="red" stroke="black" stroke-width="0.25" style="display:none"></circle>
+
+        <circle id="blackPileCopy" cx="75" cy = "32" r="2" fill ="black" stroke="black" stroke-width="0.25" style="display:none"></circle>
+        <circle id="yellowPileCopy" cx="75" cy = "37" r="2" fill ="yellow" stroke="black" stroke-width="0.25" style="display:none"></circle>
     
     </svg>
     <!-- <button id="confirm">Confirm</button> -->
