@@ -984,24 +984,42 @@ function slideCardToPlayer(color, deck, i, duration) {
     const finalY = parseFloat(stationaryElement.getAttribute("y"))
     const initX = getX(i+1)
     const initY = getY(deck+1)
+    const initH = 10;
+    const initW = 6;
+    const finalH = 3;
+    const finalW = 2;
     const distanceX = finalX - initX;
     const distanceY = finalY - initY;
+    const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
     // console.log(distanceX)
     // console.log(distanceY)
     // const startTime = performance.now();
     let currentX = initX;
     let currentY = initY;
+    let currentH = initH;
+    let currentW = initW;
+    let lastTime = null;
 
-    function animate() {
+    function animate(currentTime) {
+        if (lastTime === null) {
+            lastTime = currentTime;
+        }
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
         // const elapsed = currentTime - startTime;
         // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
         // const currentX = initX + distanceX * progress;
         // const currentY = initY + distanceY * progress
-        currentX += Math.sign(distanceX)*xSpeedPlayer
-        currentY += Math.sign(distanceY)*ySpeedPlayer
+        currentX += Math.sign(distanceX)*xSpeedPlayer*deltaTime*200
+        currentY += Math.sign(distanceY)*ySpeedPlayer*deltaTime*200
+        currentH += (finalH - initH) * xSpeedPlayer/maxDistance*deltaTime*200
+        currentW += (finalW - initW) * xSpeedPlayer/maxDistance*deltaTime*200
         // cardElement.querySelector("rect").setAttribute("x", currentX);
         element.setAttribute("x", doNotExceed(currentX, finalX, distanceX))
         element.setAttribute("y", doNotExceed(currentY, finalY, distanceY))
+        element.setAttribute("height", doNotExceed(currentH, finalH, finalH-initH))
+        element.setAttribute("width", doNotExceed(currentW, finalW, finalW-initW))
+
         // cardElement.setAttribute("x", currentX)
         // cardElement.setAttribute("y", currentY)
         if ((doNotExceed(currentX, finalX, distanceX) != finalX) || (doNotExceed(currentY, finalY, distanceY) != finalY)) {
@@ -1038,22 +1056,38 @@ function slideChipToPlayer(color) {
     const initY = parseFloat(stationaryElement.getAttribute("cy"))
     const distanceX = finalX - initX;
     const distanceY = finalY - initY;
+    const initR = parseFloat(stationaryElement.getAttribute("r"))
+    const finalR = parseFloat(finalElement.getAttribute("r"))
+    console.log(initR)
+    console.log(finalR)
     // console.log(distanceX)
+    const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
     // console.log(distanceY)
     // const startTime = performance.now();
     let currentX = initX;
     let currentY = initY;
+    let currentR = initR;
 
-    function animate() {
+    let lastTime = null;
+
+    function animate(currentTime) {
+        if (lastTime === null) {
+            lastTime = currentTime;
+        }
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
         // const elapsed = currentTime - startTime;
         // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
         // const currentX = initX + distanceX * progress;
         // const currentY = initY + distanceY * progress
-        currentX += Math.sign(distanceX)*xSpeedPlayer
-        currentY += Math.sign(distanceY)*ySpeedPlayer
+        currentX += Math.sign(distanceX)*xSpeedPlayer*deltaTime*200
+        currentY += Math.sign(distanceY)*ySpeedPlayer*deltaTime*200
+        currentR += (finalR - initR)*xSpeedPlayer/maxDistance*deltaTime*200
+        // console.log(currentR)
         // cardElement.querySelector("rect").setAttribute("x", currentX);
         element.setAttribute("cx", doNotExceed(currentX, finalX, distanceX))
         element.setAttribute("cy", doNotExceed(currentY, finalY, distanceY))
+        element.setAttribute("r", doNotExceed(currentR, finalR, finalR-initR))
         // cardElement.setAttribute("x", currentX)
         // cardElement.setAttribute("y", currentY)
         // console.log(currentX)
@@ -1091,24 +1125,39 @@ function slideChipToPile(color) {
     const initY = parseFloat(finalElement.getAttribute("cy"))
     const finalX = parseFloat(stationaryElement.getAttribute("cx"))
     const finalY = parseFloat(stationaryElement.getAttribute("cy"))
+    const initR = parseFloat(finalElement.getAttribute("r"));
+    const finalR = parseFloat(stationaryElement.getAttribute("r"));
     const distanceX = finalX - initX;
     const distanceY = finalY - initY;
+    const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY))
     // console.log(distanceX)
     // console.log(distanceY)
     // const startTime = performance.now();
     let currentX = initX;
     let currentY = initY;
+    let currentR = initR;
 
-    function animate() {
+    let lastTime = null;
+
+    function animate(currentTime) {
+        if (lastTime === null) {
+            lastTime = currentTime;
+        }
         // const elapsed = currentTime - startTime;
         // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
         // const currentX = initX + distanceX * progress;
         // const currentY = initY + distanceY * progress
-        currentX += Math.sign(distanceX)*xSpeedPlayer
-        currentY += Math.sign(distanceY)*ySpeedPlayer
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
+
+        currentX += Math.sign(distanceX)*xSpeedPlayer*deltaTime*200
+        currentY += Math.sign(distanceY)*ySpeedPlayer*deltaTime*200
+        currentR += (finalR - initR)*xSpeedPlayer/maxDistance*deltaTime*200;
+        // console.log(currentR)
         // cardElement.querySelector("rect").setAttribute("x", currentX);
         element.setAttribute("cx", doNotExceed(currentX, finalX, distanceX))
         element.setAttribute("cy", doNotExceed(currentY, finalY, distanceY))
+        element.setAttribute("r", doNotExceed(currentR, finalR, finalR-initR))
         // cardElement.setAttribute("x", currentX)
         // cardElement.setAttribute("y", currentY)
         // console.log(currentX)
@@ -1233,10 +1282,17 @@ function slideCardFromDeck(cardElement, deck, duration) {
     
     // const startTime = performance.now();
     let currentX = initX;
-    function animate() {
+    let lastTime = null;
+    function animate(currentTime) {
+        if (lastTime === null) {
+            lastTime = currentTime;
+        }
+
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
         // const elapsed = currentTime - startTime;
         // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
-        currentX += Math.sign(distance)*xSpeed;
+        currentX += Math.sign(distance)*xSpeed*deltaTime*200;
 
         // cardElement.querySelector("rect").setAttribute("x", currentX);
         updateAllX(cardElement, doNotExceed(currentX, finalX, distance))
@@ -1738,9 +1794,9 @@ function rectEvent(deck, i) {
     let card = outDecks[deck][i];
     console.log(card)
     let player = playerArray[turnIndex];
+    payForCard(player, card.cost)
     player.cards[card.color] += 1;
     player.vp += card.vp;
-    payForCard(player, card.cost)
     // removeCards();
     removeCard(deck,i,0);
     // console.log(outDecks[deck][])c
