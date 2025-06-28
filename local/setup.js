@@ -1,11 +1,13 @@
 const doneButton = document.getElementById("doneButton");
 const numPlayersSelector = document.getElementById("numPlayersSelector");
+const maxScore = document.getElementById("maxScore");
+const maxScoreText = document.getElementById("maxScoreText");
 doneButton.disabled = true;
 
 const startGameButton = document.getElementById("startGame");
 startGameButton.disabled = true;
 
-
+let maxScoreVal = 0;
 
 class Player {
     constructor(name) {
@@ -201,14 +203,42 @@ const bonuses = createBonuses();
 
 let numPlayers;
 
+const complete = [0,0];
+
+function checkComplete(complete) {
+    for (let i =0; i<complete.length; i++) {
+        if (complete[i] != 1) {
+            return true
+        }
+    }
+    return false
+}
+
+
+
 numPlayersSelector.addEventListener(('change'), () => {
     if (numPlayersSelector.value != "null") {
         numPlayers = parseInt(numPlayersSelector.value, 10);
         // console.log(numPlayers)
-        doneButton.disabled = false;
+        complete[0] = 1;
+        doneButton.disabled = checkComplete(complete);
     }
     else {
-        doneButton.disabled = true;
+        complete[0] = 0;
+        doneButton.disabled = checkComplete(complete)
+    }
+})
+
+maxScore.addEventListener(('change'), () => {
+    if ((maxScore.value != "null") && (maxScore.value > 0)) {
+        maxScoreVal = maxScore.value
+        // console.log(maxScoreVal)
+        complete[1] = 1;
+        doneButton.disabled = checkComplete(complete)
+    }
+    else {
+        complete[1] = 0;
+        doneButton.disabled = checkComplete(complete)
     }
 })
 
@@ -276,12 +306,14 @@ doneButton.addEventListener(('click'), () => {
     const deck2out = JSON.stringify(deck2);
     const deck3out = JSON.stringify(deck3);
 
+
     localStorage.setItem("outDeck1", outDeck1);
     localStorage.setItem("outDeck2", outDeck2);
     localStorage.setItem("outDeck3", outDeck3);
     localStorage.setItem("deck1", deck1out);
     localStorage.setItem("deck2", deck2out);
     localStorage.setItem("deck3", deck3out);
+    localStorage.setItem("scoreLimit", maxScoreVal)
 
     localStorage.setItem("numPlayers", numPlayers);
     localStorage.setItem("bonuses", JSON.stringify(bonusesOut));
@@ -290,6 +322,8 @@ doneButton.addEventListener(('click'), () => {
     createPlayerNames(numPlayers);
     doneButton.style.display = "none";
     numPlayersSelector.style.display = "none";
+    maxScore.style.display = "none";
+    maxScoreText.style.display = "none";
     document.getElementById("text").innerHTML = "Name your players";
 
 })

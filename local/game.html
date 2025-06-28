@@ -16,6 +16,7 @@
     <svg id="main" x = "20px" y="20px" xmlns = "http://www.w3.org/2000/svg"
         viewBox="0 0 100 50">
     <g id="board" style="display: inline;">
+        <rect id="wholeSpace" x="0" y="0" height="50" width="100" fill="white" stroke="none"></rect>
             <!-- <rect style="x:10; y:80; width:10px; height:10px"></rect> -->
             <!-- <rect x="10" y="80" width="10" height = "10"></rect> -->
         <rect id="holder" x="21" y="8" height="34" width="58" fill="white" stroke="black" stroke-dasharray="2 1" stroke-width="0.2"></rect>
@@ -190,7 +191,9 @@
         <rect id="p1goldCardCopy" x="53.5" y="3" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
 
         <text id="p1goldCardCount" x="54.5" y="5" fill="black" font-size="1.5">0</text>
-
+        <g id="player1goldCards" style="display:none;">
+            <rect x="61" y="1" height="5" width="18" fill="white" stroke="grey" stroke-dasharray="0.5 0.5" stroke-width="0.1"></rect>
+        </g>
         
     </g>
     <g id="player2" style="display: none;">
@@ -243,6 +246,10 @@
 
         <text id="p2goldCardCount" x="94.5" y="25" fill="black" font-size="1.5">0</text>
 
+        <g id="player2goldCards" style="display:none;">
+            <rect x="81" y="28" height="5" width="18" fill="white" stroke="grey" stroke-dasharray="0.5 0.5" stroke-width="0.1"></rect>
+        </g>
+
     </g>
     <g id="player4" style="display: none;">
         <rect id="player4outer" x="0" y="20" height="7" width="20" fill="white" stroke="#90EE90" stroke-width="1.5"></rect>
@@ -291,6 +298,9 @@
         <rect id="p4goldCardCopy" x="13.5" y="23" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
         <text id="p4goldCardCount" x="14.5" y="25" fill="black" font-size="1.5">0</text>
 
+        <g id="player4goldCards" style="display:none;">
+            <rect x="1" y="28" height="5" width="18" fill="white" stroke="grey" stroke-dasharray="0.5 0.5" stroke-width="0.1"></rect>
+        </g>
     </g>
 
     <g id="player3" style="display: none;">
@@ -338,6 +348,10 @@
         <rect id="p3goldCard" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
         <rect id="p3goldCardCopy" x="53.5" y="46" height="3" width="2" fill="gold" stroke="black" stroke-width="0.1"></rect>
         <text id="p3goldCardCount" x="54.5" y="48" fill="black" font-size="1.5">0</text>
+
+        <g id="player3goldCards" style="display:none;">
+            <rect x="61" y="44" height="5" width="18" fill="white" stroke="grey" stroke-width="0.1" stroke-dasharray="0.5 0.5" opacity="0.8"></rect>
+        </g>
     </g>
 
             <circle id="whitePileCopy" cx="75" cy = "12" r="2" fill ="white" stroke="black" stroke-width="0.25" style="display:none"></circle>

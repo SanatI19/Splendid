@@ -11,6 +11,9 @@ const deck1string = JSON.parse(localStorage.getItem("deck1"));
 const deck2string = JSON.parse(localStorage.getItem("deck2"));
 const deck3string = JSON.parse(localStorage.getItem("deck3"));
 
+const main = document.getElementById("main")
+const wholeSpace = document.getElementById("wholeSpace")
+
 let outDeck1string = JSON.parse(localStorage.getItem("outDeck1"));
 let outDeck2string = JSON.parse(localStorage.getItem("outDeck2"));
 let outDeck3string = JSON.parse(localStorage.getItem("outDeck3"));
@@ -21,8 +24,8 @@ let goldVal = parseInt(localStorage.getItem("goldVal"))
 // console.log(pileVals)
 // console.log(pileVals["k"])
 
-let victoryValue = 205;
-
+let victoryValue = parseInt(localStorage.getItem("scoreLimit"));
+console.log(victoryValue)
 let chipsBought = [];
 // let turnOver = false;
 
@@ -138,6 +141,11 @@ const p1goldcircle = document.getElementById("p1yellowcircle");
 const p2goldcircle = document.getElementById("p2yellowcircle");
 const p3goldcircle = document.getElementById("p3yellowcircle");
 const p4goldcircle = document.getElementById("p4yellowcircle");
+
+const p1reserved = document.getElementById("player1goldCards");
+const p2reserved = document.getElementById("player2goldCards");
+const p3reserved = document.getElementById("player3goldCards");
+const p4reserved = document.getElementById("player4goldCards");
 
 const p1whiteCard = document.getElementById("p1whiteCard");
 const p1whiteCardCount = document.getElementById("p1whiteCardCount");
@@ -276,8 +284,9 @@ function createPlayerElementArrays() {
     const playerChipRects = [p1chipsRect, p2chipsRect, p3chipsRect, p4chipsRect];
 
     const containerRectsOuter = [p1containerRectOuter, p2containerRectOuter, p3containerRectOuter, p4containerRectOuter]
+    const playerReserved = [p1reserved, p2reserved, p3reserved, p4reserved]
 
-    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames, playerCardCopies, piles, pilesCopies, playerChipRects, containerRectsOuter]
+    return [vp, containerRects, containers, playerChipCounts, playerChips, playerCards, playerCardCounts, playerNames, playerCardCopies, piles, pilesCopies, playerChipRects, containerRectsOuter, playerReserved]
 }
 
 const elements = createPlayerElementArrays()
@@ -295,6 +304,8 @@ const piles = elements[9]
 const pilesCopies = elements[10]
 const playerChipRects = elements[11]
 const playerContainersOuter = elements[12]
+const playerReserved = elements[13]
+// console.log(playerReserved)
 
 // console.log(playerCardCounts)
 
@@ -377,18 +388,51 @@ function payForCard(player, cardCost) {
         let totalAvail = addObjects(player.coins, player.cards);
         if (Object.values(subtractObjects(totalAvail, cardCost)).every(value => value >= 0)) {
             player.coins = subtractObjects(player.coins,makePositive(subtractObjects(cardCost, player.cards)));
+            animatePayment(makePositive(subtractObjects(cardCost, player.cards)), 0)
             adjustCoinTallies(subtractObjects(initCoins, player.coins))
+            // console.log("YESSSS")
         }
         else {
             if (getTotalDiff(totalAvail, cardCost) <= player.gold) {
                 player.gold -= getTotalDiff(totalAvail, cardCost);
                 player.coins = makePositive(subtractObjects(player.coins,makePositive(subtractObjects(cardCost, player.cards))));
+                animatePayment(makePositive(subtractObjects(cardCost, player.cards)), getTotalDiff(totalAvail,cardCost))
                 adjustCoinTallies(subtractObjects(initCoins, player.coins))
                 goldVal += getTotalDiff(totalAvail, cardCost);
                 yellowPile.querySelector("text").innerHTML = goldVal
             }
         }
     }
+}
+
+function getPaymentArray(payment) {
+    let paymentArray = []
+    for (const key of Object.keys(payment)) {
+        while (payment[key] > 0) {
+            // console.log(key)
+            paymentArray.push(key)
+            payment[key] -= 1
+        }
+    }
+    if (paymentArray.length > 0) {
+        paymentArray.reverse()
+    }
+    return paymentArray
+}
+
+function showPayment(payment) {
+    // console.log(payment)
+    for (let i = 0; i < payment.length; i++) {
+        setTimeout(slideChipToPilePurchase, i*200, payment[i])
+    }
+}
+
+function animatePayment(payment, gold) {
+    const paymentArray = getPaymentArray(payment);
+    for (let i = 0; i < gold;i++) {
+        paymentArray.push("y")
+    }
+    showPayment(paymentArray)
 }
 
 function adjustCoinTallies(payment) {
@@ -931,7 +975,7 @@ function removeNulls(arr, i) {
 }
 
 function sumPrev(deck,i) {
-    console.log(outDecks)
+    // console.log(outDecks)
     let sum = 0;
     for (let val = 0; val < i; val++) {
         sum += removeNulls(outDecks.map(x => x[val])).length
@@ -945,11 +989,9 @@ function sumPrev(deck,i) {
 }
 // console.log(outDecks)
 function removeCard(deck, i, y) {
-    console.log(board.children)
-    console.log(outDecks)
     moveButtonsToBack();
     const nthchild = board.children[sumPrev(deck,i)+22]
-    console.log(nthchild)
+    // console.log(nthchild)
     if (y) {
         slideCardToPlayer("yellow", deck, i, cardTransitionTime)
     }
@@ -979,7 +1021,7 @@ function slideCardToPlayer(color, deck, i, duration) {
     // element.parentNode.appendChild(element)
     element.style.display = "inline"
     
-    console.log(element)
+    // console.log(element)
     const finalX = parseFloat(stationaryElement.getAttribute("x"));
     const finalY = parseFloat(stationaryElement.getAttribute("y"))
     const initX = getX(i+1)
@@ -1039,6 +1081,15 @@ function slideCardToPlayer(color, deck, i, duration) {
     requestAnimationFrame(animate);
 }
 
+function priorTurnIndex(turn) {
+    if (turn -1 >= 0) {
+        return turn-1
+    }
+    else {
+        return numPlayers - 1
+    }
+}
+
 function slideChipToPlayer(color) {
     // const color = cardElement.children[1].getAttribute("fill");
     // console.log(color)
@@ -1058,8 +1109,8 @@ function slideChipToPlayer(color) {
     const distanceY = finalY - initY;
     const initR = parseFloat(stationaryElement.getAttribute("r"))
     const finalR = parseFloat(finalElement.getAttribute("r"))
-    console.log(initR)
-    console.log(finalR)
+    // console.log(initR)
+    // console.log(finalR)
     // console.log(distanceX)
     const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
     // console.log(distanceY)
@@ -1110,11 +1161,153 @@ function slideChipToPlayer(color) {
     requestAnimationFrame(animate);
 }
 
+// function slideChipToPile(color) {
+//     // const color = cardElement.children[1].getAttribute("fill");
+//     // console.log(color)
+//     const finalElement = piles[color].querySelector("circle")
+//     const stationaryElement = playerChips[color][turnIndex]
+//     const element = pilesCopies[color]
+//     // element.parentNode.appendChild(element)
+//     element.style.display = "inline"
+//     // console.l
+//     // console.log(stationaryElement)
+//     // console.log(element)
+//     const finalX = parseFloat(finalElement.getAttribute("cx"));
+//     const finalY = parseFloat(finalElement.getAttribute("cy"))
+//     const initX = parseFloat(stationaryElement.getAttribute("cx"))
+//     const initY = parseFloat(stationaryElement.getAttribute("cy"))
+//     const distanceX = finalX - initX;
+//     const distanceY = finalY - initY;
+//     const initR = parseFloat(stationaryElement.getAttribute("r"))
+//     const finalR = parseFloat(finalElement.getAttribute("r"))
+//     console.log(initR)
+//     console.log(finalR)
+//     // console.log(distanceX)
+//     const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY));
+//     // console.log(distanceY)
+//     // const startTime = performance.now();
+//     let currentX = initX;
+//     let currentY = initY;
+//     let currentR = initR;
+
+//     let lastTime = null;
+
+//     function animate(currentTime) {
+//         if (lastTime === null) {
+//             lastTime = currentTime;
+//         }
+//         const deltaTime = (currentTime - lastTime) / 1000;
+//         lastTime = currentTime;
+//         // const elapsed = currentTime - startTime;
+//         // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
+//         // const currentX = initX + distanceX * progress;
+//         // const currentY = initY + distanceY * progress
+//         currentX += Math.sign(distanceX)*xSpeedPlayer*deltaTime*200
+//         currentY += Math.sign(distanceY)*ySpeedPlayer*deltaTime*200
+//         currentR += (finalR - initR)*xSpeedPlayer/maxDistance*deltaTime*200
+//         // console.log(currentR)
+//         // cardElement.querySelector("rect").setAttribute("x", currentX);
+//         element.setAttribute("cx", doNotExceed(currentX, finalX, distanceX))
+//         element.setAttribute("cy", doNotExceed(currentY, finalY, distanceY))
+//         element.setAttribute("r", doNotExceed(currentR, finalR, finalR-initR))
+//         // cardElement.setAttribute("x", currentX)
+//         // cardElement.setAttribute("y", currentY)
+//         // console.log(currentX)
+//         // console.log(finalX)
+//         if ((doNotExceed(currentX, finalX, distanceX) != finalX) || (doNotExceed(currentY, finalY, distanceY) != finalY)) {
+//             requestAnimationFrame(animate)
+//         }
+//         else {
+//             element.style.display = "none"
+//         }
+        
+//         // if (progress < 1) {
+//         //     requestAnimationFrame(animate);
+//         // }
+//         // else {
+//         //     element.style.display = "none"
+//         // }
+//     }
+
+//     requestAnimationFrame(animate);
+// }
+
+
 function slideChipToPile(color) {
     // const color = cardElement.children[1].getAttribute("fill");
     // console.log(color)
     const stationaryElement = piles[color].querySelector("circle")
     const finalElement = playerChips[color][turnIndex]
+    const element = pilesCopies[color]
+    // element.parentNode.appendChild(element)
+    element.style.display = "inline"
+    // console.l
+    // console.log(stationaryElement)
+    // console.log(element)
+    const initX = parseFloat(finalElement.getAttribute("cx"));
+    const initY = parseFloat(finalElement.getAttribute("cy"))
+    const finalX = parseFloat(stationaryElement.getAttribute("cx"))
+    const finalY = parseFloat(stationaryElement.getAttribute("cy"))
+    const initR = parseFloat(finalElement.getAttribute("r"));
+    const finalR = parseFloat(stationaryElement.getAttribute("r"));
+    const distanceX = finalX - initX;
+    const distanceY = finalY - initY;
+    const maxDistance = Math.max(Math.abs(distanceX), Math.abs(distanceY))
+    // console.log(distanceX)
+    // console.log(distanceY)
+    // const startTime = performance.now();
+    let currentX = initX;
+    let currentY = initY;
+    let currentR = initR;
+
+    let lastTime = null;
+
+    function animate(currentTime) {
+        if (lastTime === null) {
+            lastTime = currentTime;
+        }
+        // const elapsed = currentTime - startTime;
+        // const progress = Math.min(elapsed / duration, 1); // clamp to [0, 1]
+        // const currentX = initX + distanceX * progress;
+        // const currentY = initY + distanceY * progress
+        const deltaTime = (currentTime - lastTime) / 1000;
+        lastTime = currentTime;
+
+        currentX += Math.sign(distanceX)*xSpeedPlayer*deltaTime*200
+        currentY += Math.sign(distanceY)*ySpeedPlayer*deltaTime*200
+        currentR += (finalR - initR)*xSpeedPlayer/maxDistance*deltaTime*200;
+        // console.log(currentR)
+        // cardElement.querySelector("rect").setAttribute("x", currentX);
+        element.setAttribute("cx", doNotExceed(currentX, finalX, distanceX))
+        element.setAttribute("cy", doNotExceed(currentY, finalY, distanceY))
+        element.setAttribute("r", doNotExceed(currentR, finalR, finalR-initR))
+        // cardElement.setAttribute("x", currentX)
+        // cardElement.setAttribute("y", currentY)
+        // console.log(currentX)
+        // console.log(finalX)
+        if ((doNotExceed(currentX, finalX, distanceX) != finalX) || (doNotExceed(currentY, finalY, distanceY) != finalY)) {
+            requestAnimationFrame(animate)
+        }
+        else {
+            element.style.display = "none"
+        }
+        
+        // if (progress < 1) {
+        //     requestAnimationFrame(animate);
+        // }
+        // else {
+        //     element.style.display = "none"
+        // }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+function slideChipToPilePurchase(color) {
+    // const color = cardElement.children[1].getAttribute("fill");
+    // console.log(color)
+    const stationaryElement = piles[color].querySelector("circle")
+    const finalElement = playerChips[color][priorTurnIndex(turnIndex)]
     const element = pilesCopies[color]
     // element.parentNode.appendChild(element)
     element.style.display = "inline"
@@ -1476,6 +1669,10 @@ function updatePlayer(i) {
         playerCards["y"][i].style.display = "inline";
         playerCardCounts["y"][i].style.display = "inline";
     }
+    else{
+        playerCards["y"][i].style.display = "none"
+        playerCardCounts["y"][i].style.display = "none";
+    }
 }
 
 function initPlayer1() {
@@ -1789,10 +1986,10 @@ initTables()
 // }
 
 function rectEvent(deck, i) {
-    console.log(deck)
-    console.log(i)
+    // console.log(deck)
+    // console.log(i)
     let card = outDecks[deck][i];
-    console.log(card)
+    // console.log(card)
     let player = playerArray[turnIndex];
     payForCard(player, card.cost)
     player.cards[card.color] += 1;
@@ -1800,9 +1997,9 @@ function rectEvent(deck, i) {
     // removeCards();
     removeCard(deck,i,0);
     // console.log(outDecks[deck][])c
-    console.log(decks[deck])
+    // console.log(decks[deck])
     outDecks[deck][i] = decks[deck].pop()
-    console.log(decks[deck])
+    // console.log(decks[deck])
     // removeNulls(outDecks[deck], deck)
     checkEmptyDeck(deck);
     setTimeout(() => {
@@ -1814,6 +2011,7 @@ function rectEvent(deck, i) {
     // placeAllBonuses();
     removeAllCardButtons();
     removeAllPileButtons();
+    // removeReservedCardAction();
     turnOver();
 }
 
@@ -1835,6 +2033,172 @@ function createAllHandlers() {
 }
 
 const rectHandlers = createAllHandlers()
+
+function getXReserved(i) {
+    if ((i == 0) || (i ==2)) {
+        return 61
+    }
+    else if (i ==1) {
+        return 81
+    }
+    else{ 
+        return 2
+    }
+}
+
+function getYReserved(i) {
+    if ((i == 1) || (i ==3)) {
+        return 28
+    }
+    else if (i ==2) {
+        return 44
+    }
+    else{ 
+        return 1
+    }
+}
+
+function removeCardFromReservedDeck(player, i) {
+    // console.log(player.reserved)
+    player.reserved.splice(i,1)
+    // console.log(player.reserved)
+}
+
+function addCardToReserved(card, i, j) {
+    // const rect = document.createElementNS("rect")
+
+    let container = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    // container.setAttribute("z-index",0);
+    let piece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    let backPiece = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+
+    //console.log(chip);
+    let x = getXReserved(i) + 4*j;
+    let y = getYReserved(i);
+
+    // x = x+ 3.2;
+    // y += 3.2;
+    backPiece.setAttribute("x",x);
+    backPiece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    backPiece.setAttribute("height", 5);
+    backPiece.setAttribute("width", 3);
+    // token.setAttribute("fill",chip.color);
+    backPiece.setAttribute("stroke","yellow");
+    backPiece.setAttribute("stroke-width",0.5);
+    backPiece.setAttribute("fill", "tan")
+    backPiece.style.display = "none";
+
+    piece.setAttribute("x",x);
+    piece.setAttribute("y",y);
+    // piece.setAttribute("r",1.75);
+    piece.setAttribute("height", 5);
+    piece.setAttribute("width", 3);
+    // token.setAttribute("fill",chip.color);
+    piece.setAttribute("stroke","black");
+    piece.setAttribute("stroke-width",0.075);
+    piece.setAttribute("fill", "tan")
+    piece.style.display = "inline";
+    // token.style.borderRadius = "50%";
+    container.appendChild(backPiece);
+    container.appendChild(piece);
+
+    let bigCircle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    // number.textContent = getColor;
+    bigCircle.setAttribute("cx", x+2.25);
+    bigCircle.setAttribute("cy", y+0.675);
+    bigCircle.setAttribute("r",0.45)
+    bigCircle.setAttribute("stroke", "black")
+    bigCircle.setAttribute("stroke-width", 0.075)
+    // number.setAttribute("font-size",2);
+    bigCircle.setAttribute("fill",getColor(card.color));
+    container.appendChild(bigCircle);
+    
+    // let line = document.createElementNS()
+    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x);
+    line.setAttribute("y1", y+1.25);
+    line.setAttribute("x2", x+3);
+    line.setAttribute("y2", y+1.25);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", 0.1);
+    container.appendChild(line)
+
+    if (card.vp != 0) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = card.vp;
+        number.setAttribute("x", x+0.25);
+        number.setAttribute("y", y+1);
+        number.setAttribute("font-size",1.25);
+        number.setAttribute("fill","gold");
+        number.setAttribute("stroke", "black")
+        number.setAttribute("stroke-width",0.05)
+        container.appendChild(number);
+    }
+
+    let nonzero = {}
+    for (let x of Object.keys(card.cost)) {
+        if (card.cost[x] > 0) {
+            nonzero[x] = card.cost[x]
+        }
+    }
+    let nonzeroKeys = Object.keys(nonzero);
+    for (let j = 0; j < nonzeroKeys.length; j++) {
+        let number = document.createElementNS("http://www.w3.org/2000/svg","text");
+        number.textContent = nonzero[nonzeroKeys[j]];
+        number.setAttribute("x", x+0.25);
+        number.setAttribute("y", y+2+ (3.5/nonzeroKeys.length)*j);
+        number.setAttribute("font-size",0.75);
+        number.setAttribute("fill","black");
+        container.appendChild(number);
+
+        let circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        // number.textContent = getColor;
+        circle.setAttribute("cx", x+1);
+        circle.setAttribute("cy", y+2+ (3.5/nonzeroKeys.length)*j-0.25);
+        circle.setAttribute("r",0.25)
+        circle.setAttribute("stroke","black")
+        circle.setAttribute("stroke-width",0.05)
+        // number.setAttribute("font-size",2);
+        circle.setAttribute("fill",getColor(nonzeroKeys[j]));
+        container.appendChild(circle);
+    }
+
+    if (checkAffordable(playerArray[i], card.cost)) {
+        // piece.setAttribute("stroke","yellow")
+        backPiece.style.display="inline"
+        container.addEventListener(('click'), () => {
+            
+            // console.log(card)
+            console.log("BUYING")
+            let player = playerArray[turnIndex];
+            payForCard(player, card.cost)
+            player.cards[card.color] += 1;
+            player.vp += card.vp;
+            // removeCards();
+            removeReservedCards()
+            removeCardFromReservedDeck(player,j);
+            // console.log(outDecks[deck][])c
+            // console.log(decks[deck])
+            // outDecks[deck][i] = decks[deck].pop()
+            // console.log(decks[deck])
+            // removeNulls(outDecks[deck], deck)
+            // checkEmptyDeck(deck);
+            // setTimeout(() => {
+            //     replaceCard(deck,i)
+            // }, 100)
+            // replaceCard(deck,i)
+            // placeAllCards();
+            // setTimeout(placeAllCards, 500);
+            // placeAllBonuses();
+            removeAllCardButtons();
+            removeAllPileButtons();
+            turnOver();
+        })
+    }
+
+    playerReserved[i].appendChild(container);
+}
 
 function reserveEvent(deck, i) {
     playerArray[turnIndex].reserved.push(outDecks[deck][i]);
@@ -2032,14 +2396,98 @@ function addHighlightsAllChips() {
     yellowPile.querySelector("circle").style.stroke = "yellow";
 }
 
+function removePlayerReservedDisplay(i) {
+    for (const child of playerReserved[i].children) {
+        child.style.display = "none"
+    }
+}
+
+function addPlayerReservedDisplay(i) {
+    playerReserved[i].style.display = "inline"
+    for (const child of playerReserved[i].children) {
+        child.style.display = "inline"
+    }
+    // console.log(playerReserved[i])
+}
+
+function removeAllReserveDisplays() {
+    for (let i =0; i<playerArray.length; i++) {
+        removePlayerReservedDisplay(i);
+    }
+}
+
+function reserveHoverEvent(i) {
+    addPlayerReservedDisplay(i)
+    removeReservedCardAction();
+    
+}
+
+function createReservedHandler(i) {
+    return function() {
+        reserveHoverEvent(i)
+    }
+}
+
+function reserveUnhoverEvent(i) {
+    console.log('bye')
+}
+
+function createReservedHandlerOut(i) {
+    return function() {
+        reserveUnhoverEvent(i)
+    }
+}
+
+
+function createAllReservedCardHandlers() {
+    const handlers = {}
+    for (let i = 0; i < numPlayers; i++) {
+        handlers[i] = createReservedHandler(i)
+        // handlers[2*i+1] = createReservedHandlerOut(i)
+    }
+    // console.log(handlers)
+    return handlers
+}
+
+const allReservedCardHandlers = createAllReservedCardHandlers()
+
+// console.log(allReservedCardHandlers)
+
+function addReservedCardAction() {
+    const yellowPile = playerCards["y"][turnIndex]
+    yellowPile.addEventListener(('click'), allReservedCardHandlers[turnIndex])
+    // yellowPile.addEventListener(('mouseout'), allReservedCardHandlers[2*turnIndex+1])
+    // console.log(yellowPile)
+}
+
+function removeReservedCardAction() {
+    const yellowPile = playerCards["y"][turnIndex]
+    yellowPile.removeEventListener(('click'), allReservedCardHandlers[turnIndex])
+}
+
+function addReservedCards() {
+    for (let i=0; i<playerArray[turnIndex].reserved.length; i++) {
+        addCardToReserved(playerArray[turnIndex].reserved[i], turnIndex, i)
+    }
+}
+
+function removeReservedCards() {
+    for (let i = 0; i<playerArray[turnIndex].reserved.length;i++) {
+        playerReserved[turnIndex].removeChild(playerReserved[turnIndex].lastChild)
+    }
+}
 
 function takeTurn() {
     // turnOver = false;
     // console.log(pileVals)
     let player = playerArray[turnIndex];
     if (player.reserved.length > 0) {
+        // console.log(player.reserved)
         addReservedCardAction()
+        // addCardToReserved(outDecks[deck][i], turnIndex)
+        addReservedCards()
     }
+    removeAllReserveDisplays()
     highlightCurrentPlayer(turnIndex);
     // console.log(player)
     addHighlightsAllChips();
@@ -2421,15 +2869,27 @@ function discardChips(player) {
 
 }
 
+function addVictoryScreen() {
+    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+    text.setAttribute("x", 10);
+    text.setAttribute("y", 25);
+    text.setAttribute("font-size", 15);
+    text.innerHTML = playerArray[turnIndex].name + " wins!";
+    wholeSpace.style.fill = "green"
+    main.appendChild(text)
+}
+
 function turnOver() {
     checkBonuses()
     updatePlayer(turnIndex)
+    removeReservedCardAction();
+    removeReservedCards()
     // console.log(elements)
     // console.log(playerArray)
     // console.log("ending turn")
     const victory = checkWinCondition(playerArray[turnIndex])
     if (victory) {
-
+        addVictoryScreen()
     }
     else if (getTotalCoins(playerArray[turnIndex]) > 10) {
         triggerChipReturn()
